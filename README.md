@@ -18,7 +18,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 5. After all the changes have been pulled, do a quick test of the app by running `node server.js` and then navigate to for example `http://flip1.engr.oregonstate.edu:4100/`. Make sure no other node processes are running before running that command.
 
-6. If the app looks as expected, stop the node process by running `ctrl + c`.
+6. If the app looks as expected, stop the node process by running the keyboard command `ctrl + c`.
 
 7. Run `./node_modules/forever/bin/forever start server.js` to have the app run continuously. 
 
