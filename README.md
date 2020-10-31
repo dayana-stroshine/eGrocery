@@ -1,27 +1,25 @@
 # EGrocery
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
+This is the eGrocery web app!
 
-## Development server
+## Building App for Local Development
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Building App for Running on Remote Server
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+1. Run `ng build --prod`.
 
-## Build
+2. After this finishes running, check that the web app looks as expected locally by running `node server.js`. Navigate to `http://localhost:4100/`.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+3. If it looks as expected, push the change to remote repository by commiting changes and running `git push`.
 
-## Running unit tests
+4. Next ssh onto the remote server and connect to VPN. Navigate to project folder. Run `git pull` to pull down all the changes that were just pushed to the remote repository.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+5. After all the changes have been pulled, do a quick test of the app by running `node server.js` and then navigate to for example `http://flip1.engr.oregonstate.edu:4100/`. Make sure no other node processes are running before running that command.
 
-## Running end-to-end tests
+6. If the app looks as expected, stop the node process by running `ctrl + c`.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+7. Run `./node_modules/forever/bin/forever start server.js` to have the app run continuously. 
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
