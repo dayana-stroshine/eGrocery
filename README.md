@@ -1,6 +1,6 @@
-# EGrocery
+# eGrocery
 
-This is the eGrocery web app!
+This is the eGrocery web app! To view, please visit `http://flip1.engr.oregonstate.edu:4100/`.
 
 ## Building App for Local Development
 
