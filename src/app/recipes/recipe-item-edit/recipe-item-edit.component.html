@@ -1,0 +1,63 @@
+<div class="jumbotron bg-keylime">
+    <h1>Edit Recipe</h1>
+</div>
+
+<button type="button" class="btn btn-success btn-lg button-mrgn" style="margin-left: 0;">
+    Submit Changes
+</button>
+<a routerLink="/recipes">
+    <button type="button" class="btn btn-secondary btn-lg button-mrgn">
+        Cancel
+    </button>
+</a>
+<br>
+
+<form>
+    <div class="form-group">
+        <label for="inputRecipeName">
+            <h2>Recipe Name</h2>
+        </label>
+        <input type="text" class="form-control" id="inputRecipeName" [placeholder]="thisRecipe.name">
+    </div>
+    <h2>Ingredients</h2>
+    <button type="button" class="btn btn-secondary  button-mrgn" (click)="addIngredient()">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Ingredient
+    </button>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label>Quantity</label>
+        </div>
+        <div class="form-group col-md-2">
+            <label>Unit</label>
+        </div>
+        <div class="form-group col-md-6">
+            <label>Ingredient Name</label>
+        </div>
+        <div class="form-group col-md-2">
+            <label>Delete?</label>
+        </div>
+    </div>
+    <div class="form-row" *ngFor="let ingredient of thisRecipe.ingredients">
+        <div class="form-group col-md-2">
+            <input type="text" class="form-control" [placeholder]="ingredient.quantity">
+        </div>
+        <div class="form-group col-md-2">
+            <input type="text" class="form-control" [placeholder]="ingredient.unit">
+        </div>
+        <div class="form-group col-md-6">
+            <input type="text" class="form-control" [placeholder]="ingredient.name">
+        </div>
+        <div class="form-group col-md-2">
+            <button type="button" class="btn btn-secondary">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+  <hr>
+    <h2>Directions</h2>
+    <div class="form-row">
+        <div class="form-group">
+            <textarea class="form-control" id="inputDirections" rows="3" [placeholder]="thisRecipe.directions"></textarea>
+        </div>
+    </div>
+</form>
