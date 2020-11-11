@@ -8,20 +8,20 @@
 <div class="row mrgn-bottom">
     <div class="col-md-6 col-md-offset-3">
         <h1>Sign Up</h1>
-        <form>
+        <form [formGroup]="signupForm" (ngSubmit)="signup()" novalidate>
             <div class="form-group">
-              <label for="exampleInputEmail1">Username</label>
-              <input type="text" class="form-control">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" placeholder="ex. Pat" formControlName="name">
             </div>
             <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" placeholder="ex. pat.lastname@myemail.com" formControlName="email">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Confirm Password</label>
-                <input type="password" class="form-control">
+                <label for="passwordCheck">Password</label>
+                <input type="password" class="form-control" formControlName="password">
               </div>
-            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="submit" class="btn btn-success" [disabled]="!signupForm.valid">Submit</button>
           </form>
     </div>
 </div>

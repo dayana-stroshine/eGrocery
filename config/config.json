@@ -1,0 +1,6 @@
+{
+    "host": "rds-mysql.c2j0vxayl3bh.us-west-2.rds.amazonaws.com",
+    "user": "admin340",
+    "database": "eGrocery",
+    "password": "cs340eGrocery"
+}

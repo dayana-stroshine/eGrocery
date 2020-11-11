@@ -1,13 +1,30 @@
 "use strict";
 const express = require("express");
 const compression = require("compression");
+const authRoutes = require('./routes/auth');
+const errorController = require('./controllers/error');
+const bodyParser = require("body-parser");
 
-const _port = 4100;
+const _port = process.env.PORT || 4100;
 const _app_folder = 'dist/eGrocery';
 
 const app = express();
 app.use(compression());
+app.use(bodyParser.json());
 
+// ---- CORS ALLOW API ACCESS FROM ANYWHERE ---//
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+})
+
+// --- ROUTES FOR AUTHORIZATION --- //
+app.use('/auth', authRoutes);
+// --- HANDLE ERRROS ---//
+app.use(errorController.get404);
+app.use(errorController.get500);
 
 // ---- SERVE STATIC FILES ---- //
 app.get('*.*', express.static(_app_folder, {maxAge: '1y'}));
