@@ -10,7 +10,9 @@ import { RecipesComponent } from './recipes/recipes.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomepageComponent, pathMatch: 'full' },
-  { path: 'recipes', component: RecipesComponent },
+  { path: 'recipes', component: RecipesComponent, children: [
+    { path: '', component: KitchenComponent },
+  ] },
   { path: 'kitchen', component: KitchenComponent },
   { path: 'grocery-list', component: GroceryListComponent },
   { path: 'calendar', component: CalendarComponent }
