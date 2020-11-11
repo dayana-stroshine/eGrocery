@@ -10,6 +10,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomepageComponent } from './homepage/homepage.component';
 import { KitchenComponent } from './kitchen/kitchen.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { RecipeItemComponent } from './recipes/recipe-item/recipe-item.component';
+import { RecipeItemEditComponent } from './recipes/recipe-item-edit/recipe-item-edit.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { CalendarComponent } from './calendar/calendar.component';
     GroceryListComponent,
     HomepageComponent,
     KitchenComponent,
-    CalendarComponent
+    CalendarComponent,
+    RecipeItemComponent,
+    RecipeItemEditComponent
   ],
   imports: [
     BrowserModule,
