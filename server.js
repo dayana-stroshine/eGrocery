@@ -11,6 +11,7 @@ const _app_folder = 'dist/eGrocery';
 const app = express();
 app.use(compression());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }))
 
 // ---- CORS ALLOW API ACCESS FROM ANYWHERE ---//
 app.use((req, res, next) => {
