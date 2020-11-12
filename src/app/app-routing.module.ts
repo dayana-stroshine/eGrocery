@@ -11,9 +11,7 @@ import { RecipeItemEditComponent } from './recipes/recipe-item-edit/recipe-item-
 
 const appRoutes: Routes = [
   { path: '', component: HomepageComponent, pathMatch: 'full' },
-  { path: 'recipes', component: RecipesComponent, children: [
-    { path: '', component: KitchenComponent },
-  ] },
+  { path: 'recipes', component: RecipesComponent },
   { path: 'kitchen', component: KitchenComponent },
   { path: 'grocery-list', component: GroceryListComponent },
   { path: 'calendar', component: CalendarComponent },

@@ -7,15 +7,31 @@
 
 <hr>
 
-<!-- <h3>My Recipe</h3>
-<li>This subpage will show recipe instructions and ingredients</li>
-<li>Functionality to add/remove ingredients from the recipe and update the instructions</li>
-<li>Functionality to add/remove ingredients for this recipe from the grocery list</li>
-<li>Functionality to add/remove this recipe from calendar ** needs to have ability to select day of week and meal **</li> -->
-<!-- 
-<app-recipe-item [myRecipe] = "testRecipe" ></app-recipe-item> -->
+<app-recipe-item [myRecipe]="testRecipe"></app-recipe-item>
 
 <div class="row">
+  <div class="col-md-5">
+    <ul class="nav nav-pills nav-stacked">
+      <li role="presentation" class="active"><a>Breakfast</a></li>
+      <li role="presentation"><a>Lunch</a></li>
+      <li role="presentation"><a>Dinner</a></li>
+      <li role="presentation"><a>Dessert</a></li>
+    </ul>
+  </div>
+  <div class="col-md-7">
+    <ul class="list-group">
+      <a routerLink="/recipe-item">
+        <li class="list-group-item">Mashed potatoes</li>
+      </a>
+      <li class="list-group-item">Tomato Soup</li>
+      <li class="list-group-item">Porridge</li>
+      <li class="list-group-item">Cheeseburger</li>
+      <li class="list-group-item">Garden salad</li>
+    </ul>
+  </div>
+</div>
+
+<!-- <div class="row">
   <div class="col-md-5">
     <ul class="list-group">
       <li class="list-group-item">
@@ -40,8 +56,4 @@
       </li>
     </ul>
   </div>
-  <div class="col-md-7">
-    <router-outlet></router-outlet>
-  </div>
-</div>
-
+</div> -->
