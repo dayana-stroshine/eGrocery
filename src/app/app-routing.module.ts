@@ -14,18 +14,15 @@ import { RecipeItemComponent } from './recipes/recipe-item/recipe-item.component
 
 const appRoutes: Routes = [
   { path: '', component: HomepageComponent, pathMatch: 'full' },
-  { path: 'recipes', component: RecipesComponent, children: [
-    { path: '', component: KitchenComponent },
-  ] },
+  { path: 'recipes', component: RecipesComponent },
   { path: 'kitchen', component: KitchenComponent },
   { path: 'grocery-list', component: GroceryListComponent },
   { path: 'calendar', component: CalendarComponent },
+  { path: 'recipe-item', component: RecipeItemComponent },
   { path: 'recipe-edit', component: RecipeItemEditComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent},
-  { path: '**', redirectTo:''},
-  { path: 'recipe-item', component: RecipeItemComponent },
-  { path: 'recipe-edit', component: RecipeItemEditComponent }
+  { path: '**', redirectTo:''}
 ];
 
 @NgModule({

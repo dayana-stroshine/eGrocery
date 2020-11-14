@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Recipe } from '../shared/recipe.model';
-import { Ingredient } from '../shared/ingredient.model';
 import { RecipeService } from '../recipe.service';
 import { Router } from '@angular/router';
 import { MealService } from '../meal.service';
 import { Meal } from '../shared/meal.model';
+import { Recipe } from '../shared/models/recipe.model';
 
 @Component({
   selector: 'app-recipes',

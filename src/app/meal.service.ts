@@ -1,8 +1,8 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { Ingredient } from './shared/ingredient.model';
+import { Injectable } from '@angular/core';
 
 import { Meal } from './shared/meal.model';
-import { Recipe } from './shared/recipe.model';
+import { Ingredient } from './shared/models/ingredient.model';
+import { Recipe } from './shared/models/recipe.model';
 
 @Injectable({providedIn: 'root'})
 export class MealService {
