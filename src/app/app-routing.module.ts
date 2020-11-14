@@ -10,17 +10,22 @@ import { RecipesComponent } from './recipes/recipes.component';
 import { RecipeItemEditComponent } from './recipes/recipe-item-edit/recipe-item-edit.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { RecipeItemComponent } from './recipes/recipe-item/recipe-item.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomepageComponent, pathMatch: 'full' },
-  { path: 'recipes', component: RecipesComponent },
+  { path: 'recipes', component: RecipesComponent, children: [
+    { path: '', component: KitchenComponent },
+  ] },
   { path: 'kitchen', component: KitchenComponent },
   { path: 'grocery-list', component: GroceryListComponent },
   { path: 'calendar', component: CalendarComponent },
   { path: 'recipe-edit', component: RecipeItemEditComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent},
-  { path: '**', redirectTo:''}
+  { path: '**', redirectTo:''},
+  { path: 'recipe-item', component: RecipeItemComponent },
+  { path: 'recipe-edit', component: RecipeItemEditComponent }
 ];
 
 @NgModule({
