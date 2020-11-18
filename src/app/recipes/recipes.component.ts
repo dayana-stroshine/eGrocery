@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Recipe } from '../shared/recipe.model';
-import { Ingredient } from '../shared/ingredient.model';
+import { RecipeService } from '../recipe.service';
+import { Router } from '@angular/router';
+import { MealService } from '../meal.service';
+import { Meal } from '../shared/meal.model';
+import { Recipe } from '../shared/models/recipe.model';
 
 @Component({
   selector: 'app-recipes',
@@ -9,18 +12,26 @@ import { Ingredient } from '../shared/ingredient.model';
   styleUrls: ['./recipes.component.css']
 })
 export class RecipesComponent implements OnInit {
+  mealSelected: Meal;
+  meals: Meal[];
 
-  testRecipe: Recipe = new Recipe('Mashed Potatoes', [
-    new Ingredient('russet potatoes', 3, ''), 
-    new Ingredient('butter', .5, 'cup'),
-    new Ingredient('sour cream', 4, 'ounces'),
-    new Ingredient('salt', 1, 'tablespoon')], 
-   'Boil potatoes for 30 minutes. Mash with fork. Add butter with sour cream and salt to taste.', 4);
-  
-
-  constructor() { }
+  constructor(
+    private mealService: MealService,
+    private recipeService: RecipeService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+    this.mealSelected = this.mealService.mealSelected;
+    this.meals = this.mealService.getMeals();
   }
 
+  recipeSelected(recipe: Recipe) {
+    this.recipeService.recipeSelected = recipe;
+    this.router.navigate(['recipe-item']);
+  }
+
+  onMealSelect(idx: number){
+    this.mealSelected = this.meals[idx];
+  }
 }
