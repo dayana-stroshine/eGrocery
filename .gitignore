@@ -39,7 +39,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
-config.json
+config/config.json
 
 # System Files
 .DS_Store
