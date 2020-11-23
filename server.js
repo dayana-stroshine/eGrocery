@@ -2,6 +2,7 @@
 const express = require("express");
 const compression = require("compression");
 const authRoutes = require('./routes/auth');
+const recipeRoutes = require('./routes/recipe');
 const errorController = require('./controllers/error');
 const bodyParser = require("body-parser");
 
@@ -23,6 +24,8 @@ app.use((req, res, next) => {
 
 // --- ROUTES FOR AUTHORIZATION --- //
 app.use('/auth', authRoutes);
+// --- ROUTES FOR RECIPES CRUD --- //
+app.use('/recipe', recipeRoutes);
 // --- HANDLE ERRROS ---//
 app.use(errorController.get404);
 app.use(errorController.get500);
