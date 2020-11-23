@@ -3,6 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { RecipeService } from 'src/app/recipe.service';
+import { RecipeHttpService } from '../../shared/services/recipe.service'
 import { Recipe } from '../../shared/models/recipe.model';
 import { Ingredient } from '../../shared/models/ingredient.model';
 
@@ -30,6 +31,7 @@ export class RecipeItemAddComponent implements OnInit {
 
   constructor(    
     private recipeService: RecipeService,
+    private recipeHttpService:RecipeHttpService,
     private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -64,8 +66,12 @@ removeIngredient(index) {
   this.IngredientList.removeAt(index);
 }
  // method triggered when form is submitted
- submit() {
-  console.log(this.recipeForm.value);
+//  submit() {
+//   console.log(this.recipeForm.value);
+// }
+// Makes an Http call
+submit(): void {
+  this.recipeHttpService.addRecipe(this.recipeForm.value).subscribe((msg) => console.log(msg));
 }
 }
 
