@@ -11,7 +11,7 @@ import { ErrorHandlerService } from './error-handler.service';
   providedIn: 'root'
 })
 export class RecipeHttpService {
-  private url = 'http://flip1.engr.oregonstate.edu:4100/api/recipe/addrecipe'
+  private url = 'http://ec2-18-216-213-10.us-east-2.compute.amazonaws.com:4100/api/recipe/addrecipe'
 
   httpOptions: { headers: HttpHeaders } = {
     headers: new HttpHeaders({ "Content-Type": "application/json" })
