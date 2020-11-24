@@ -11,7 +11,7 @@ import { ErrorHandlerService } from './error-handler.service';
   providedIn: 'root'
 })
 export class RecipeHttpService {
-  private url = 'http://localhost:4100/recipe/addrecipe'
+  private url = 'http://localhost:4100/api/recipe/addrecipe'
 
   httpOptions: { headers: HttpHeaders } = {
     headers: new HttpHeaders({ "Content-Type": "application/json" })
