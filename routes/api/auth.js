@@ -1,10 +1,10 @@
 const express = require('express');
 const { body } = require('express-validator');
 
-const User = require('../models/user');
+const User = require('../../models/user');
 const router = express.Router();
 
-const authController = require('../controllers/auth');
+const authController = require('../../controllers/auth');
 
 //--- SERVER SIDE VALIDATION OF INPUT ---//
 

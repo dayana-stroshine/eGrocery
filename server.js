@@ -1,8 +1,7 @@
 "use strict";
 const express = require("express");
 const compression = require("compression");
-const authRoutes = require('./routes/auth');
-const recipeRoutes = require('./routes/recipe');
+const routes = require('./routes/api/');
 const errorController = require('./controllers/error');
 const bodyParser = require("body-parser");
 
@@ -22,13 +21,12 @@ app.use((req, res, next) => {
     next();
 })
 
-// --- ROUTES FOR AUTHORIZATION --- //
-app.use('/auth', authRoutes);
-// --- ROUTES FOR RECIPES CRUD --- //
-app.use('/recipe', recipeRoutes);
-// --- HANDLE ERRROS ---//
-app.use(errorController.get404);
-app.use(errorController.get500);
+// --- ROUTES FOR API --- //
+app.use('/api', routes);
+
+// --- HANDLE ERRORS ---//
+// app.use(errorController.get404);
+// app.use(errorController.get500);
 
 // ---- SERVE STATIC FILES ---- //
 app.get('*.*', express.static(_app_folder, {maxAge: '1y'}));
