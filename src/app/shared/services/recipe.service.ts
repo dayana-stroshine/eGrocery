@@ -12,7 +12,7 @@ import { ErrorHandlerService } from './error-handler.service';
   providedIn: 'root'
 })
 export class RecipeHttpService {
-  private url = environment.baseUrl + "api/auth/signup";
+  private url = environment.baseUrl + "api/recipe/addRecipe";
 
   httpOptions: { headers: HttpHeaders } = {
     headers: new HttpHeaders({ "Content-Type": "application/json" })
