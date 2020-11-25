@@ -1,6 +1,6 @@
 # eGrocery
 
-This is the eGrocery web app! To view, please visit `http://flip1.engr.oregonstate.edu:4100/`.
+This is the eGrocery web app! To view, please visit `http://ec2-18-216-213-10.us-east-2.compute.amazonaws.com:4100/`.
 
 ## Building App for Local Development
 
@@ -16,10 +16,10 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 4. Next ssh onto the remote server and connect to VPN. Navigate to project folder. Run `git pull` to pull down all the changes that were just pushed to the remote repository.
 
-5. After all the changes have been pulled, do a quick test of the app by running `node server.js` and then navigate to for example `http://flip1.engr.oregonstate.edu:4100/`. Make sure no other node processes are running before running that command.
+5. After all the changes have been pulled, do a quick test of the app by running `node server.js` and then navigate to for example `http://ec2-18-216-213-10.us-east-2.compute.amazonaws.com:4100/`. Make sure no other node processes are running before running that command.
 
 6. If the app looks as expected, stop the node process by running the keyboard command `ctrl + c`.
 
-7. Run `./node_modules/forever/bin/forever start server.js` to have the app run continuously. 
+7. Run `forever start server.js` to have the app run continuously. 
 
 
