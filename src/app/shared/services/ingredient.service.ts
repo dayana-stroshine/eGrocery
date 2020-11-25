@@ -12,8 +12,8 @@ import { ErrorHandlerService } from './error-handler.service';
   providedIn: 'root'
 })
 export class IngredientHttpService {
-  // private url = environment.baseUrl + "api/ingredient/addIngredient";
-  private url = "http://localhost:4100/api/ingredient/addIngredient";
+  private url = environment.baseUrl + "api/ingredient/addIngredient";
+  // private url = "http://localhost:4100/api/ingredient/addIngredient";
 
   httpOptions: { headers: HttpHeaders } = {
     headers: new HttpHeaders({ "Content-Type": "application/json" })

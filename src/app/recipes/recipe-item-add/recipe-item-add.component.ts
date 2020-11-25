@@ -72,8 +72,11 @@ export class RecipeItemAddComponent implements OnInit {
   // }
   // Makes an Http call
   submit(): void {
-    console.log(this.recipeForm.value);
-    // this.recipeHttpService.addRecipe(this.recipeForm.value).subscribe((msg) => console.log(msg));
+    // this.IngredientList.controls.forEach((element, index) => {
+    //     console.log(element.value);
+    // })
+    // console.log(this.recipeForm.get('ingredients').value);
+    this.recipeHttpService.addRecipe(this.recipeForm.value).subscribe((msg) => console.log(msg));
   }
 }
 
