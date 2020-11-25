@@ -3,7 +3,7 @@ const { validationResult } = require('express-validator');
 
 const Recipe = require('../models/recipe');
 
-exports.addRecipe = async(req, res, next) => {
+exports.addRecipe = async (req, res, next) => {
     const errors = validationResult(req);
 
     if(!errors.isEmpty()) return

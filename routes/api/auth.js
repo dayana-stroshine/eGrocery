@@ -13,7 +13,7 @@ router.post(
     [
         body('name').trim().not().isEmpty(),
         body('email').isEmail().withMessage('Please enter a valid email.')
-        .custom(async(email) => {
+        .custom(async (email) => {
             const user = await User.find(email);
             // Make sure only one email exists for one user
             if (user[0].length > 0) {
