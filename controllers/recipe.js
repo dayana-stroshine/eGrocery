@@ -25,7 +25,10 @@ exports.addRecipe = async (req, res, next) => {
 
         const result = await Recipe.save(recipeDetails);
 
-        res.status(201).json({message: 'Recipe created!'})
+        return res.status(201).json({
+            message: 'Recipe created!',
+            id: result.insertId
+        })
     }
     catch (err) {
         if(!err.statusCode) {

@@ -3,6 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { RecipeService } from 'src/app/recipe.service';
+import { IngredientHttpService } from '../../shared/services/ingredient.service';
 import { RecipeHttpService } from '../../shared/services/recipe.service'
 import { Recipe } from '../../shared/models/recipe.model';
 import { Ingredient } from '../../shared/models/ingredient.model';
@@ -22,20 +23,20 @@ export class RecipeItemAddComponent implements OnInit {
     return this.recipeForm.get('ingredients') as FormArray;
   }
 
-// get the formgroup under contacts form array
+  // get the formgroup under contacts form array
   getIngredientFormGroup(index): FormGroup {
     // this.IngredientList = this.form.get('ingredients') as FormArray;
     const formGroup = this.IngredientList.controls[index] as FormGroup;
     return formGroup;
   }
 
-  constructor(    
+  constructor(
     private recipeService: RecipeService,
-    private recipeHttpService:RecipeHttpService,
+    private recipeHttpService: RecipeHttpService,
     private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.newRecipe= this.recipeService.recipeSelected;
+    this.newRecipe = this.recipeService.recipeSelected;
     // this.recipeForm = this.createFormGroup();
     this.recipeForm = this.fb.group({
       recipeName: ['', Validators.compose([Validators.required])],
@@ -44,35 +45,36 @@ export class RecipeItemAddComponent implements OnInit {
     });
 
     this.IngredientList = this.recipeForm.get('ingredients') as FormArray;
-    
+
   }
 
-   // ingredient formgroup
+  // ingredient formgroup
   createIngredient(): FormGroup {
     return this.fb.group({
-      quantity: [null], 
-      unit: [null], 
+      quantity: [null],
+      unit: [null],
       name: [null]
     });
   }
 
   // add ingredient from group
   addIngredient() {
-    this.IngredientList.push( this.createIngredient());
+    this.IngredientList.push(this.createIngredient());
   }
 
   // remove ingredient from group
-removeIngredient(index) {
-  this.IngredientList.removeAt(index);
-}
- // method triggered when form is submitted
-//  submit() {
-//   console.log(this.recipeForm.value);
-// }
-// Makes an Http call
-submit(): void {
-  this.recipeHttpService.addRecipe(this.recipeForm.value).subscribe((msg) => console.log(msg));
-}
+  removeIngredient(index) {
+    this.IngredientList.removeAt(index);
+  }
+  // method triggered when form is submitted
+  //  submit() {
+  //   console.log(this.recipeForm.value);
+  // }
+  // Makes an Http call
+  submit(): void {
+    console.log(this.recipeForm.value);
+    // this.recipeHttpService.addRecipe(this.recipeForm.value).subscribe((msg) => console.log(msg));
+  }
 }
 
 
