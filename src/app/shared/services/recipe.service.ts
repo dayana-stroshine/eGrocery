@@ -29,4 +29,13 @@ export class RecipeHttpService {
         catchError(this.errorHandlerService.handleError<Recipe>('addRecipe'))
       );
   }
+
+//   getAll():  Observable<Recipe> {
+//     return this.http.get<Recipe>(this.url, this.httpOptions)
+//       .pipe(
+//         first(),
+//         catchError(this.errorHandlerService.handleError<Recipe>('getAll'))
+//       );
+//   }
 }
+

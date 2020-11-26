@@ -9,7 +9,7 @@ exports.addIngredient = async (req, res, next) => {
     if (!errors.isEmpty()) return
 
     // Create array of ingredient objects
-    const ingredient_name = req.body.ingredientName;
+    const ingredient_name = req.body.name;
     const quantity = req.body.quantity;
     const unit = req.body.unit;
     // FIX ME: add in category
@@ -23,11 +23,12 @@ exports.addIngredient = async (req, res, next) => {
             unit: unit
         }
 
-        const result = await Recipe.save(ingredientDetails);
+        const result = await Ingredient.save(ingredientDetails);
 
-        res.status(201).json({
-            message: 'Ingredient created!',
-            id: result.insertId
+        return res.status(201).json({
+            // message: 'Ingredient created!',
+            id: result.insertId,
+            status: true,
         })
     }
     catch (err) {

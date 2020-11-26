@@ -33,6 +33,7 @@ export class RecipeItemAddComponent implements OnInit {
   constructor(
     private recipeService: RecipeService,
     private recipeHttpService: RecipeHttpService,
+    private ingredientHttpService: IngredientHttpService,
     private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -72,11 +73,37 @@ export class RecipeItemAddComponent implements OnInit {
   // }
   // Makes an Http call
   submit(): void {
-    // this.IngredientList.controls.forEach((element, index) => {
-    //     console.log(element.value);
-    // })
-    // console.log(this.recipeForm.get('ingredients').value);
+    // addRecipe
     this.recipeHttpService.addRecipe(this.recipeForm.value).subscribe((msg) => console.log(msg));
+    // Add Ingredients 
+    this.IngredientList.controls.forEach((element, index) => {
+      this.ingredientHttpService.addIngredient(element.value).subscribe((msg => console.log(msg)))
+      // console.log(element.value);
+    })
+
+// HOT MESS BELOW, FIX ME ADD RECIPE INGREDIENTS
+
+    // const addRecipe$ = this.recipeHttpService.addRecipe(this.recipeForm.value);
+
+
+    // const addIngredient$ = addRecipe$.switchMap(
+    // )
+    // addIngredient$.subscribe(
+    //   console.log,
+    //   console.error,
+    //   () => console.log ('completed adding recipe')
+    // )
+    //     const course$ = simulateHttp({id:1, description: 'Angular For Beginners'}, 1000);
+
+    // const httpResult$ = course$.switchMap(
+    //     courses => simulateHttp([], 2000),
+    //     (courses, lessons, outerIndex, innerIndex) => [courses, lessons] );
+
+    // httpResult$.subscribe(
+    //     console.log,
+    //     console.error,
+    //     () => console.log('completed httpResult$')
+    // );
   }
 }
 
