@@ -15,6 +15,7 @@ import { ErrorHandlerService } from './error-handler.service';
 })
 export class AuthService {
   private url = environment.baseUrl + "api/auth/signup";
+  // private url = "http://localhost:4100/api/auth/signup";
 
   httpOptions: { headers: HttpHeaders } = {
     headers: new HttpHeaders({ "Content-Type": "application/json"}),
