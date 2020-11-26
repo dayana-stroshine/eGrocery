@@ -13,4 +13,10 @@ router.post(
     ingredientController.addIngredient
 )
 
+// Update an ingredient
+router.patch('/:ingredientId', ingredientController.update)
+
+// Delete a recipe
+router.delete('/:ingredientId', ingredientController.delete)
+
 module.exports = router;

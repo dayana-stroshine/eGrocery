@@ -11,10 +11,11 @@ exports.addRecipe = async (req, res, next) => {
     if(!errors.isEmpty()) return
 
     const recipe_name = req.body.recipeName;
+    const category = req.body.recipeCategory;
     const instruction = req.body.directions;
     // FIX ME: add in user id
     const user_id = req.body.user_id ? req.body.user_id : 1;
-    const category = req.body.category
+
 
     try {
         const recipeDetails = {

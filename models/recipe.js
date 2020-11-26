@@ -1,7 +1,8 @@
 const db = require('../util/database');
 
 module.exports = class Recipe {
-    constructor(recipe_name, instruction, category, satisfaction, user_id) {
+    constructor(recipe_id, recipe_name, instruction, category, satisfaction, user_id) {
+        this.recipe_id = recipe_id
         this.recipe_name = recipe_name;
         this.instruction = instruction;
         this.category = category;
@@ -12,7 +13,7 @@ module.exports = class Recipe {
     // Create recipe
     static save(recipe) {
         return db.execute(
-            'INSERT INTO Recipes (recipe_name, instruction, category, user_id) VALUES (?, ?, ?)',
+            'INSERT INTO Recipes (recipe_name, instruction, category, user_id) VALUES (?, ?, ?, ?)',
             [recipe.recipe_name, recipe.instruction, recipe.category, recipe.user_id]
         );
     }
@@ -43,7 +44,7 @@ module.exports = class Recipe {
             SET recipe_name = ?,
                 instruction = ?,
                 category = ?,
-                satisfaction = ?,
+                satisfaction = ?
             WHERE recipe_id = ?`,
             [recipe.recipe_name, recipe.instruction, recipe.category, recipe.satisfaction, recipe.recipe_id]);
     }

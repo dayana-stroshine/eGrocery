@@ -41,6 +41,7 @@ export class RecipeItemAddComponent implements OnInit {
     // this.recipeForm = this.createFormGroup();
     this.recipeForm = this.fb.group({
       recipeName: ['', Validators.compose([Validators.required])],
+      recipeCategory: [''],
       ingredients: this.fb.array([this.createIngredient()]),
       directions: ['']
     });
@@ -54,7 +55,8 @@ export class RecipeItemAddComponent implements OnInit {
     return this.fb.group({
       quantity: [null],
       unit: [null],
-      name: [null]
+      name: [null],
+      category: [null]
     });
   }
 
@@ -67,21 +69,20 @@ export class RecipeItemAddComponent implements OnInit {
   removeIngredient(index) {
     this.IngredientList.removeAt(index);
   }
-  // method triggered when form is submitted
-  //  submit() {
-  //   console.log(this.recipeForm.value);
-  // }
+
   // Makes an Http call
   submit(): void {
     // addRecipe
+    console.log(this.recipeForm.value)
     this.recipeHttpService.addRecipe(this.recipeForm.value).subscribe((msg) => console.log(msg));
     // Add Ingredients 
     this.IngredientList.controls.forEach((element, index) => {
       this.ingredientHttpService.addIngredient(element.value).subscribe((msg => console.log(msg)))
-      // console.log(element.value);
     })
 
-// HOT MESS BELOW, FIX ME ADD RECIPE INGREDIENTS
+
+
+    // HOT MESS BELOW, FIX ME ADD RECIPE INGREDIENTS
 
     // const addRecipe$ = this.recipeHttpService.addRecipe(this.recipeForm.value);
 
