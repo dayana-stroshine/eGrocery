@@ -12,7 +12,8 @@ import { ErrorHandlerService } from './error-handler.service';
   providedIn: 'root'
 })
 export class RecipeHttpService {
-  private url = environment.baseUrl + "api/recipe/addRecipe";
+  recipeSelected: Recipe;
+  private url = environment.baseUrl + "api/recipe";
 
   httpOptions: { headers: HttpHeaders } = {
     headers: new HttpHeaders({ "Content-Type": "application/json" })
@@ -22,19 +23,30 @@ export class RecipeHttpService {
     private errorHandlerService: ErrorHandlerService) { }
 
   addRecipe(recipe: Omit<Recipe, "id">): Observable<Recipe> {
-    return this.http.post<Recipe>(this.url, recipe, this.httpOptions)
+    return this.http.post<Recipe>(`${this.url}/addRecipe`, recipe, this.httpOptions)
       .pipe(
         first(),
         catchError(this.errorHandlerService.handleError<Recipe>('addRecipe'))
       );
   }
 
-//   getAll():  Observable<Recipe> {
-//     return this.http.get<Recipe>(this.url, this.httpOptions)
-//       .pipe(
-//         first(),
-//         catchError(this.errorHandlerService.handleError<Recipe>('getAll'))
-//       );
-//   }
+  getAll(userId: number):  Observable<any> {
+    return this.http.get<any>(`${this.url}/${userId}`, this.httpOptions)
+      .pipe(
+        first(),
+        catchError(this.errorHandlerService.handleError<any>('getAll'))
+      );
+  }
+
+  getOne(recipeId: number):  Observable<any> {
+    return this.http.get<any>(`${this.url}/getOne/${recipeId}`, this.httpOptions)
+      .pipe(
+        first(),
+        catchError(this.errorHandlerService.handleError<any>('getOne'))
+      );
+  }
+
 }
+
+
 
