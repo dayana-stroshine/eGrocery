@@ -38,7 +38,8 @@ export class RecipesComponent implements OnInit {
             currentRecipe.recipe_name, 
             [], 
             currentRecipe.instruction, 
-            currentRecipe.satisfaction
+            currentRecipe.satisfaction,
+            currentRecipe.recipe_id
           )
         );
       } else if (currentRecipe.category === 'lunch') {
@@ -47,7 +48,8 @@ export class RecipesComponent implements OnInit {
             currentRecipe.recipe_name, 
             [], 
             currentRecipe.instruction, 
-            currentRecipe.satisfaction
+            currentRecipe.satisfaction,
+            currentRecipe.recipe_id
           )
         );
       } else if (currentRecipe.category === 'dinner') {
@@ -56,7 +58,8 @@ export class RecipesComponent implements OnInit {
             currentRecipe.recipe_name, 
             [], 
             currentRecipe.instruction, 
-            currentRecipe.satisfaction
+            currentRecipe.satisfaction,
+            currentRecipe.recipe_id
           )
         );
       } else if (currentRecipe.category === 'dessert') {
@@ -65,7 +68,8 @@ export class RecipesComponent implements OnInit {
             currentRecipe.recipe_name, 
             [], 
             currentRecipe.instruction, 
-            currentRecipe.satisfaction
+            currentRecipe.satisfaction,
+            currentRecipe.recipe_id
           )
         );
       } else {

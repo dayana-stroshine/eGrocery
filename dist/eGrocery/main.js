@@ -131,11 +131,12 @@ KitchenComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineC
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Recipe", function() { return Recipe; });
 class Recipe {
-    constructor(name, ingredients, directions, rating) {
+    constructor(name, ingredients, directions, rating, recipeId) {
         this.name = name;
         this.ingredients = ingredients;
         this.directions = directions;
         this.rating = rating;
+        this.recipeId = recipeId;
     }
 }
 
@@ -1238,16 +1239,16 @@ class RecipesComponent {
         this.mealService.mealSelected = this.mealService.meals[0];
         for (const currentRecipe of this.allRecipes) {
             if (currentRecipe.category === 'breakfast') {
-                this.mealService.meals[0].recipes.push(new _shared_models_recipe_model__WEBPACK_IMPORTED_MODULE_1__["Recipe"](currentRecipe.recipe_name, [], currentRecipe.instruction, currentRecipe.satisfaction));
+                this.mealService.meals[0].recipes.push(new _shared_models_recipe_model__WEBPACK_IMPORTED_MODULE_1__["Recipe"](currentRecipe.recipe_name, [], currentRecipe.instruction, currentRecipe.satisfaction, currentRecipe.recipe_id));
             }
             else if (currentRecipe.category === 'lunch') {
-                this.mealService.meals[1].recipes.push(new _shared_models_recipe_model__WEBPACK_IMPORTED_MODULE_1__["Recipe"](currentRecipe.recipe_name, [], currentRecipe.instruction, currentRecipe.satisfaction));
+                this.mealService.meals[1].recipes.push(new _shared_models_recipe_model__WEBPACK_IMPORTED_MODULE_1__["Recipe"](currentRecipe.recipe_name, [], currentRecipe.instruction, currentRecipe.satisfaction, currentRecipe.recipe_id));
             }
             else if (currentRecipe.category === 'dinner') {
-                this.mealService.meals[2].recipes.push(new _shared_models_recipe_model__WEBPACK_IMPORTED_MODULE_1__["Recipe"](currentRecipe.recipe_name, [], currentRecipe.instruction, currentRecipe.satisfaction));
+                this.mealService.meals[2].recipes.push(new _shared_models_recipe_model__WEBPACK_IMPORTED_MODULE_1__["Recipe"](currentRecipe.recipe_name, [], currentRecipe.instruction, currentRecipe.satisfaction, currentRecipe.recipe_id));
             }
             else if (currentRecipe.category === 'dessert') {
-                this.mealService.meals[3].recipes.push(new _shared_models_recipe_model__WEBPACK_IMPORTED_MODULE_1__["Recipe"](currentRecipe.recipe_name, [], currentRecipe.instruction, currentRecipe.satisfaction));
+                this.mealService.meals[3].recipes.push(new _shared_models_recipe_model__WEBPACK_IMPORTED_MODULE_1__["Recipe"](currentRecipe.recipe_name, [], currentRecipe.instruction, currentRecipe.satisfaction, currentRecipe.recipe_id));
             }
             else {
                 console.error(`Missing category or invalid currentRecipe: ${currentRecipe}`);
