@@ -12,10 +12,11 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { RecipeItemComponent } from './recipes/recipe-item/recipe-item.component';
 import { RecipeItemAddComponent } from './recipes/recipe-item-add/recipe-item-add.component';
+import { RecipeResolver } from './shared/resolver/recipe.resolver';
 
 const appRoutes: Routes = [
   { path: '', component: HomepageComponent, pathMatch: 'full' },
-  { path: 'recipes', component: RecipesComponent },
+  { path: 'recipes', component: RecipesComponent, resolve: { message: RecipeResolver } },
   { path: 'kitchen', component: KitchenComponent },
   { path: 'grocery-list', component: GroceryListComponent },
   { path: 'calendar', component: CalendarComponent },
