@@ -1,5 +1,5 @@
 <div class="jumbotron bg-keylime">
-    <h1>{{ myRecipe.name }}</h1>
+    <h1>{{ recipeItem.recipe_name }}</h1>
 </div>
 
 <button type="button" (click)="goToEdit()" class="btn btn-success btn-lg button-mrgn"  style="margin-left: 0;">
@@ -12,13 +12,13 @@
 
 <h2 class="heading-float">Ingredients</h2>
 <ul class="list-group">
-    <li class="list-group-item" *ngFor="let ingredient of myRecipe.ingredients">
-        {{ ingredient.quantity }} {{ ingredient.unit }} {{ ingredient.name }}
+    <li class="list-group-item" *ngFor="let ingredient of recipeItem.ingredients">
+        {{ ingredient.quantity }} {{ ingredient.unit }} {{ ingredient.ingredient_name }}
     </li>
 </ul>
 <h2 class="heading-float">Directions</h2>
 <div class="panel panel-default mrgn-bottom">
     <div class="panel-body">
-        {{ myRecipe.directions }}
+        {{ recipeItem.instruction }}
     </div>
 </div>
