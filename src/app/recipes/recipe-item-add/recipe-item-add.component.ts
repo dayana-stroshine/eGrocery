@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { RecipeService } from 'src/app/recipe.service';
 import { IngredientHttpService } from '../../shared/services/ingredient.service';
 import { RecipeHttpService } from '../../shared/services/recipe.service'
 import { Recipe } from '../../shared/models/recipe.model';
-import { Ingredient } from '../../shared/models/ingredient.model';
 
 @Component({
   selector: 'app-recipe-item-add',
@@ -31,13 +28,12 @@ export class RecipeItemAddComponent implements OnInit {
   }
 
   constructor(
-    private recipeService: RecipeService,
     private recipeHttpService: RecipeHttpService,
     private ingredientHttpService: IngredientHttpService,
     private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.newRecipe = this.recipeService.recipeSelected;
+    this.newRecipe = this.recipeHttpService.recipeSelected;
     // this.recipeForm = this.createFormGroup();
     this.recipeForm = this.fb.group({
       recipeName: ['', Validators.compose([Validators.required])],

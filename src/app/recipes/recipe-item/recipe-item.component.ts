@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { RecipeService } from 'src/app/recipe.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Recipe } from 'src/app/shared/models/recipe.model';
+import { RecipeHttpService } from 'src/app/shared/services/recipe.service';
 
 
 @Component({
@@ -16,20 +16,20 @@ export class RecipeItemComponent implements OnInit {
   recipeItem: any;
 
   constructor(
-    private recipeService: RecipeService,
+    private recipeHttpService: RecipeHttpService,
     private router: Router,
     private activeRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.myRecipe= this.recipeService.recipeSelected;
+    this.myRecipe = this.recipeHttpService.recipeSelected;
     this.recipeItem = this.formatRecipeItem(this.activeRoute.snapshot.data.message[0]);
     console.log(this.myRecipe);
     console.log(this.recipeItem);
   }
 
   goToEdit(): void {
-    this.recipeService.recipeSelected = this.myRecipe;
+    this.recipeHttpService.recipeSelected = this.myRecipe;
     this.router.navigateByUrl('/recipe-edit', {state: this.myRecipe});
   }
 

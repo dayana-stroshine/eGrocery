@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { RecipeService } from '../recipe.service';
 import { RecipeHttpService } from '../shared/services/recipe.service'
 import { ActivatedRoute, Router } from '@angular/router';
-import { MealService } from '../meal.service';
-import { Meal } from '../shared/meal.model';
+import { MealService } from '../shared/services/meal.service';
+import { Meal } from '../shared/models/meal.model';
 import { Recipe } from '../shared/models/recipe.model';
 
 @Component({
@@ -19,7 +18,6 @@ export class RecipesComponent implements OnInit {
 
   constructor(
     private mealService: MealService,
-    private recipeService: RecipeService,
     private router: Router,
     private recipeHttpService: RecipeHttpService,
     private activeRoute: ActivatedRoute
@@ -82,7 +80,7 @@ export class RecipesComponent implements OnInit {
   }
 
   recipeSelected(recipe: Recipe) {
-    this.recipeService.recipeSelected = recipe;
+    this.recipeHttpService.recipeSelected = recipe;
     this.router.navigate(['recipe-item']);
   }
 
