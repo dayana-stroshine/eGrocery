@@ -37,5 +37,16 @@ export class RecipeHttpService {
         catchError(this.errorHandlerService.handleError<any>('getAll'))
       );
   }
+
+  getOne(recipeId: number):  Observable<any> {
+    return this.http.get<any>(`${this.url}/getOne/${recipeId}`, this.httpOptions)
+      .pipe(
+        first(),
+        catchError(this.errorHandlerService.handleError<any>('getOne'))
+      );
+  }
+
 }
+
+
 
