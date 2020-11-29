@@ -26,9 +26,11 @@ export class RecipeItemComponent implements OnInit {
     this.recipeItem = this.formatRecipeItem(this.activeRoute.snapshot.data.message[0]);
   }
 
-  goToEdit(): void {
+  goToEdit(recipeId: number): void {
+    console.log(recipeId)
+    console.log(this.recipeItem)
     this.recipeService.recipeSelected = this.recipeItem;
-    this.router.navigateByUrl('/recipe-edit', {state: this.recipeItem});
+    this.router.navigate(['/recipe-edit', recipeId]);
   }
 
   // Upon completion of GET call to API, the results are formatted so the page may be displayed
