@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
-import { RecipeService } from 'src/app/recipe.service';
 import { Recipe } from '../../shared/models/recipe.model';
 import { Ingredient } from '../../shared/models/ingredient.model';
+import { RecipeHttpService } from 'src/app/shared/services/recipe.service';
 
 @Component({
   selector: 'app-recipe-item-edit',
@@ -36,13 +36,13 @@ export class RecipeItemEditComponent implements OnInit {
   }
 
   constructor(    
-    private recipeService: RecipeService,
+    private recipeHttpService: RecipeHttpService,
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.thisRecipe= this.recipeService.recipeSelected;
+    this.thisRecipe = this.recipeHttpService.recipeSelected;
     // this.recipeForm = this.createFormGroup();
     this.recipeForm = this.fb.group({
       recipeName: [this.thisRecipe.name, Validators.compose([Validators.required])],

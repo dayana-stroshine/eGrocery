@@ -3,18 +3,15 @@ import { Resolve } from '@angular/router';
 
 import { Observable } from 'rxjs';
 import { RecipeHttpService } from '../services/recipe.service';
-import { RecipeService } from 'src/app/recipe.service';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class RecipeItemResolver implements Resolve<Observable<string>> {
-  
-  constructor(
-      private recipeHttpService: RecipeHttpService,
-    private recipeService: RecipeService) {}
+
+  constructor(private recipeHttpService: RecipeHttpService) { }
 
   resolve() {
-      // Get the recipeId from recipe service to make the API call
-     const recipeId =this.recipeService.recipeSelected.recipeId; 
+    // Get the recipeId from recipe service to make the API call
+    const recipeId = this.recipeHttpService.recipeSelected.recipeId;
     return this.recipeHttpService.getOne(recipeId);
   }
 }
