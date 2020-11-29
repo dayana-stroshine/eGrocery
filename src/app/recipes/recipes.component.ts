@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { RecipeService } from '../recipe.service';
 import { RecipeHttpService } from '../shared/services/recipe.service'
 import { ActivatedRoute, Router } from '@angular/router';
-import { MealService } from '../meal.service';
-import { Meal } from '../shared/meal.model';
+import { MealService } from '../shared/services/meal.service';
+import { Meal } from '../shared/models/meal.model';
 import { Recipe } from '../shared/models/recipe.model';
 
 @Component({
