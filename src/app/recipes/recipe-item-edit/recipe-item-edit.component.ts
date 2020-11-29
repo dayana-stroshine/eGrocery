@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
+import { IngredientHttpService } from '../../shared/services/ingredient.service';
+import { RecipeHttpService } from '../../shared/services/recipe.service'
 import { RecipeService } from 'src/app/recipe.service';
 import { Recipe } from '../../shared/models/recipe.model';
 import { Ingredient } from '../../shared/models/ingredient.model';
@@ -13,20 +15,6 @@ import { Ingredient } from '../../shared/models/ingredient.model';
 })
 
 export class RecipeItemEditComponent implements OnInit {
-  // thisRecipe: Recipe = new Recipe('Mashed Potatoes', [
-  //   new Ingredient('russet potatoes', 3, ''), 
-  //   new Ingredient('butter', .5, 'cup'),
-  //   new Ingredient('sour cream', 4, 'ounces'),
-  //   new Ingredient('salt', 1, 'tablespoon')], 
-  //  'Boil potatoes for 30 minutes. Mash with fork. Add butter with sour cream and salt to taste.', 4);
-
-  //  addIngredient() {
-  //   this.thisRecipe.ingredients.push({
-  //     name: '',
-  //     unit: '',
-  //     quantity: 0,
-  //   });
-  // }
   thisRecipe: Recipe;
   public recipeForm: FormGroup;
   public IngredientList: FormArray;
@@ -35,20 +23,37 @@ export class RecipeItemEditComponent implements OnInit {
     return this.recipeForm.get('ingredients') as FormArray;
   }
 
+ // get the formgroup under contacts form array
+ getIngredientFormGroup(index): FormGroup {
+  // this.IngredientList = this.form.get('ingredients') as FormArray;
+  const formGroup = this.IngredientList.controls[index] as FormGroup;
+  return formGroup;
+}
+
+
   constructor(    
     private recipeService: RecipeService,
     private router: Router,
     private route: ActivatedRoute,
+    private recipeHttpService: RecipeHttpService,
+    private ingredientHttpService: IngredientHttpService,
+
     private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.thisRecipe= this.recipeService.recipeSelected;
+    console.log(this.thisRecipe);
+    
+
     // this.recipeForm = this.createFormGroup();
     this.recipeForm = this.fb.group({
-      recipeName: [this.thisRecipe.name, Validators.compose([Validators.required])],
+      recipeName: ['', Validators.compose([Validators.required])],
+      recipeCategory: [''],
       ingredients: this.fb.array([this.createIngredient()]),
-      directions: [this.thisRecipe.directions]
+      directions: ['']
     });
+
+    this.IngredientList = this.recipeForm.get('ingredients') as FormArray;
     
   }
 
@@ -63,7 +68,8 @@ export class RecipeItemEditComponent implements OnInit {
       formArray.push(this.fb.group({
         quantity: ingrd.quantity,
         unit: ingrd.unit,
-        name: ingrd.name
+        name: ingrd.name,
+        category: ingrd.category
       }));
     });
 
@@ -75,11 +81,33 @@ export class RecipeItemEditComponent implements OnInit {
     return this.fb.group({
       quantity: [null], 
       unit: [null], 
-      name: [null]
+      name: [null],
+      category: [null]
     });
+
+    
   }
 
+// add ingredient from group
+  addIngredient() {
+    this.IngredientList.push(this.createIngredient());
+  }
 
+  // remove ingredient from group
+  removeIngredient(index) {
+    this.IngredientList.removeAt(index);
+  }
+
+  // Makes an Http call
+  submit(): void {
+    // // addRecipe
+    // console.log(this.recipeForm.value)
+    // this.recipeHttpService.addRecipe(this.recipeForm.value).subscribe((msg) => console.log(msg));
+    // // Add Ingredients 
+    // this.IngredientList.controls.forEach((element, index) => {
+    //   this.ingredientHttpService.addIngredient(element.value).subscribe((msg => console.log(msg)))
+    // })
+  }
   // getIngredientFormGroup(index): FormGroup {
   //   const formGroup = this.IngredientList.controls[index] as FormGroup;
   //   return formGroup;
