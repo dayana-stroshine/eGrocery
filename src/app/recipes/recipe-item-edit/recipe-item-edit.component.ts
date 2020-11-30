@@ -23,15 +23,15 @@ export class RecipeItemEditComponent implements OnInit {
     return this.recipeForm.get('ingredients') as FormArray;
   }
 
- // get the formgroup under contacts form array
- getIngredientFormGroup(index): FormGroup {
-  // this.IngredientList = this.form.get('ingredients') as FormArray;
-  const formGroup = this.IngredientList.controls[index] as FormGroup;
-  return formGroup;
-}
+  // get the formgroup under contacts form array
+  getIngredientFormGroup(index): FormGroup {
+    // this.IngredientList = this.form.get('ingredients') as FormArray;
+    const formGroup = this.IngredientList.controls[index] as FormGroup;
+    return formGroup;
+  }
 
 
-  constructor(    
+  constructor(
     private recipeService: RecipeService,
     private router: Router,
     private route: ActivatedRoute,
@@ -41,9 +41,9 @@ export class RecipeItemEditComponent implements OnInit {
     private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.thisRecipe= this.recipeService.recipeSelected;
+    this.thisRecipe = this.recipeService.recipeSelected;
     console.log(this.thisRecipe);
-    
+
 
     // this.recipeForm = this.createFormGroup();
     this.recipeForm = this.fb.group({
@@ -54,21 +54,46 @@ export class RecipeItemEditComponent implements OnInit {
     });
 
     this.IngredientList = this.recipeForm.get('ingredients') as FormArray;
-    
+
+    // Start of chain of events that gets the recipe based on the param id
+    this.route.paramMap.subscribe(params => {
+      const recipeId = +params.get('id');
+      if (recipeId) {
+        this.getRecipe(this.route);
+      }
+    })
+
+  }
+// Next step in the chain will get the recipe and then append it to the form
+  getRecipe(route: ActivatedRoute) {
+    const recipe = this.formatRecipeItem(this.route.snapshot.data.message[0]);
+    console.log(recipe);
+    if (recipe) {
+      this.editRecipe(recipe);
+    }
+  }
+
+  editRecipe(recipe) {
+    this.recipeForm.patchValue({
+      recipeName: recipe.recipe_name,
+      recipeCategory: recipe.category,
+      directions: recipe.instruction
+    });
+    this.recipeForm.setControl('ingredients', this.setExistingIngredients(recipe.ingredients))
   }
 
   // bind ingredient form array data to ingredients
-  editIngredient(recipe: Recipe){
+  editIngredient(recipe: Recipe) {
     this.recipeForm.setControl('ingredients', this.setExistingIngredients(recipe.ingredients));
   }
-
-  setExistingIngredients(ingredientSets: Ingredient[]): FormArray {
+  // setExistingIngredients(ingredientSets: Ingredient[]): FormArray {
+  setExistingIngredients(ingredientSets): FormArray {
     const formArray = new FormArray([]);
-    ingredientSets.forEach( ingrd => {
+    ingredientSets.forEach(ingrd => {
       formArray.push(this.fb.group({
         quantity: ingrd.quantity,
         unit: ingrd.unit,
-        name: ingrd.name,
+        name: ingrd.ingredient_name,
         category: ingrd.category
       }));
     });
@@ -76,19 +101,19 @@ export class RecipeItemEditComponent implements OnInit {
     return formArray;
   }
 
-   // ingredient formgroup
-   createIngredient(): FormGroup {
+  // ingredient formgroup
+  createIngredient(): FormGroup {
     return this.fb.group({
-      quantity: [null], 
-      unit: [null], 
+      quantity: [null],
+      unit: [null],
       name: [null],
       category: [null]
     });
 
-    
+
   }
 
-// add ingredient from group
+  // add ingredient from group
   addIngredient() {
     this.IngredientList.push(this.createIngredient());
   }
@@ -121,4 +146,29 @@ export class RecipeItemEditComponent implements OnInit {
 
   //   })
   // }
+  // Upon completion of GET call to API, the results are formatted so the page may be displayed
+  formatRecipeItem(recipeItem) {
+    console.log(recipeItem)
+    if (recipeItem) {
+      return recipeItem.reduce((recipe, curr) => {
+        const newIngredient = {
+          ingredient_id: curr.ingredient_id,
+          ingredient_name: curr.ingredient_name,
+          category: curr.category,
+          quantity: curr.quantity,
+          unit: curr.unit,
+        }
+        recipe.ingredients.push(newIngredient);
+        return recipe;
+      }, {
+        recipe_id: recipeItem[0].recipe_id,
+        recipe_name: recipeItem[0].recipe_name,
+        satisfaction: recipeItem[0].satisfaction,
+        category: recipeItem[0].recipe_category,
+        instruction: recipeItem[0].instruction,
+        user_id: recipeItem[0].user_id,
+        ingredients: []
+      })
+    }
+  }
 }
