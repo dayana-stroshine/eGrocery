@@ -19,8 +19,10 @@ export class RecipeHttpService {
     headers: new HttpHeaders({ "Content-Type": "application/json" })
   };
 
-  constructor(private http: HttpClient,
-    private errorHandlerService: ErrorHandlerService) { }
+  constructor(
+    private http: HttpClient,
+    private errorHandlerService: ErrorHandlerService
+  ) { }
 
   addRecipe(recipe: Omit<Recipe, "id">): Observable<Recipe> {
     return this.http.post<Recipe>(`${this.url}/addRecipe`, recipe, this.httpOptions)
@@ -30,7 +32,7 @@ export class RecipeHttpService {
       );
   }
 
-  getAll(userId: number):  Observable<any> {
+  getAll(userId: number): Observable<any> {
     return this.http.get<any>(`${this.url}/${userId}`, this.httpOptions)
       .pipe(
         first(),
@@ -38,15 +40,11 @@ export class RecipeHttpService {
       );
   }
 
-  getOne(recipeId: number):  Observable<any> {
+  getOne(recipeId: number): Observable<any> {
     return this.http.get<any>(`${this.url}/getOne/${recipeId}`, this.httpOptions)
       .pipe(
         first(),
         catchError(this.errorHandlerService.handleError<any>('getOne'))
       );
   }
-
 }
-
-
-
