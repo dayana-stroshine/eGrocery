@@ -12,19 +12,22 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { RecipeItemComponent } from './recipes/recipe-item/recipe-item.component';
 import { RecipeItemAddComponent } from './recipes/recipe-item-add/recipe-item-add.component';
+import { RecipeResolver } from './shared/resolver/recipe.resolver';
+import { RecipeItemResolver } from './shared/resolver/recipe-item.resolver';
+import { KitchenResolver } from './shared/resolver/kitchen.resolver';
 
 const appRoutes: Routes = [
   { path: '', component: HomepageComponent, pathMatch: 'full' },
-  { path: 'recipes', component: RecipesComponent },
-  { path: 'kitchen', component: KitchenComponent },
+  { path: 'recipes', component: RecipesComponent, resolve: { message: RecipeResolver } },
+  { path: 'kitchen', component: KitchenComponent, resolve: { message: KitchenResolver } },
   { path: 'grocery-list', component: GroceryListComponent },
   { path: 'calendar', component: CalendarComponent },
-  { path: 'recipe-item', component: RecipeItemComponent },
-  { path: 'recipe-edit', component: RecipeItemEditComponent },
+  { path: 'recipe-item/:id', component: RecipeItemComponent, resolve: { message: RecipeItemResolver } },
+  { path: 'recipe-edit/:id', component: RecipeItemEditComponent, resolve: { message: RecipeItemResolver } },
   { path: 'recipe-add', component: RecipeItemAddComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent},
-  { path: '**', redirectTo:''}
+  { path: 'signup', component: SignupComponent },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

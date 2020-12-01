@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { RecipeService } from 'src/app/recipe.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Recipe } from 'src/app/shared/models/recipe.model';
-
+import { RecipeHttpService } from 'src/app/shared/services/recipe.service';
 
 
 @Component({
@@ -13,21 +12,52 @@ import { Recipe } from 'src/app/shared/models/recipe.model';
 })
 export class RecipeItemComponent implements OnInit {
   //@Input() myRecipe: Recipe;
-  myRecipe: Recipe;
+  // myRecipe: Recipe;
+  recipeItem: any;
 
   constructor(
-    private recipeService: RecipeService,
+    private recipeHttpService: RecipeHttpService,
     private router: Router,
-    private route: ActivatedRoute
+    private activeRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.myRecipe= this.recipeService.recipeSelected;
+    // this.myRecipe = this.recipeHttpService.recipeSelected;
+    this.recipeItem = this.formatRecipeItem(this.activeRoute.snapshot.data.message[0]);
   }
 
-  goToEdit(): void {
-    this.recipeService.recipeSelected = this.myRecipe;
-    this.router.navigateByUrl('/recipe-edit', {state: this.myRecipe});
+  goToEdit(recipeId: number): void {
+    console.log(recipeId)
+    console.log(this.recipeItem)
+    // this.recipeService.recipeSelected = this.recipeItem;
+    this.router.navigate(['/recipe-edit', recipeId]);
+
+  }
+
+  // Upon completion of GET call to API, the results are formatted so the page may be displayed
+  formatRecipeItem(recipeItem) {
+    if (recipeItem) {
+      return recipeItem.reduce((recipe, curr) => {
+            const newIngredient = {
+                ingredient_id: curr.ingredient_id,
+                ingredient_name: curr.ingredient_name,
+                category: curr.category,
+                quantity: curr.quantity,
+                unit: curr.unit,
+        }
+        recipe.ingredients.push(newIngredient);
+        return recipe;
+    }, {
+      recipe_id: recipeItem[0].recipe_id,
+      recipe_name: recipeItem[0].recipe_name,
+      satisfaction: recipeItem[0].satisfaction,
+      // FIX ME
+      // category: recipeItem[0].recipe_category,
+      instruction: recipeItem[0].instruction,
+      user_id: recipeItem[0].user_id,
+      ingredients: []
+    })
+    }
   }
 
 }
