@@ -27,16 +27,16 @@ module.exports = class Recipe {
     // Read a recipe including its ingredients
     static getOne(recipe) {
         return db.execute(
-            `SELECT * FROM Recipes AS r
-            JOIN Recipe_Ingredients AS r_i
-            ON r.recipe_id = r_i.recipe_id
-            JOIN Ingredients as i
-            ON i.ingredient_id = r_i.ingredient_id
-            WHERE r.recipe_id = ?`, [recipe.recipe_id]);
+            `SELECT r.recipe_id, r.recipe_name, r.instruction, r.category AS recipe_category, r.satisfaction, r.user_id, 
+            i.ingredient_id, i.ingredient_name, i.quantity, i.unit, i.category FROM Recipes AS r
+                        JOIN Recipe_Ingredients AS r_i
+                        ON r.recipe_id = r_i.recipe_id
+                        JOIN Ingredients as i
+                        ON i.ingredient_id = r_i.ingredient_id
+                        WHERE r.recipe_id = ?`, [recipe.recipe_id]);
     }
 
     // Update a recipe
-    // FIX ME: ERROR IN SQL syntax
     static update(recipe) {
         console.log(recipe)
         return db.execute(

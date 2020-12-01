@@ -23,7 +23,7 @@ export class RecipeItemAddComponent implements OnInit {
     return this.recipeForm.get('ingredients') as FormArray;
   }
 
-  // get the formgroup under contacts form array
+  // get the formgroup under ingredients form array
   getIngredientFormGroup(index): FormGroup {
     // this.IngredientList = this.form.get('ingredients') as FormArray;
     const formGroup = this.IngredientList.controls[index] as FormGroup;
