@@ -47,4 +47,12 @@ export class RecipeHttpService {
         catchError(this.errorHandlerService.handleError<any>('getOne'))
       );
   }
+
+  delete(recipeId: number):  Observable<any> {
+    return this.http.delete<any>(`${this.url}/${recipeId}`, this.httpOptions)
+      .pipe(
+        first(),
+        catchError(this.errorHandlerService.handleError<any>('delete'))
+      );
+  }
 }

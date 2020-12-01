@@ -34,6 +34,7 @@ export class RecipesComponent implements OnInit {
         this.mealService.meals[0].recipes.push(
           new Recipe(
             currentRecipe.recipe_name, 
+            currentRecipe.category,
             [], 
             currentRecipe.instruction, 
             currentRecipe.satisfaction,
@@ -43,7 +44,8 @@ export class RecipesComponent implements OnInit {
       } else if (currentRecipe.category === 'lunch') {
         this.mealService.meals[1].recipes.push(
           new Recipe(
-            currentRecipe.recipe_name, 
+            currentRecipe.recipe_name,
+            currentRecipe.category, 
             [], 
             currentRecipe.instruction, 
             currentRecipe.satisfaction,
@@ -54,6 +56,7 @@ export class RecipesComponent implements OnInit {
         this.mealService.meals[2].recipes.push(
           new Recipe(
             currentRecipe.recipe_name, 
+            currentRecipe.category,
             [], 
             currentRecipe.instruction, 
             currentRecipe.satisfaction,
@@ -64,6 +67,7 @@ export class RecipesComponent implements OnInit {
         this.mealService.meals[3].recipes.push(
           new Recipe(
             currentRecipe.recipe_name, 
+            currentRecipe.category,
             [], 
             currentRecipe.instruction, 
             currentRecipe.satisfaction,
@@ -80,8 +84,9 @@ export class RecipesComponent implements OnInit {
   }
 
   recipeSelected(recipe: Recipe) {
-    this.recipeHttpService.recipeSelected = recipe;
-    this.router.navigate(['recipe-item']);
+    this.recipeService.recipeSelected = recipe;
+    this.router.navigate(['/recipe-item', recipe.recipeId]);
+
   }
 
   onMealSelect(idx: number){

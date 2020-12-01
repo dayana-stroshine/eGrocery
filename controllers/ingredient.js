@@ -79,12 +79,13 @@ exports.update = async (req, res, next) => {
 }
 
 // Delete ingredient
-exports.delete = async (req, res, next) => {
+exports.deleteIngredient = async (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) return
 
     const ingredient_id = req.params.ingredientId;
+    console.log(ingredient_id);
 
     try {
         const ingredient = {
