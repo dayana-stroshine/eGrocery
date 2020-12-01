@@ -12,7 +12,7 @@ import { RecipeHttpService } from 'src/app/shared/services/recipe.service';
 })
 export class RecipeItemComponent implements OnInit {
   //@Input() myRecipe: Recipe;
-  myRecipe: Recipe;
+  // myRecipe: Recipe;
   recipeItem: any;
 
   constructor(
@@ -22,14 +22,14 @@ export class RecipeItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.myRecipe = this.recipeHttpService.recipeSelected;
+    // this.myRecipe = this.recipeHttpService.recipeSelected;
     this.recipeItem = this.formatRecipeItem(this.activeRoute.snapshot.data.message[0]);
   }
 
   goToEdit(recipeId: number): void {
     console.log(recipeId)
     console.log(this.recipeItem)
-    this.recipeService.recipeSelected = this.recipeItem;
+    // this.recipeService.recipeSelected = this.recipeItem;
     this.router.navigate(['/recipe-edit', recipeId]);
 
   }

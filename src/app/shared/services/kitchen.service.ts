@@ -46,7 +46,9 @@ export class KitchenService {
           new Ingredient(
             currentIngredient.ingredient_name,
             currentIngredient.quantity,
-            currentIngredient.unit
+            currentIngredient.unit,
+            currentIngredient.category,
+            currentIngredient.id
           )
         );
 
@@ -56,7 +58,9 @@ export class KitchenService {
           new Ingredient(
             currentIngredient.ingredient_name,
             currentIngredient.quantity,
-            currentIngredient.unit
+            currentIngredient.unit,
+            currentIngredient.category,
+            currentIngredient.id
           )
         ];
         this.currentKitchen.set(currentCategory, newIngredientList.slice());

@@ -84,7 +84,7 @@ export class RecipesComponent implements OnInit {
   }
 
   recipeSelected(recipe: Recipe) {
-    this.recipeService.recipeSelected = recipe;
+    // this.recipeService.recipeSelected = recipe;
     this.router.navigate(['/recipe-item', recipe.recipeId]);
 
   }
