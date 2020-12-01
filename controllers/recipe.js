@@ -6,152 +6,152 @@ const Recipe = require('../models/recipe');
 
 // Create Recipe
 exports.addRecipe = async (req, res, next) => {
-    const errors = validationResult(req);
+  const errors = validationResult(req);
 
-    if(!errors.isEmpty()) return
+  if (!errors.isEmpty()) return
 
-    const recipe_name = req.body.recipeName;
-    const category = req.body.recipeCategory;
-    const instruction = req.body.directions;
-    // FIX ME: add in user id
-    const user_id = req.body.user_id ? req.body.user_id : 1;
+  const recipe_name = req.body.recipeName;
+  const category = req.body.recipeCategory;
+  const instruction = req.body.directions;
+  // FIX ME: add in user id
+  const user_id = req.body.user_id ? req.body.user_id : 1;
 
 
-    try {
-        const recipeDetails = {
-            recipe_name: recipe_name,
-            instruction: instruction,
-            category: category,
-            user_id: user_id
-        }
-
-        const result = await Recipe.save(recipeDetails);
-
-        return res.status(201).json({
-            message: 'Recipe created!',
-            id: result.insertId
-        })
+  try {
+    const recipeDetails = {
+      recipe_name: recipe_name,
+      instruction: instruction,
+      category: category,
+      user_id: user_id
     }
-    catch (err) {
-        if(!err.statusCode) {
-            err.statusCode = 500;
-        }
-        next(err);
+
+    const result = await Recipe.save(recipeDetails);
+
+    return res.status(201).json({
+      message: 'Recipe created!',
+      id: result.insertId
+    })
+  }
+  catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
     }
+    next(err);
+  }
 }
 
 // Read all recipes by a user
 exports.getAll = async (req, res, next) => {
-    const errors = validationResult(req);
+  const errors = validationResult(req);
 
-    if(!errors.isEmpty()) return
+  if (!errors.isEmpty()) return
 
-    const user_id = req.params.userId;
-  
-    try {
-        const recipeUser = {  
-            user_id: user_id
-        }
+  const user_id = req.params.userId;
 
-        const recipes = await Recipe.getAll(recipeUser);
-
-        return res.status(200).json(recipes)
+  try {
+    const recipeUser = {
+      user_id: user_id
     }
-    catch (err) {
-        if(!err.statusCode) {
-            err.statusCode = 500;
-        }
-        next(err);
+
+    const recipes = await Recipe.getAll(recipeUser);
+
+    return res.status(200).json(recipes)
+  }
+  catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
     }
+    next(err);
+  }
 }
 
 // Read one recipe by a user
 exports.getOne = async (req, res, next) => {
-    const errors = validationResult(req);
+  const errors = validationResult(req);
 
-    if(!errors.isEmpty()) return
+  if (!errors.isEmpty()) return
 
-    const recipe_id = req.params.recipeId;
-  
-    try {
-        const recipeId = {  
-            recipe_id: recipe_id
-        }
+  const recipe_id = req.params.recipeId;
 
-        const recipe = await Recipe.getOne(recipeId);
-
-        return res.status(200).json(recipe)
+  try {
+    const recipeId = {
+      recipe_id: recipe_id
     }
-    catch (err) {
-        if(!err.statusCode) {
-            err.statusCode = 500;
-        }
-        next(err);
+
+    const recipe = await Recipe.getOne(recipeId);
+
+    return res.status(200).json(recipe)
+  }
+  catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
     }
+    next(err);
+  }
 }
 
 // Update recipe
 exports.update = async (req, res, next) => {
-    const errors = validationResult(req);
+  const errors = validationResult(req);
 
-    if(!errors.isEmpty()) return
+  if (!errors.isEmpty()) return
 
-    const recipeId = req.params.recipeId;
-    const recipe_id = parseInt(recipeId, 10);
+  const recipeId = req.params.recipeId;
+  const recipe_id = parseInt(recipeId, 10);
 
-    try {
-        const [recipe] = await db.query(`SELECT * FROM Recipes WHERE recipe_id = ?`, [recipe_id])
+  try {
+    const [recipe] = await db.query(`SELECT * FROM Recipes WHERE recipe_id = ?`, [recipe_id])
 
-        if (!recipe) {
-          return res.status(404).json({
-            error: 'No recipe with this recipe_id exists',
-          })
-        }
-        const recipeDetails = {
-            recipe_name: req.body.recipeName || recipe[0].recipe_name,
-            instruction: req.body.directions || recipe[0].instruction,
-            category: req.body.category || recipe[0].category || null,
-            satisfaction: req.body.satisfaction || recipe[0].satisfaciton || null,
-            recipe_id: recipe_id,
-        }
-        console.log(recipeDetails)
-        const result = await Recipe.update(recipeDetails);
-
-        return res.status(201).json({
-            message: 'Recipe updated!',
-        })
+    if (!recipe) {
+      return res.status(404).json({
+        error: 'No recipe with this recipe_id exists',
+      })
     }
-    catch (err) {
-        if(!err.statusCode) {
-            err.statusCode = 500;
-        }
-        next(err);
+    const recipeDetails = {
+      recipe_name: req.body.recipeName || recipe[0].recipe_name,
+      instruction: req.body.directions || recipe[0].instruction,
+      category: req.body.category || recipe[0].category || null,
+      satisfaction: req.body.satisfaction || recipe[0].satisfaciton || null,
+      recipe_id: recipe_id,
     }
+    console.log(recipeDetails)
+    const result = await Recipe.update(recipeDetails);
+
+    return res.status(201).json({
+      message: 'Recipe updated!',
+    })
+  }
+  catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
 }
 
 // Delete a recipe
 exports.delete = async (req, res, next) => {
-    const errors = validationResult(req);
+  const errors = validationResult(req);
 
-    if(!errors.isEmpty()) return
+  if (!errors.isEmpty()) return
 
-    const recipe_id = req.params.recipeId;
-  
-    try {
-        const recipe = {  
-            recipe_id: recipe_id
-        }
-        const result = await Recipe.delete(recipe);
+  const recipe_id = req.params.recipeId;
 
-        return res.status(200).json({
-            message: 'Recipe deleted!'
-        })
+  try {
+    const recipe = {
+      recipe_id: recipe_id
     }
-    catch (err) {
-        if(!err.statusCode) {
-            err.statusCode = 500;
-        }
-        next(err);
+    const result = await Recipe.delete(recipe);
+
+    return res.status(200).json({
+      message: 'Recipe deleted!'
+    })
+  }
+  catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
     }
+    next(err);
+  }
 }
 
