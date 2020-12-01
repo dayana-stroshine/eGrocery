@@ -18,6 +18,7 @@ export class RecipeItemEditComponent implements OnInit {
   thisRecipe: Recipe;
   public recipeForm: FormGroup;
   public IngredientList: FormArray;
+  public id: number;
 
   get ingredientFormGroup() {
     return this.recipeForm.get('ingredients') as FormArray;
@@ -42,8 +43,6 @@ export class RecipeItemEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.thisRecipe = this.recipeService.recipeSelected;
-    console.log(this.thisRecipe);
-
 
     // this.recipeForm = this.createFormGroup();
     this.recipeForm = this.fb.group({
@@ -54,6 +53,8 @@ export class RecipeItemEditComponent implements OnInit {
     });
 
     this.IngredientList = this.recipeForm.get('ingredients') as FormArray;
+
+    this.id = +this.route.snapshot.paramMap.get('id');
 
     // Start of chain of events that gets the recipe based on the param id
     this.route.paramMap.subscribe(params => {
@@ -67,7 +68,6 @@ export class RecipeItemEditComponent implements OnInit {
   // Next step in the chain will get the recipe and then append it to the form
   getRecipe(route: ActivatedRoute) {
     const recipe = this.formatRecipeItem(this.route.snapshot.data.message[0]);
-    console.log(recipe);
     if (recipe) {
       this.editRecipe(recipe);
     }
@@ -122,11 +122,8 @@ export class RecipeItemEditComponent implements OnInit {
   // remove ingredient from group
   removeIngredient(index) {
     let ingredients = this.recipeForm.get('ingredients').value;
-    console.log(ingredients[index].id);
     (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
     this.ingredientHttpService.deleteIngredient(ingredients[index].id).subscribe((msg => console.log(msg)))
-
-    
   }
 
   // Makes an Http call
@@ -151,22 +148,21 @@ export class RecipeItemEditComponent implements OnInit {
     //   this.ingredientHttpService.addIngredient(element.value).subscribe((msg => console.log(msg)))
     // })
   }
-  // getIngredientFormGroup(index): FormGroup {
-  //   const formGroup = this.IngredientList.controls[index] as FormGroup;
-  //   return formGroup;
-  // }
 
-  // createFormGroup(): FormGroup {
-  //   return new FormGroup ({
-  //     recipeName: new FormControl("", []),
-  //     email: new FormControl("", []),
-  //     password: new FormControl("", [Validators.required, Validators.minLength(7)])
+  removeRecipe(){
+    let ingredients = this.recipeForm.get('ingredients').value;
+    // Delete ingredients
+    ingredients.forEach(ingredient =>
+      {
+        this.ingredientHttpService.deleteIngredient(ingredient.id).subscribe((msg => console.log(msg)))
+      });
+    // Delete recipe
+    this.recipeHttpService.delete(this.id).subscribe((msg => console.log(msg)));
+    this.router.navigate(['/recipes']);
+  }
 
-  //   })
-  // }
   // Upon completion of GET call to API, the results are formatted so the page may be displayed
   formatRecipeItem(recipeItem) {
-    console.log(recipeItem)
     if (recipeItem) {
       return recipeItem.reduce((recipe, curr) => {
         const newIngredient = {

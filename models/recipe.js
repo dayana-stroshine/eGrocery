@@ -37,7 +37,6 @@ module.exports = class Recipe {
     }
 
     // Update a recipe
-    // FIX ME: ERROR IN SQL syntax
     static update(recipe) {
         console.log(recipe)
         return db.execute(
