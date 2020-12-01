@@ -64,7 +64,7 @@ export class RecipeItemEditComponent implements OnInit {
     })
 
   }
-// Next step in the chain will get the recipe and then append it to the form
+  // Next step in the chain will get the recipe and then append it to the form
   getRecipe(route: ActivatedRoute) {
     const recipe = this.formatRecipeItem(this.route.snapshot.data.message[0]);
     console.log(recipe);
@@ -94,10 +94,10 @@ export class RecipeItemEditComponent implements OnInit {
         quantity: ingrd.quantity,
         unit: ingrd.unit,
         name: ingrd.ingredient_name,
-        category: ingrd.category
+        category: ingrd.category,
+        id: ingrd.ingredient_id,
       }));
     });
-
     return formArray;
   }
 
@@ -107,7 +107,8 @@ export class RecipeItemEditComponent implements OnInit {
       quantity: [null],
       unit: [null],
       name: [null],
-      category: [null]
+      category: [null],
+      id: [null]
     });
 
 
@@ -115,16 +116,33 @@ export class RecipeItemEditComponent implements OnInit {
 
   // add ingredient from group
   addIngredient() {
-    this.IngredientList.push(this.createIngredient());
+    (<FormArray>this.recipeForm.get('ingredients')).push(this.createIngredient());
   }
 
   // remove ingredient from group
   removeIngredient(index) {
-    this.IngredientList.removeAt(index);
+    let ingredients = this.recipeForm.get('ingredients').value;
+    console.log(ingredients[index].id);
+    (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
+    this.ingredientHttpService.deleteIngredient(ingredients[index].id).subscribe((msg => console.log(msg)))
+
+    
   }
 
   // Makes an Http call
   submit(): void {
+    // get recipe
+
+    // update recipe
+
+    // get ingredients
+
+    // loop through ingredients returned from form,
+    // if they have an ingredient id, update them
+    
+    
+    // if not, add them to the recipe
+
     // // addRecipe
     // console.log(this.recipeForm.value)
     // this.recipeHttpService.addRecipe(this.recipeForm.value).subscribe((msg) => console.log(msg));
