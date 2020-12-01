@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { RecipeService } from 'src/app/recipe.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Recipe } from 'src/app/shared/models/recipe.model';
+import { RecipeHttpService } from 'src/app/shared/services/recipe.service';
 
 
 @Component({
@@ -16,13 +16,13 @@ export class RecipeItemComponent implements OnInit {
   recipeItem: any;
 
   constructor(
-    private recipeService: RecipeService,
+    private recipeHttpService: RecipeHttpService,
     private router: Router,
     private activeRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.myRecipe= this.recipeService.recipeSelected;
+    this.myRecipe = this.recipeHttpService.recipeSelected;
     this.recipeItem = this.formatRecipeItem(this.activeRoute.snapshot.data.message[0]);
   }
 
@@ -31,6 +31,7 @@ export class RecipeItemComponent implements OnInit {
     console.log(this.recipeItem)
     this.recipeService.recipeSelected = this.recipeItem;
     this.router.navigate(['/recipe-edit', recipeId]);
+
   }
 
   // Upon completion of GET call to API, the results are formatted so the page may be displayed

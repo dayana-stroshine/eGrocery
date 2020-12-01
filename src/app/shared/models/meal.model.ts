@@ -1,4 +1,4 @@
-import { Recipe } from './models/recipe.model';
+import { Recipe } from './recipe.model';
 
 export class Meal {
   public name: string;

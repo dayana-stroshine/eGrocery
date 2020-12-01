@@ -3,7 +3,6 @@ import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 
 import { Observable } from 'rxjs';
 import { RecipeHttpService } from '../services/recipe.service';
-import { RecipeService } from 'src/app/recipe.service';
 
 @Injectable({ providedIn: 'root' })
 export class RecipeItemResolver implements Resolve<Observable<string>> {
@@ -18,5 +17,6 @@ export class RecipeItemResolver implements Resolve<Observable<string>> {
 
     // Get the recipeId from the route params
     return this.recipeHttpService.getOne(+route.paramMap.get('id'));
+
   }
 }
