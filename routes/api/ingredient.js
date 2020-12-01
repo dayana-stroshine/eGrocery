@@ -17,6 +17,6 @@ router.post(
 router.patch('/:ingredientId', ingredientController.update)
 
 // Delete a recipe
-router.delete('/:ingredientId', ingredientController.delete)
+router.delete('/:ingredientId', ingredientController.deleteIngredient)
 
 module.exports = router;

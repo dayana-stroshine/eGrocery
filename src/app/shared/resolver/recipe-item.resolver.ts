@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 
 import { Observable } from 'rxjs';
 import { RecipeHttpService } from '../services/recipe.service';
@@ -7,11 +7,16 @@ import { RecipeHttpService } from '../services/recipe.service';
 @Injectable({ providedIn: 'root' })
 export class RecipeItemResolver implements Resolve<Observable<string>> {
 
-  constructor(private recipeHttpService: RecipeHttpService) { }
+  constructor(
+    private recipeHttpService: RecipeHttpService,
+    private recipeService: RecipeService) { }
 
-  resolve() {
+  resolve(route: ActivatedRouteSnapshot) {
     // Get the recipeId from recipe service to make the API call
-    const recipeId = this.recipeHttpService.recipeSelected.recipeId;
-    return this.recipeHttpService.getOne(recipeId);
+    // const recipeId =this.recipeService.recipeSelected.recipeId; 
+
+    // Get the recipeId from the route params
+    return this.recipeHttpService.getOne(+route.paramMap.get('id'));
+
   }
 }

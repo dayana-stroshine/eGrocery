@@ -12,7 +12,7 @@ import { ErrorHandlerService } from './error-handler.service';
   providedIn: 'root'
 })
 export class IngredientHttpService {
-  private url = environment.baseUrl + "api/ingredient/addIngredient";
+  private url = environment.baseUrl + "api/ingredient/";
   // private url = "http://localhost:4100/api/ingredient/addIngredient";
 
   httpOptions: { headers: HttpHeaders } = {
@@ -23,10 +23,18 @@ export class IngredientHttpService {
     private errorHandlerService: ErrorHandlerService) { }
 
   addIngredient(ingredient: Omit<Ingredient, "id">): Observable<Ingredient> {
-    return this.http.post<Ingredient>(this.url, ingredient, this.httpOptions)
+    return this.http.post<Ingredient>(`${this.url}/addIngredient`, ingredient, this.httpOptions)
       .pipe(
         first(),
         catchError(this.errorHandlerService.handleError<Ingredient>('addIngredient'))
       );
+  }
+
+  deleteIngredient(ingredientId:number): Observable<any> {
+    return this.http.delete<any>(`${this.url}/${ingredientId}`, this.httpOptions)
+    .pipe(
+      first(),
+      catchError(this.errorHandlerService.handleError<any>('deleteIngredient'))
+    )
   }
 }
