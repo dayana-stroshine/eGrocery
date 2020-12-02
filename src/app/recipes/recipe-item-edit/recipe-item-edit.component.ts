@@ -6,6 +6,7 @@ import { IngredientHttpService } from '../../shared/services/ingredient.service'
 import { Recipe } from '../../shared/models/recipe.model';
 import { Ingredient } from '../../shared/models/ingredient.model';
 import { RecipeHttpService } from 'src/app/shared/services/recipe.service';
+import { RecipeIngredientHttpService } from 'src/app/shared/services/recipe-ingredients.service';
 
 @Component({
   selector: 'app-recipe-item-edit',
@@ -14,7 +15,7 @@ import { RecipeHttpService } from 'src/app/shared/services/recipe.service';
 })
 
 export class RecipeItemEditComponent implements OnInit {
-  // thisRecipe: Recipe;
+  thisRecipe: Recipe;
   public recipeForm: FormGroup;
   public IngredientList: FormArray;
   public id: number;
@@ -30,11 +31,12 @@ export class RecipeItemEditComponent implements OnInit {
     return formGroup;
   }
 
-  constructor(    
+  constructor(
     private router: Router,
     private route: ActivatedRoute,
     private recipeHttpService: RecipeHttpService,
     private ingredientHttpService: IngredientHttpService,
+    private recipeIngredientHttpService: RecipeIngredientHttpService,
 
     private fb: FormBuilder) { }
 
@@ -64,9 +66,9 @@ export class RecipeItemEditComponent implements OnInit {
   }
   // Next step in the chain will get the recipe and then append it to the form
   getRecipe(route: ActivatedRoute) {
-    const recipe = this.formatRecipeItem(this.route.snapshot.data.message[0]);
-    if (recipe) {
-      this.editRecipe(recipe);
+    this.thisRecipe = this.formatRecipeItem(this.route.snapshot.data.message[0]);
+    if (this.thisRecipe) {
+      this.editRecipe(this.thisRecipe);
     }
   }
 
@@ -107,8 +109,6 @@ export class RecipeItemEditComponent implements OnInit {
       category: [null],
       id: [null]
     });
-
-
   }
 
   // add ingredient from group
@@ -125,34 +125,54 @@ export class RecipeItemEditComponent implements OnInit {
 
   // Makes an Http call
   submit(): void {
-    // get recipe
+    // get recipe and ingredients
+    const ingredientArray = this.recipeForm.value.ingredients;
+    const recipeUpdate = {
+      name: this.recipeForm.value.recipeName,
+      category: this.recipeForm.value.recipeCategory,
+      ingredients: [],
+      directions: this.recipeForm.value.directions,
+      rating: this.thisRecipe.rating, //FIX ME: include rating from form
+      recipeId: this.id,
+    }
 
     // update recipe
+    this.recipeHttpService.update(recipeUpdate).subscribe((msg) => console.log(msg));
 
-    // get ingredients
-
+    let ingredientId: number;
     // loop through ingredients returned from form,
     // if they have an ingredient id, update them
-    
-    
-    // if not, add them to the recipe
-
-    // // addRecipe
-    // console.log(this.recipeForm.value)
-    // this.recipeHttpService.addRecipe(this.recipeForm.value).subscribe((msg) => console.log(msg));
-    // // Add Ingredients 
-    // this.IngredientList.controls.forEach((element, index) => {
-    //   this.ingredientHttpService.addIngredient(element.value).subscribe((msg => console.log(msg)))
-    // })
+    // else, add them to the recipe
+    ingredientArray.forEach((element, index) => {
+      if (element.id != null) {
+        //update
+        this.ingredientHttpService.updateIngredient(element).subscribe((msg => console.log(msg)))
+      } else if (element.name) {
+        // add new ingredient and recipe/ingredient relation
+        this.ingredientHttpService.addIngredient(element).subscribe(result => {
+          ingredientId = result[0].insertId;
+          this.submitRelation(this.id, ingredientId);
+        })
+      }
+    })
+    setTimeout(() => this.router.navigate(['/recipe-item', this.id]), 1000);
   }
 
-  removeRecipe(){
+  // Helper function for submitting to Recipes_Ingredients table that relates an ingredient to a recipe
+  submitRelation(recipeId: number, ingredientId: number) {
+    const recipeIngredient = {
+      recipe_id: recipeId,
+      ingredient_id: ingredientId
+    }
+    this.recipeIngredientHttpService.addRIRelation(recipeIngredient).subscribe(msg => console.log(msg));
+  }
+
+  removeRecipe() {
     let ingredients = this.recipeForm.get('ingredients').value;
     // Delete ingredients
-    ingredients.forEach(ingredient =>
-      {
-        this.ingredientHttpService.deleteIngredient(ingredient.id).subscribe((msg => console.log(msg)))
-      });
+    ingredients.forEach(ingredient => {
+      this.ingredientHttpService.deleteIngredient(ingredient.id).subscribe((msg => console.log(msg)))
+    });
     // Delete recipe
     this.recipeHttpService.delete(this.id).subscribe((msg => console.log(msg)));
     this.router.navigate(['/recipes']);

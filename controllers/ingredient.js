@@ -36,7 +36,7 @@ exports.addIngredient = async (req, res, next) => {
 }
 
 // Update ingredient
-exports.update = async (req, res, next) => {
+exports.updateIngredient = async (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) return
@@ -61,9 +61,7 @@ exports.update = async (req, res, next) => {
         }
         const result = await Ingredient.update(ingredientDetails);
 
-        return res.status(201).json({
-            message: 'Ingredient updated!',
-        })
+        return res.status(201).json(result)
     }
     catch (err) {
         if (!err.statusCode) {
