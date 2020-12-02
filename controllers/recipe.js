@@ -105,10 +105,10 @@ exports.update = async (req, res, next) => {
       })
     }
     const recipeDetails = {
-      recipe_name: req.body.recipeName || recipe[0].recipe_name,
+      recipe_name: req.body.name || recipe[0].recipe_name,
       instruction: req.body.directions || recipe[0].instruction,
       category: req.body.category || recipe[0].category || null,
-      satisfaction: req.body.satisfaction || recipe[0].satisfaciton || null,
+      satisfaction: req.body.rating || recipe[0].satisfaciton || null,
       recipe_id: recipe_id,
     }
     const result = await Recipe.update(recipeDetails);

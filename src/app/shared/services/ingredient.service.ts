@@ -30,6 +30,14 @@ export class IngredientHttpService {
       );
   }
 
+  updateIngredient(ingredient: Ingredient ): Observable<Ingredient> {
+    return this.http.patch<Ingredient>(`${this.url}/${ingredient.id}`, ingredient, this.httpOptions)
+      .pipe(
+        first(),
+        catchError(this.errorHandlerService.handleError<Ingredient>('updateIngredient'))
+      );
+  }
+
   deleteIngredient(ingredientId:number): Observable<any> {
     return this.http.delete<any>(`${this.url}/${ingredientId}`, this.httpOptions)
     .pipe(

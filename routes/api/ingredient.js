@@ -14,7 +14,7 @@ router.post(
 )
 
 // Update an ingredient
-router.patch('/:ingredientId', ingredientController.update)
+router.patch('/:ingredientId', ingredientController.updateIngredient)
 
 // Delete a recipe
 router.delete('/:ingredientId', ingredientController.deleteIngredient)
