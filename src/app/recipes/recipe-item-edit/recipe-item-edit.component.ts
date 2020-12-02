@@ -139,12 +139,12 @@ export class RecipeItemEditComponent implements OnInit {
     // update recipe
     this.recipeHttpService.update(recipeUpdate).subscribe((msg) => console.log(msg));
 
-    let ingredientId:number;
+    let ingredientId: number;
     // loop through ingredients returned from form,
     // if they have an ingredient id, update them
     // else, add them to the recipe
-    ingredientArray.forEach((element, index) => { 
-      if (element.id != null ){
+    ingredientArray.forEach((element, index) => {
+      if (element.id != null) {
         //update
         this.ingredientHttpService.updateIngredient(element).subscribe((msg => console.log(msg)))
       } else if (element.name) {
@@ -154,52 +154,52 @@ export class RecipeItemEditComponent implements OnInit {
           this.submitRelation(this.id, ingredientId);
         })
       }
-      })
-      this.router.navigate(['/recipe-item', this.id]);
-    }
-
-// Helper function for submitting to Recipes_Ingredients table that relates an ingredient to a recipe
-submitRelation(recipeId: number, ingredientId: number){
-  const recipeIngredient = {
-    recipe_id : recipeId,
-    ingredient_id : ingredientId
+    })
+    setTimeout(() => this.router.navigate(['/recipe-item', this.id]), 1000);
   }
-  this.recipeIngredientHttpService.addRIRelation(recipeIngredient).subscribe(msg => console.log(msg));
-}
+
+  // Helper function for submitting to Recipes_Ingredients table that relates an ingredient to a recipe
+  submitRelation(recipeId: number, ingredientId: number) {
+    const recipeIngredient = {
+      recipe_id: recipeId,
+      ingredient_id: ingredientId
+    }
+    this.recipeIngredientHttpService.addRIRelation(recipeIngredient).subscribe(msg => console.log(msg));
+  }
 
   removeRecipe() {
-      let ingredients = this.recipeForm.get('ingredients').value;
-      // Delete ingredients
-      ingredients.forEach(ingredient => {
-        this.ingredientHttpService.deleteIngredient(ingredient.id).subscribe((msg => console.log(msg)))
-      });
-      // Delete recipe
-      this.recipeHttpService.delete(this.id).subscribe((msg => console.log(msg)));
-      this.router.navigate(['/recipes']);
-    }
+    let ingredients = this.recipeForm.get('ingredients').value;
+    // Delete ingredients
+    ingredients.forEach(ingredient => {
+      this.ingredientHttpService.deleteIngredient(ingredient.id).subscribe((msg => console.log(msg)))
+    });
+    // Delete recipe
+    this.recipeHttpService.delete(this.id).subscribe((msg => console.log(msg)));
+    this.router.navigate(['/recipes']);
+  }
 
   // Upon completion of GET call to API, the results are formatted so the page may be displayed
   formatRecipeItem(recipeItem) {
-      if(recipeItem) {
-        return recipeItem.reduce((recipe, curr) => {
-          const newIngredient = {
-            ingredient_id: curr.ingredient_id,
-            ingredient_name: curr.ingredient_name,
-            category: curr.category,
-            quantity: curr.quantity,
-            unit: curr.unit,
-          }
-          recipe.ingredients.push(newIngredient);
-          return recipe;
-        }, {
-          recipe_id: recipeItem[0].recipe_id,
-          recipe_name: recipeItem[0].recipe_name,
-          satisfaction: recipeItem[0].satisfaction,
-          category: recipeItem[0].recipe_category,
-          instruction: recipeItem[0].instruction,
-          user_id: recipeItem[0].user_id,
-          ingredients: []
-        })
-      }
+    if (recipeItem) {
+      return recipeItem.reduce((recipe, curr) => {
+        const newIngredient = {
+          ingredient_id: curr.ingredient_id,
+          ingredient_name: curr.ingredient_name,
+          category: curr.category,
+          quantity: curr.quantity,
+          unit: curr.unit,
+        }
+        recipe.ingredients.push(newIngredient);
+        return recipe;
+      }, {
+        recipe_id: recipeItem[0].recipe_id,
+        recipe_name: recipeItem[0].recipe_name,
+        satisfaction: recipeItem[0].satisfaction,
+        category: recipeItem[0].recipe_category,
+        instruction: recipeItem[0].instruction,
+        user_id: recipeItem[0].user_id,
+        ingredients: []
+      })
     }
+  }
 }
