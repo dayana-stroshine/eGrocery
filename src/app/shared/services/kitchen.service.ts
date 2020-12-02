@@ -44,9 +44,11 @@ export class KitchenService {
 
         tempIngredientList.push(
           new Ingredient(
+            currentIngredient.ingredient_id,
             currentIngredient.ingredient_name,
             currentIngredient.quantity,
-            currentIngredient.unit
+            currentIngredient.unit,
+            currentIngredient.category
           )
         );
 
@@ -54,9 +56,11 @@ export class KitchenService {
       } else {
         const newIngredientList: Ingredient[] = [
           new Ingredient(
+            currentIngredient.ingredient_id,
             currentIngredient.ingredient_name,
             currentIngredient.quantity,
-            currentIngredient.unit
+            currentIngredient.unit,
+            currentIngredient.category
           )
         ];
         this.currentKitchen.set(currentCategory, newIngredientList.slice());

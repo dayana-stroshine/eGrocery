@@ -14,7 +14,7 @@ exports.addRecipe = async (req, res, next) => {
   const category = req.body.recipeCategory;
   const instruction = req.body.directions;
   // FIX ME: add in user id
-  const user_id = req.body.user_id ? req.body.user_id : 1;
+  const user_id = req.body.user_id ? req.body.user_id : 10;
 
 
   try {
@@ -27,10 +27,7 @@ exports.addRecipe = async (req, res, next) => {
 
     const result = await Recipe.save(recipeDetails);
 
-    return res.status(201).json({
-      message: 'Recipe created!',
-      id: result.insertId
-    })
+    return res.status(201).json(result);
   }
   catch (err) {
     if (!err.statusCode) {
@@ -114,7 +111,6 @@ exports.update = async (req, res, next) => {
       satisfaction: req.body.satisfaction || recipe[0].satisfaciton || null,
       recipe_id: recipe_id,
     }
-    console.log(recipeDetails)
     const result = await Recipe.update(recipeDetails);
 
     return res.status(201).json({

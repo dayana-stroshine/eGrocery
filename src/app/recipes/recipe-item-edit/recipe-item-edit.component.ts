@@ -14,7 +14,7 @@ import { RecipeHttpService } from 'src/app/shared/services/recipe.service';
 })
 
 export class RecipeItemEditComponent implements OnInit {
-  thisRecipe: Recipe;
+  // thisRecipe: Recipe;
   public recipeForm: FormGroup;
   public IngredientList: FormArray;
   public id: number;
@@ -31,8 +31,6 @@ export class RecipeItemEditComponent implements OnInit {
   }
 
   constructor(    
-    private recipeHttpService: RecipeHttpService,
-
     private router: Router,
     private route: ActivatedRoute,
     private recipeHttpService: RecipeHttpService,
@@ -42,7 +40,7 @@ export class RecipeItemEditComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.thisRecipe = this.recipeHttpService.recipeSelected;
+    // this.thisRecipe = this.recipeHttpService.recipeSelected;
     // this.recipeForm = this.createFormGroup();
     this.recipeForm = this.fb.group({
       recipeName: ['', Validators.compose([Validators.required])],

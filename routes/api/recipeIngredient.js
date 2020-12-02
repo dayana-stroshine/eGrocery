@@ -6,7 +6,7 @@ const RecipeIngredeint = require('../../models/recipeIngredient');
 const recipeIngredientController = require('../../controllers/recipeIngredient');
 
 // Create a recipe ingredient relationship
-router.post( '/', recipeIngredientController.addRecipeIngredient)
+router.post('/', recipeIngredientController.addRecipeIngredient)
 
 // Delete a recipe
 router.delete('/:recipeId/:ingredientId', recipeIngredientController.delete)

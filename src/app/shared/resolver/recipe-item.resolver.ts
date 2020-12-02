@@ -8,8 +8,7 @@ import { RecipeHttpService } from '../services/recipe.service';
 export class RecipeItemResolver implements Resolve<Observable<string>> {
 
   constructor(
-    private recipeHttpService: RecipeHttpService,
-    private recipeService: RecipeService) { }
+    private recipeHttpService: RecipeHttpService) { }
 
   resolve(route: ActivatedRouteSnapshot) {
     // Get the recipeId from recipe service to make the API call

@@ -9,8 +9,8 @@ exports.addRecipeIngredient = async (req, res, next) => {
 
     if(!errors.isEmpty()) return
 
-    const recipe_id = req.body.recipeId;
-    const ingredient_id = req.body.ingredientId;
+    const recipe_id = req.body.recipe_id;
+    const ingredient_id = req.body.ingredient_id;
 
 
     try {
