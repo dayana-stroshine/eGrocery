@@ -36,7 +36,7 @@ exports.addIngredient = async (req, res, next) => {
 }
 
 // Update ingredient
-exports.update = async (req, res, next) => {
+exports.updateIngredient = async (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) return

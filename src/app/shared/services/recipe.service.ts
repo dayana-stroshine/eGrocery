@@ -49,8 +49,6 @@ export class RecipeHttpService {
   }
 
   update(recipe: Recipe ): Observable<Recipe> {
-    console.log("Object sent to HTTP request:");
-    console.log(recipe);
     return this.http.patch<Recipe>(`${this.url}/${recipe.recipeId}`, recipe, this.httpOptions)
       .pipe(
         first(),
