@@ -38,7 +38,6 @@ module.exports = class Recipe {
 
     // Update a recipe
     static update(recipe) {
-        console.log(recipe)
         return db.execute(
             `UPDATE Recipes
             SET recipe_name = ?,
