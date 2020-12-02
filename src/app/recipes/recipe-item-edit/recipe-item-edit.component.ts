@@ -14,7 +14,7 @@ import { RecipeHttpService } from 'src/app/shared/services/recipe.service';
 })
 
 export class RecipeItemEditComponent implements OnInit {
-  // thisRecipe: Recipe;
+  thisRecipe: Recipe;
   public recipeForm: FormGroup;
   public IngredientList: FormArray;
   public id: number;
@@ -30,7 +30,7 @@ export class RecipeItemEditComponent implements OnInit {
     return formGroup;
   }
 
-  constructor(    
+  constructor(
     private router: Router,
     private route: ActivatedRoute,
     private recipeHttpService: RecipeHttpService,
@@ -64,9 +64,9 @@ export class RecipeItemEditComponent implements OnInit {
   }
   // Next step in the chain will get the recipe and then append it to the form
   getRecipe(route: ActivatedRoute) {
-    const recipe = this.formatRecipeItem(this.route.snapshot.data.message[0]);
-    if (recipe) {
-      this.editRecipe(recipe);
+    this.thisRecipe = this.formatRecipeItem(this.route.snapshot.data.message[0]);
+    if (this.thisRecipe) {
+      this.editRecipe(this.thisRecipe);
     }
   }
 
@@ -125,16 +125,29 @@ export class RecipeItemEditComponent implements OnInit {
 
   // Makes an Http call
   submit(): void {
-    // get recipe
+    // get recipe and ingredients
+    console.log("Original:");
+    console.log(this.thisRecipe);
+    console.log("Form value:");
+    console.log(this.recipeForm.value);
 
+    const recipeUpdate = {
+      name: this.recipeForm.value.recipeName,
+      category: this.recipeForm.value.recipeCategory,
+      ingredients: [],
+      directions: this.recipeForm.value.directions,
+      rating: this.thisRecipe.rating, //FIX ME: include rating from form
+      recipeId : this.id,
+    }
+    
     // update recipe
-
+    this.recipeHttpService.update(recipeUpdate).subscribe((msg) => console.log(msg));
     // get ingredients
 
     // loop through ingredients returned from form,
     // if they have an ingredient id, update them
-    
-    
+
+
     // if not, add them to the recipe
 
     // // addRecipe
@@ -146,13 +159,12 @@ export class RecipeItemEditComponent implements OnInit {
     // })
   }
 
-  removeRecipe(){
+  removeRecipe() {
     let ingredients = this.recipeForm.get('ingredients').value;
     // Delete ingredients
-    ingredients.forEach(ingredient =>
-      {
-        this.ingredientHttpService.deleteIngredient(ingredient.id).subscribe((msg => console.log(msg)))
-      });
+    ingredients.forEach(ingredient => {
+      this.ingredientHttpService.deleteIngredient(ingredient.id).subscribe((msg => console.log(msg)))
+    });
     // Delete recipe
     this.recipeHttpService.delete(this.id).subscribe((msg => console.log(msg)));
     this.router.navigate(['/recipes']);
