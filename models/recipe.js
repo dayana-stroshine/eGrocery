@@ -24,6 +24,11 @@ module.exports = class Recipe {
       'SELECT * FROM Recipes WHERE user_id = ?', [user.user_id]);
   }
 
+  static getRandom() {
+    return db.execute(
+      `SELECT * FROM Recipes WHERE recipe_id = 103`);
+  }
+
     // Read a recipe including its ingredients
     static getOne(recipe) {
         return db.execute(

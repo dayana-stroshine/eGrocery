@@ -20,6 +20,9 @@ router.get('/:userId', recipeController.getAll);
 // Read one recipe from a user
 router.get('/getOne/:recipeId', recipeController.getOne);
 
+// Get random recipes
+router.get('/random', recipeController.getRandom);
+
 // Update a recipe
 router.patch('/:recipeId', recipeController.update);
 
