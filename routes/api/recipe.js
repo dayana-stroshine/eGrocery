@@ -21,7 +21,7 @@ router.get('/:userId', recipeController.getAll);
 router.get('/getOne/:recipeId', recipeController.getOne);
 
 // Get random recipes
-router.get('/random', recipeController.getRandom);
+router.get('/recipe', recipeController.getRandom);
 
 // Update a recipe
 router.patch('/:recipeId', recipeController.update);

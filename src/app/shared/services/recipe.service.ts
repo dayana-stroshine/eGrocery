@@ -48,6 +48,14 @@ export class RecipeHttpService {
       );
   }
 
+  getRandom(): Observable<any> {
+    return this.http.get<any>(`${this.url}/random`, this.httpOptions)
+      .pipe(
+        first(),
+        catchError(this.errorHandlerService.handleError<any>('getRandom'))
+      );
+  }
+
   update(recipe: Recipe ): Observable<Recipe> {
     return this.http.patch<Recipe>(`${this.url}/${recipe.recipeId}`, recipe, this.httpOptions)
       .pipe(

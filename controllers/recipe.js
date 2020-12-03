@@ -87,21 +87,18 @@ exports.getOne = async (req, res, next) => {
   }
 }
 
-// Read random recipes
 exports.getRandom = async (req, res, next) => {
   try {
-    const recipes= await Recipe.getRandom();
+    const recipes = await Recipe.getRandom();
 
     return res.status(200).json(recipes)
-  }
-  catch (err) {
+  } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
     }
     next(err);
   }
 }
-
 
 // Update recipe
 exports.update = async (req, res, next) => {
