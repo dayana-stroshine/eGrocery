@@ -15,9 +15,10 @@ import { RecipeItemAddComponent } from './recipes/recipe-item-add/recipe-item-ad
 import { RecipeResolver } from './shared/resolver/recipe.resolver';
 import { RecipeItemResolver } from './shared/resolver/recipe-item.resolver';
 import { KitchenResolver } from './shared/resolver/kitchen.resolver';
+import { HomepageResolver } from './shared/resolver/homepage.resolver';
 
 const appRoutes: Routes = [
-  { path: '', component: HomepageComponent, pathMatch: 'full' },
+  { path: '', component: HomepageComponent, pathMatch: 'full', resolve: { message: HomepageResolver } },
   { path: 'recipes', component: RecipesComponent, resolve: { message: RecipeResolver } },
   { path: 'kitchen', component: KitchenComponent, resolve: { message: KitchenResolver } },
   { path: 'grocery-list', component: GroceryListComponent },

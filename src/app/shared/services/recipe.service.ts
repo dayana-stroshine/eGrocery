@@ -48,8 +48,8 @@ export class RecipeHttpService {
       );
   }
 
-  getRandom(): Observable<any> {
-    return this.http.get<any>(`${this.url}/random`, this.httpOptions)
+  getRandom(userId:number): Observable<any> {
+    return this.http.get<any>(`${this.url}/random/${userId}`, this.httpOptions)
       .pipe(
         first(),
         catchError(this.errorHandlerService.handleError<any>('getRandom'))

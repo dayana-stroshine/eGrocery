@@ -24,9 +24,10 @@ module.exports = class Recipe {
       'SELECT * FROM Recipes WHERE user_id = ?', [user.user_id]);
   }
 
-  static getRandom() {
+   // Read all recipes except from one user
+   static getRandom(user) {
     return db.execute(
-      'SELECT * FROM Recipes');
+      'SELECT * FROM Recipes WHERE user_id != ? ORDER BY recipe_id DESC LIMIT 4', [user.user_id]);
   }
 
     // Read a recipe including its ingredients

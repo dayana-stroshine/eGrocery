@@ -64,14 +64,18 @@
 <h3>Recently Added Recipes</h3>
 <div class="row">
 
-  <div class="col-sm-6 col-md-3">
+<div *ngFor="let recipe of newRecipes; let i = index">
+  <div class="col-sm-6 col-md-3" >
     <div class="thumbnail">
       <div class="caption">
-        <h3>Recipe Name </h3>
-        <p>Category</p>
-        <p><a href="#" class="btn btn-warning" role="button">View Recipe</a> </p>
+        <h3>{{recipe.recipe_name}} </h3>
+        <p>{{recipe.category}}</p>
+        <p><button class="btn btn-warning" (click)="goToRecipe(recipe.recipe_id)">View Recipe</button> </p>
       </div>
     </div>
   </div>
+</div>
+
+ 
 
 </div>

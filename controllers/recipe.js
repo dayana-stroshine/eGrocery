@@ -87,12 +87,24 @@ exports.getOne = async (req, res, next) => {
   }
 }
 
+// Read all recipes except from one user 
 exports.getRandom = async (req, res, next) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) return
+
+  const user_id = req.params.userId;
+
   try {
-    const recipes = await Recipe.getRandom();
+    const recipeUser = {
+      user_id: user_id
+    }
+
+    const recipes = await Recipe.getRandom(recipeUser);
 
     return res.status(200).json(recipes)
-  } catch (err) {
+  }
+  catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
     }
