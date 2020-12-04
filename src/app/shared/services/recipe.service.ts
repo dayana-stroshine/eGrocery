@@ -48,6 +48,14 @@ export class RecipeHttpService {
       );
   }
 
+  update(recipe: Recipe ): Observable<Recipe> {
+    return this.http.patch<Recipe>(`${this.url}/${recipe.recipeId}`, recipe, this.httpOptions)
+      .pipe(
+        first(),
+        catchError(this.errorHandlerService.handleError<Recipe>('update'))
+      );
+  }
+
   delete(recipeId: number):  Observable<any> {
     return this.http.delete<any>(`${this.url}/${recipeId}`, this.httpOptions)
       .pipe(
