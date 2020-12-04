@@ -14,6 +14,8 @@ export class KitchenComponent implements OnInit {
   categories: string[];
   selectedCategoryIngredients: Ingredient[];
   selectedCategory: string;
+  searchQuery: string = '';
+  searchResult: string;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -31,5 +33,23 @@ export class KitchenComponent implements OnInit {
   onSelect(category: string) {
     this.selectedCategory = category;
     this.selectedCategoryIngredients = this.kitchenService.currentKitchen.get(category).slice();
+  }
+
+  onSearch() {
+    this.searchResult = '';
+    
+    for (const categoryKey of this.kitchenService.currentKitchen.keys()) {
+      const ingredients = this.kitchenService.currentKitchen.get(categoryKey).slice();
+      for (const ingredient of ingredients) {
+        if (ingredient.name.includes(this.searchQuery)) {
+          this.selectedCategory = categoryKey;
+          this.selectedCategoryIngredients = ingredients.slice();
+          return;
+        }
+      }
+    }
+
+    this.searchResult = 'Nothing matches search query!';
+    return;
   }
 }
