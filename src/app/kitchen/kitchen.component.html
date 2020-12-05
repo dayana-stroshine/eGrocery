@@ -26,7 +26,8 @@
         role="presentation" 
         *ngFor="let category of categories" 
         (click)="onSelect(category)" 
-        [ngClass]="{'active':category === selectedCategory}">
+        [ngClass]="{'active':category === selectedCategory}"
+        style="cursor: pointer">
           <a>{{ category.charAt(0).toUpperCase() + category.slice(1).toLowerCase() }}</a>
         </li>
     </ul>
