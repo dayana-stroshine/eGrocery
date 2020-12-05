@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { Recipe } from 'src/app/shared/models/recipe.model';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { RecipeHttpService } from 'src/app/shared/services/recipe.service';
 
 
@@ -14,16 +15,22 @@ export class RecipeItemComponent implements OnInit {
   //@Input() myRecipe: Recipe;
   // myRecipe: Recipe;
   recipeItem: any;
+  isAuthenticated = false;
 
   constructor(
     private recipeHttpService: RecipeHttpService,
     private router: Router,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
     // this.myRecipe = this.recipeHttpService.recipeSelected;
     this.recipeItem = this.formatRecipeItem(this.activeRoute.snapshot.data.message[0]);
+
+    this.authService.isUserLoggedIn$.subscribe((isLoggedIn) => {
+      this.isAuthenticated = isLoggedIn;
+    })
   }
 
   goToEdit(recipeId: number): void {

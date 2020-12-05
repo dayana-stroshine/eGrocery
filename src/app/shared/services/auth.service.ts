@@ -48,8 +48,14 @@ export class AuthService {
       tap((tokenObject: { token: string; userId: Pick<User, "id">}) => {
         this.userId = tokenObject.userId;
         localStorage.setItem("token", tokenObject.token);
-        this.isUserLoggedIn$.next(true);
-        this.router.navigate([""]);
+        if (tokenObject.token) {
+          this.isUserLoggedIn$.next(true);
+          this.router.navigate([""]);
+        } else {
+          this.isUserLoggedIn$.next(false);
+          this.router.navigate(["login"]);
+        }
+      
       }),
       catchError(this.errorHandlerService.handleError<{
         token: string; userId: Pick<User, "id">
