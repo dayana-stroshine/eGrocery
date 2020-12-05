@@ -48,6 +48,42 @@ module.exports = __webpack_require__(/*! /Users/Dayana/Desktop/CS 340/eGrocery/s
 
 /***/ }),
 
+/***/ "0CQI":
+/*!***************************************************!*\
+  !*** ./src/app/shared/resolver/event.resolver.ts ***!
+  \***************************************************/
+/*! exports provided: EventResolver */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EventResolver", function() { return EventResolver; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _services_event_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/event.service */ "6BoG");
+
+
+
+class EventResolver {
+    constructor(eventService) {
+        this.eventService = eventService;
+    }
+    resolve() {
+        const userId = 10; // could be replaced with a user service that has current user
+        return this.eventService.getAll(userId);
+    }
+}
+EventResolver.ɵfac = function EventResolver_Factory(t) { return new (t || EventResolver)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_services_event_service__WEBPACK_IMPORTED_MODULE_1__["EventService"])); };
+EventResolver.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: EventResolver, factory: EventResolver.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](EventResolver, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
+        args: [{
+                providedIn: 'root'
+            }]
+    }], function () { return [{ type: _services_event_service__WEBPACK_IMPORTED_MODULE_1__["EventService"] }]; }, null); })();
+
+
+/***/ }),
+
 /***/ "1Q2P":
 /*!**********************************************!*\
   !*** ./src/app/kitchen/kitchen.component.ts ***!
@@ -257,6 +293,69 @@ MealService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjec
 
 /***/ }),
 
+/***/ "6BoG":
+/*!**************************************************!*\
+  !*** ./src/app/shared/services/event.service.ts ***!
+  \**************************************************/
+/*! exports provided: EventService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EventService", function() { return EventService; });
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/environments/environment */ "AytR");
+/* harmony import */ var _error_handler_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./error-handler.service */ "nAk8");
+
+
+
+
+
+
+
+class EventService {
+    constructor(http, errorHandlerService) {
+        this.http = http;
+        this.errorHandlerService = errorHandlerService;
+        this.url = `${src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl}api/event`;
+        this.httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpHeaders"]({ "Content-Type": "application/json" })
+        };
+    }
+    getAll(userId) {
+        return this.http.get(`${this.url}/${userId}`, this.httpOptions)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["first"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.errorHandlerService.handleError('getAll')));
+    }
+    populateCalendar(allEventRecipes) {
+        this.currentCalendar = new Map();
+        for (const eventRecipe of allEventRecipes) {
+            const day = eventRecipe.date.toLowerCase();
+            if (this.currentCalendar.has(day)) {
+                const tempRecipeList = this.currentCalendar.get(day).slice();
+                tempRecipeList.push(eventRecipe.recipe_name);
+                this.currentCalendar.set(day, tempRecipeList.slice());
+            }
+            else {
+                const newRecipeList = [eventRecipe.recipe_name];
+                this.currentCalendar.set(day, newRecipeList.slice());
+            }
+        }
+    }
+}
+EventService.ɵfac = function EventService_Factory(t) { return new (t || EventService)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_error_handler_service__WEBPACK_IMPORTED_MODULE_4__["ErrorHandlerService"])); };
+EventService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjectable"]({ token: EventService, factory: EventService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](EventService, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"],
+        args: [{
+                providedIn: 'root'
+            }]
+    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClient"] }, { type: _error_handler_service__WEBPACK_IMPORTED_MODULE_4__["ErrorHandlerService"] }]; }, null); })();
+
+
+/***/ }),
+
 /***/ "7mpd":
 /*!************************************************!*\
   !*** ./src/app/calendar/calendar.component.ts ***!
@@ -268,25 +367,89 @@ MealService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjec
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CalendarComponent", function() { return CalendarComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var _shared_services_event_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/services/event.service */ "6BoG");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "ofXK");
 
 
+
+
+
+const _c0 = function (a0) { return { "active": a0 }; };
+function CalendarComponent_li_6_Template(rf, ctx) { if (rf & 1) {
+    const _r4 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "li", 8);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function CalendarComponent_li_6_Template_li_click_0_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r4); const day_r2 = ctx.$implicit; const ctx_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r3.onSelect(day_r2); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "a");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+} if (rf & 2) {
+    const day_r2 = ctx.$implicit;
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](2, _c0, day_r2 === ctx_r0.selectedDay));
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](day_r2);
+} }
+function CalendarComponent_li_9_Template(rf, ctx) { if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "li", 9);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+} if (rf & 2) {
+    const recipe_r5 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](recipe_r5);
+} }
 class CalendarComponent {
-    constructor() { }
+    constructor(activeRoute, eventService) {
+        this.activeRoute = activeRoute;
+        this.eventService = eventService;
+        this.daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        this.availableDays = [];
+    }
     ngOnInit() {
+        this.allEventRecipes = this.activeRoute.snapshot.data.message[0];
+        this.eventService.populateCalendar(this.allEventRecipes);
+        for (const day of this.daysOfWeek) {
+            if (this.eventService.currentCalendar.has(day.toLowerCase())) {
+                this.availableDays.push(day);
+            }
+        }
+        if (this.availableDays) {
+            this.selectedDay = this.availableDays[0];
+            this.selectedDayRecipes = this.eventService.currentCalendar.get(this.selectedDay.toLowerCase()).slice();
+        }
+    }
+    onSelect(day) {
+        this.selectedDay = day;
+        this.selectedDayRecipes = this.eventService.currentCalendar.get(day.toLowerCase()).slice();
     }
 }
-CalendarComponent.ɵfac = function CalendarComponent_Factory(t) { return new (t || CalendarComponent)(); };
-CalendarComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: CalendarComponent, selectors: [["app-calendar"]], decls: 6, vars: 0, template: function CalendarComponent_Template(rf, ctx) { if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "h1");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "Calendar");
+CalendarComponent.ɵfac = function CalendarComponent_Factory(t) { return new (t || CalendarComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_event_service__WEBPACK_IMPORTED_MODULE_2__["EventService"])); };
+CalendarComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: CalendarComponent, selectors: [["app-calendar"]], decls: 10, vars: 2, consts: [[1, "jumbotron", "bg-keylime"], [1, "row"], [1, "col-md-5"], [1, "nav", "nav-pills", "nav-stacked"], ["role", "presentation", 3, "ngClass", "click", 4, "ngFor", "ngForOf"], [1, "col-md-7"], [1, "list-group"], ["class", "list-group-item", 4, "ngFor", "ngForOf"], ["role", "presentation", 3, "ngClass", "click"], [1, "list-group-item"]], template: function CalendarComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "h1");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "My Recipe Calendar");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "li");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3, "This page will have a sidebar with links for days of the week and each link will display recipes for breakfast, lunch, and dinner for that day");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "li");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5, "Functionality to add and delete recipes from each meal of each day");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "div", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "div", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "ul", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](6, CalendarComponent_li_6_Template, 3, 4, "li", 4);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    } }, styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NhbGVuZGFyL2NhbGVuZGFyLmNvbXBvbmVudC5jc3MifQ== */"] });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "div", 5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "ul", 6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](9, CalendarComponent_li_9_Template, 2, 1, "li", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    } if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.availableDays);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.selectedDayRecipes);
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgForOf"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["NgClass"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NhbGVuZGFyL2NhbGVuZGFyLmNvbXBvbmVudC5jc3MifQ== */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](CalendarComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -294,7 +457,7 @@ CalendarComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefine
                 templateUrl: './calendar.component.html',
                 styleUrls: ['./calendar.component.css']
             }]
-    }], function () { return []; }, null); })();
+    }], function () { return [{ type: _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"] }, { type: _shared_services_event_service__WEBPACK_IMPORTED_MODULE_2__["EventService"] }]; }, null); })();
 
 
 /***/ }),
@@ -551,54 +714,6 @@ AuthService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjec
                 providedIn: 'root'
             }]
     }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }, { type: _error_handler_service__WEBPACK_IMPORTED_MODULE_4__["ErrorHandlerService"] }]; }, null); })();
-
-
-/***/ }),
-
-/***/ "M3Rx":
-/*!********************************************************!*\
-  !*** ./src/app/grocery-list/grocery-list.component.ts ***!
-  \********************************************************/
-/*! exports provided: GroceryListComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GroceryListComponent", function() { return GroceryListComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
-
-
-class GroceryListComponent {
-    constructor() { }
-    ngOnInit() {
-    }
-}
-GroceryListComponent.ɵfac = function GroceryListComponent_Factory(t) { return new (t || GroceryListComponent)(); };
-GroceryListComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: GroceryListComponent, selectors: [["app-grocery-list"]], decls: 10, vars: 0, template: function GroceryListComponent_Template(rf, ctx) { if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "h1");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "Grocery List");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "li");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3, "This page will have a sidebar with links for every food category and each link will display ingredients for that food category");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "li");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5, "Search bar functionality that will search for ingredients");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "li");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7, "Functionality to add or delete ingredients");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "li");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](9, "Functionality to update an ingredient's measurement or quantity");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    } }, styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2dyb2NlcnktbGlzdC9ncm9jZXJ5LWxpc3QuY29tcG9uZW50LmNzcyJ9 */"] });
-/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](GroceryListComponent, [{
-        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
-        args: [{
-                selector: 'app-grocery-list',
-                templateUrl: './grocery-list.component.html',
-                styleUrls: ['./grocery-list.component.css']
-            }]
-    }], function () { return []; }, null); })();
 
 
 /***/ }),
@@ -1379,17 +1494,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/platform-browser/animations */ "R1ws");
 /* harmony import */ var _recipes_recipes_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./recipes/recipes.component */ "juFZ");
 /* harmony import */ var _header_header_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./header/header.component */ "fECr");
-/* harmony import */ var _grocery_list_grocery_list_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./grocery-list/grocery-list.component */ "M3Rx");
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./app-routing.module */ "vY5A");
-/* harmony import */ var _homepage_homepage_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./homepage/homepage.component */ "Oh3b");
-/* harmony import */ var _kitchen_kitchen_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./kitchen/kitchen.component */ "1Q2P");
-/* harmony import */ var _calendar_calendar_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./calendar/calendar.component */ "7mpd");
-/* harmony import */ var _recipes_recipe_item_recipe_item_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./recipes/recipe-item/recipe-item.component */ "vqDz");
-/* harmony import */ var _recipes_recipe_item_edit_recipe_item_edit_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./recipes/recipe-item-edit/recipe-item-edit.component */ "VkJC");
-/* harmony import */ var _signup_signup_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./signup/signup.component */ "rd1V");
-/* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./login/login.component */ "vtpD");
-/* harmony import */ var _recipes_recipe_item_add_recipe_item_add_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./recipes/recipe-item-add/recipe-item-add.component */ "OZ4E");
-
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./app-routing.module */ "vY5A");
+/* harmony import */ var _homepage_homepage_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./homepage/homepage.component */ "Oh3b");
+/* harmony import */ var _kitchen_kitchen_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./kitchen/kitchen.component */ "1Q2P");
+/* harmony import */ var _calendar_calendar_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./calendar/calendar.component */ "7mpd");
+/* harmony import */ var _recipes_recipe_item_recipe_item_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./recipes/recipe-item/recipe-item.component */ "vqDz");
+/* harmony import */ var _recipes_recipe_item_edit_recipe_item_edit_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./recipes/recipe-item-edit/recipe-item-edit.component */ "VkJC");
+/* harmony import */ var _signup_signup_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./signup/signup.component */ "rd1V");
+/* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./login/login.component */ "vtpD");
+/* harmony import */ var _recipes_recipe_item_add_recipe_item_add_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./recipes/recipe-item-add/recipe-item-add.component */ "OZ4E");
 
 
 
@@ -1415,25 +1528,24 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
             _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"],
             _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"],
-            _app_routing_module__WEBPACK_IMPORTED_MODULE_9__["AppRoutingModule"],
+            _app_routing_module__WEBPACK_IMPORTED_MODULE_8__["AppRoutingModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"]
         ]] });
 (function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"],
         _recipes_recipes_component__WEBPACK_IMPORTED_MODULE_6__["RecipesComponent"],
         _header_header_component__WEBPACK_IMPORTED_MODULE_7__["HeaderComponent"],
-        _grocery_list_grocery_list_component__WEBPACK_IMPORTED_MODULE_8__["GroceryListComponent"],
-        _homepage_homepage_component__WEBPACK_IMPORTED_MODULE_10__["HomepageComponent"],
-        _kitchen_kitchen_component__WEBPACK_IMPORTED_MODULE_11__["KitchenComponent"],
-        _calendar_calendar_component__WEBPACK_IMPORTED_MODULE_12__["CalendarComponent"],
-        _recipes_recipe_item_recipe_item_component__WEBPACK_IMPORTED_MODULE_13__["RecipeItemComponent"],
-        _recipes_recipe_item_edit_recipe_item_edit_component__WEBPACK_IMPORTED_MODULE_14__["RecipeItemEditComponent"],
-        _signup_signup_component__WEBPACK_IMPORTED_MODULE_15__["SignupComponent"],
-        _login_login_component__WEBPACK_IMPORTED_MODULE_16__["LoginComponent"],
-        _recipes_recipe_item_add_recipe_item_add_component__WEBPACK_IMPORTED_MODULE_17__["RecipeItemAddComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
+        _homepage_homepage_component__WEBPACK_IMPORTED_MODULE_9__["HomepageComponent"],
+        _kitchen_kitchen_component__WEBPACK_IMPORTED_MODULE_10__["KitchenComponent"],
+        _calendar_calendar_component__WEBPACK_IMPORTED_MODULE_11__["CalendarComponent"],
+        _recipes_recipe_item_recipe_item_component__WEBPACK_IMPORTED_MODULE_12__["RecipeItemComponent"],
+        _recipes_recipe_item_edit_recipe_item_edit_component__WEBPACK_IMPORTED_MODULE_13__["RecipeItemEditComponent"],
+        _signup_signup_component__WEBPACK_IMPORTED_MODULE_14__["SignupComponent"],
+        _login_login_component__WEBPACK_IMPORTED_MODULE_15__["LoginComponent"],
+        _recipes_recipe_item_add_recipe_item_add_component__WEBPACK_IMPORTED_MODULE_16__["RecipeItemAddComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
         _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"],
         _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"],
-        _app_routing_module__WEBPACK_IMPORTED_MODULE_9__["AppRoutingModule"],
+        _app_routing_module__WEBPACK_IMPORTED_MODULE_8__["AppRoutingModule"],
         _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"],
         _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"]] }); })();
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](AppModule, [{
@@ -1443,21 +1555,20 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
                     _app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"],
                     _recipes_recipes_component__WEBPACK_IMPORTED_MODULE_6__["RecipesComponent"],
                     _header_header_component__WEBPACK_IMPORTED_MODULE_7__["HeaderComponent"],
-                    _grocery_list_grocery_list_component__WEBPACK_IMPORTED_MODULE_8__["GroceryListComponent"],
-                    _homepage_homepage_component__WEBPACK_IMPORTED_MODULE_10__["HomepageComponent"],
-                    _kitchen_kitchen_component__WEBPACK_IMPORTED_MODULE_11__["KitchenComponent"],
-                    _calendar_calendar_component__WEBPACK_IMPORTED_MODULE_12__["CalendarComponent"],
-                    _recipes_recipe_item_recipe_item_component__WEBPACK_IMPORTED_MODULE_13__["RecipeItemComponent"],
-                    _recipes_recipe_item_edit_recipe_item_edit_component__WEBPACK_IMPORTED_MODULE_14__["RecipeItemEditComponent"],
-                    _signup_signup_component__WEBPACK_IMPORTED_MODULE_15__["SignupComponent"],
-                    _login_login_component__WEBPACK_IMPORTED_MODULE_16__["LoginComponent"],
-                    _recipes_recipe_item_add_recipe_item_add_component__WEBPACK_IMPORTED_MODULE_17__["RecipeItemAddComponent"]
+                    _homepage_homepage_component__WEBPACK_IMPORTED_MODULE_9__["HomepageComponent"],
+                    _kitchen_kitchen_component__WEBPACK_IMPORTED_MODULE_10__["KitchenComponent"],
+                    _calendar_calendar_component__WEBPACK_IMPORTED_MODULE_11__["CalendarComponent"],
+                    _recipes_recipe_item_recipe_item_component__WEBPACK_IMPORTED_MODULE_12__["RecipeItemComponent"],
+                    _recipes_recipe_item_edit_recipe_item_edit_component__WEBPACK_IMPORTED_MODULE_13__["RecipeItemEditComponent"],
+                    _signup_signup_component__WEBPACK_IMPORTED_MODULE_14__["SignupComponent"],
+                    _login_login_component__WEBPACK_IMPORTED_MODULE_15__["LoginComponent"],
+                    _recipes_recipe_item_add_recipe_item_add_component__WEBPACK_IMPORTED_MODULE_16__["RecipeItemAddComponent"]
                 ],
                 imports: [
                     _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
                     _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"],
                     _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"],
-                    _app_routing_module__WEBPACK_IMPORTED_MODULE_9__["AppRoutingModule"],
+                    _app_routing_module__WEBPACK_IMPORTED_MODULE_8__["AppRoutingModule"],
                     _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"],
                     _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"]
                 ],
@@ -1548,7 +1659,7 @@ class HeaderComponent {
     }
 }
 HeaderComponent.ɵfac = function HeaderComponent_Factory(t) { return new (t || HeaderComponent)(); };
-HeaderComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: HeaderComponent, selectors: [["app-header"]], decls: 26, vars: 0, consts: [[1, "navbar", "navbar-default"], [1, "container-fluid"], [1, "navbar-header"], ["routerLink", "", 1, "navbar-brand"], [1, "collapse", "navbar-collapse"], [1, "nav", "navbar-nav"], ["routerLinkActive", "active"], ["routerLink", "/recipes"], ["routerLink", "/kitchen"], ["routerLink", "/grocery-list"], ["routerLink", "/calendar"], [1, "nav", "navbar-nav", "navbar-right"], ["routerLink", "/login"], ["routerLink", "/signup"]], template: function HeaderComponent_Template(rf, ctx) { if (rf & 1) {
+HeaderComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: HeaderComponent, selectors: [["app-header"]], decls: 23, vars: 0, consts: [[1, "navbar", "navbar-default"], [1, "container-fluid"], [1, "navbar-header"], ["routerLink", "", 1, "navbar-brand"], [1, "collapse", "navbar-collapse"], [1, "nav", "navbar-nav"], ["routerLinkActive", "active"], ["routerLink", "/recipes"], ["routerLink", "/kitchen"], ["routerLink", "/calendar"], [1, "nav", "navbar-nav", "navbar-right"], ["routerLink", "/login"], ["routerLink", "/signup"]], template: function HeaderComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "nav", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 2);
@@ -1570,24 +1681,19 @@ HeaderComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCo
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](13, "li", 6);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](14, "a", 9);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](15, "Grocery List");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](16, "li", 6);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](17, "a", 10);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](18, "Calendar");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](15, "Calendar");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](19, "ul", 11);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](16, "ul", 10);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](17, "li", 6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](18, "a", 11);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](19, "Log in");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](20, "li", 6);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](21, "a", 12);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](22, "Log in");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](23, "li", 6);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](24, "a", 13);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](25, "Sign up");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](22, "Sign up");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1989,18 +2095,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "tyNb");
 /* harmony import */ var _calendar_calendar_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./calendar/calendar.component */ "7mpd");
-/* harmony import */ var _grocery_list_grocery_list_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./grocery-list/grocery-list.component */ "M3Rx");
-/* harmony import */ var _homepage_homepage_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./homepage/homepage.component */ "Oh3b");
-/* harmony import */ var _kitchen_kitchen_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./kitchen/kitchen.component */ "1Q2P");
-/* harmony import */ var _recipes_recipes_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./recipes/recipes.component */ "juFZ");
-/* harmony import */ var _recipes_recipe_item_edit_recipe_item_edit_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./recipes/recipe-item-edit/recipe-item-edit.component */ "VkJC");
-/* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./login/login.component */ "vtpD");
-/* harmony import */ var _signup_signup_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./signup/signup.component */ "rd1V");
-/* harmony import */ var _recipes_recipe_item_recipe_item_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./recipes/recipe-item/recipe-item.component */ "vqDz");
-/* harmony import */ var _recipes_recipe_item_add_recipe_item_add_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./recipes/recipe-item-add/recipe-item-add.component */ "OZ4E");
-/* harmony import */ var _shared_resolver_recipe_resolver__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./shared/resolver/recipe.resolver */ "+0Ii");
-/* harmony import */ var _shared_resolver_recipe_item_resolver__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./shared/resolver/recipe-item.resolver */ "OEo8");
-/* harmony import */ var _shared_resolver_kitchen_resolver__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./shared/resolver/kitchen.resolver */ "Go9B");
+/* harmony import */ var _homepage_homepage_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./homepage/homepage.component */ "Oh3b");
+/* harmony import */ var _kitchen_kitchen_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./kitchen/kitchen.component */ "1Q2P");
+/* harmony import */ var _recipes_recipes_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./recipes/recipes.component */ "juFZ");
+/* harmony import */ var _recipes_recipe_item_edit_recipe_item_edit_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./recipes/recipe-item-edit/recipe-item-edit.component */ "VkJC");
+/* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./login/login.component */ "vtpD");
+/* harmony import */ var _signup_signup_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./signup/signup.component */ "rd1V");
+/* harmony import */ var _recipes_recipe_item_recipe_item_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./recipes/recipe-item/recipe-item.component */ "vqDz");
+/* harmony import */ var _recipes_recipe_item_add_recipe_item_add_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./recipes/recipe-item-add/recipe-item-add.component */ "OZ4E");
+/* harmony import */ var _shared_resolver_recipe_resolver__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./shared/resolver/recipe.resolver */ "+0Ii");
+/* harmony import */ var _shared_resolver_recipe_item_resolver__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./shared/resolver/recipe-item.resolver */ "OEo8");
+/* harmony import */ var _shared_resolver_kitchen_resolver__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./shared/resolver/kitchen.resolver */ "Go9B");
+/* harmony import */ var _shared_resolver_event_resolver__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./shared/resolver/event.resolver */ "0CQI");
 
 
 
@@ -2019,16 +2125,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const appRoutes = [
-    { path: '', component: _homepage_homepage_component__WEBPACK_IMPORTED_MODULE_4__["HomepageComponent"], pathMatch: 'full' },
-    { path: 'recipes', component: _recipes_recipes_component__WEBPACK_IMPORTED_MODULE_6__["RecipesComponent"], resolve: { message: _shared_resolver_recipe_resolver__WEBPACK_IMPORTED_MODULE_12__["RecipeResolver"] } },
-    { path: 'kitchen', component: _kitchen_kitchen_component__WEBPACK_IMPORTED_MODULE_5__["KitchenComponent"], resolve: { message: _shared_resolver_kitchen_resolver__WEBPACK_IMPORTED_MODULE_14__["KitchenResolver"] } },
-    { path: 'grocery-list', component: _grocery_list_grocery_list_component__WEBPACK_IMPORTED_MODULE_3__["GroceryListComponent"] },
-    { path: 'calendar', component: _calendar_calendar_component__WEBPACK_IMPORTED_MODULE_2__["CalendarComponent"] },
-    { path: 'recipe-item/:id', component: _recipes_recipe_item_recipe_item_component__WEBPACK_IMPORTED_MODULE_10__["RecipeItemComponent"], resolve: { message: _shared_resolver_recipe_item_resolver__WEBPACK_IMPORTED_MODULE_13__["RecipeItemResolver"] } },
-    { path: 'recipe-edit/:id', component: _recipes_recipe_item_edit_recipe_item_edit_component__WEBPACK_IMPORTED_MODULE_7__["RecipeItemEditComponent"], resolve: { message: _shared_resolver_recipe_item_resolver__WEBPACK_IMPORTED_MODULE_13__["RecipeItemResolver"] } },
-    { path: 'recipe-add', component: _recipes_recipe_item_add_recipe_item_add_component__WEBPACK_IMPORTED_MODULE_11__["RecipeItemAddComponent"] },
-    { path: 'login', component: _login_login_component__WEBPACK_IMPORTED_MODULE_8__["LoginComponent"] },
-    { path: 'signup', component: _signup_signup_component__WEBPACK_IMPORTED_MODULE_9__["SignupComponent"] },
+    { path: '', component: _homepage_homepage_component__WEBPACK_IMPORTED_MODULE_3__["HomepageComponent"], pathMatch: 'full' },
+    { path: 'recipes', component: _recipes_recipes_component__WEBPACK_IMPORTED_MODULE_5__["RecipesComponent"], resolve: { message: _shared_resolver_recipe_resolver__WEBPACK_IMPORTED_MODULE_11__["RecipeResolver"] } },
+    { path: 'kitchen', component: _kitchen_kitchen_component__WEBPACK_IMPORTED_MODULE_4__["KitchenComponent"], resolve: { message: _shared_resolver_kitchen_resolver__WEBPACK_IMPORTED_MODULE_13__["KitchenResolver"] } },
+    { path: 'calendar', component: _calendar_calendar_component__WEBPACK_IMPORTED_MODULE_2__["CalendarComponent"], resolve: { message: _shared_resolver_event_resolver__WEBPACK_IMPORTED_MODULE_14__["EventResolver"] } },
+    { path: 'recipe-item/:id', component: _recipes_recipe_item_recipe_item_component__WEBPACK_IMPORTED_MODULE_9__["RecipeItemComponent"], resolve: { message: _shared_resolver_recipe_item_resolver__WEBPACK_IMPORTED_MODULE_12__["RecipeItemResolver"] } },
+    { path: 'recipe-edit/:id', component: _recipes_recipe_item_edit_recipe_item_edit_component__WEBPACK_IMPORTED_MODULE_6__["RecipeItemEditComponent"], resolve: { message: _shared_resolver_recipe_item_resolver__WEBPACK_IMPORTED_MODULE_12__["RecipeItemResolver"] } },
+    { path: 'recipe-add', component: _recipes_recipe_item_add_recipe_item_add_component__WEBPACK_IMPORTED_MODULE_10__["RecipeItemAddComponent"] },
+    { path: 'login', component: _login_login_component__WEBPACK_IMPORTED_MODULE_7__["LoginComponent"] },
+    { path: 'signup', component: _signup_signup_component__WEBPACK_IMPORTED_MODULE_8__["SignupComponent"] },
     { path: '**', redirectTo: '' }
 ];
 class AppRoutingModule {

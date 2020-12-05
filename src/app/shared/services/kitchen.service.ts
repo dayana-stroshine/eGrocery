@@ -5,7 +5,6 @@ import { catchError, first } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { Ingredient } from '../models/ingredient.model';
-import { Recipe } from '../models/recipe.model';
 import { ErrorHandlerService } from './error-handler.service';
 
 @Injectable({
