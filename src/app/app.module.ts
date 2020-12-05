@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -17,6 +17,8 @@ import { RecipeItemEditComponent } from './recipes/recipe-item-edit/recipe-item-
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { RecipeItemAddComponent } from './recipes/recipe-item-add/recipe-item-add.component';
+
+import { AuthCompanionService } from './shared/services/auth-companion.service';
 
 
 @NgModule({
@@ -41,7 +43,13 @@ import { RecipeItemAddComponent } from './recipes/recipe-item-add/recipe-item-ad
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthCompanionService,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

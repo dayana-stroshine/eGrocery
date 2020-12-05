@@ -12,8 +12,9 @@
         <li routerLinkActive="active"><a routerLink="/calendar">Calendar</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-       <li routerLinkActive="active"><a routerLink="/login">Log in</a></li>
-        <li routerLinkActive="active"><a routerLink="/signup">Sign up</a></li> 
+       <li routerLinkActive="active"><a *ngIf="!isAuthenticated" routerLink="/login">Log in</a></li>
+       <li routerLinkActive="active"><a *ngIf="isAuthenticated" (click)="logout()">Log out</a></li>
+        <li routerLinkActive="active"><a *ngIf="!isAuthenticated" routerLink="/signup">Sign up</a></li> 
       </ul>
     </div>
   </div>
