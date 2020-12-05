@@ -14,12 +14,13 @@ import { RecipeItemAddComponent } from './recipes/recipe-item-add/recipe-item-ad
 import { RecipeResolver } from './shared/resolver/recipe.resolver';
 import { RecipeItemResolver } from './shared/resolver/recipe-item.resolver';
 import { KitchenResolver } from './shared/resolver/kitchen.resolver';
+import { EventResolver } from './shared/resolver/event.resolver';
 
 const appRoutes: Routes = [
   { path: '', component: HomepageComponent, pathMatch: 'full' },
   { path: 'recipes', component: RecipesComponent, resolve: { message: RecipeResolver } },
   { path: 'kitchen', component: KitchenComponent, resolve: { message: KitchenResolver } },
-  { path: 'calendar', component: CalendarComponent },
+  { path: 'calendar', component: CalendarComponent, resolve: { message: EventResolver } },
   { path: 'recipe-item/:id', component: RecipeItemComponent, resolve: { message: RecipeItemResolver } },
   { path: 'recipe-edit/:id', component: RecipeItemEditComponent, resolve: { message: RecipeItemResolver } },
   { path: 'recipe-add', component: RecipeItemAddComponent },
