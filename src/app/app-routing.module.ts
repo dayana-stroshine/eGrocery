@@ -22,12 +22,12 @@ import { AuthGuardService } from "./shared/services/auth-guard.service";
 
 const appRoutes: Routes = [
   { path: '', component: HomepageComponent, pathMatch: 'full', resolve: { message: HomepageResolver } },
-  { path: 'recipes', component: RecipesComponent, canActivate: [AuthGuardService], resolve: { message: RecipeResolver } },
-  { path: 'kitchen', component: KitchenComponent, resolve: { message: KitchenResolver } },
-  { path: 'grocery-list', component: GroceryListComponent },
-  { path: 'calendar', component: CalendarComponent },
+  { path: 'recipes', component: RecipesComponent, resolve: { message: RecipeResolver } },
+  { path: 'kitchen', component: KitchenComponent, canActivate: [AuthGuardService], resolve: { message: KitchenResolver } },
+  { path: 'grocery-list', canActivate: [AuthGuardService], component: GroceryListComponent },
+  { path: 'calendar', canActivate: [AuthGuardService], component: CalendarComponent },
   { path: 'recipe-item/:id', component: RecipeItemComponent, resolve: { message: RecipeItemResolver } },
-  { path: 'recipe-edit/:id', component: RecipeItemEditComponent, resolve: { message: RecipeItemResolver } },
+  { path: 'recipe-edit/:id', canActivate: [AuthGuardService], component: RecipeItemEditComponent, resolve: { message: RecipeItemResolver } },
   { path: 'recipe-add', component: RecipeItemAddComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },

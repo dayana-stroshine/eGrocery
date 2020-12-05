@@ -18,6 +18,7 @@ export class RecipesComponent implements OnInit {
   meals: Meal[];
   allRecipes: any;
   userId: Pick<User, "id">;
+  isAuthenticated = false;
 
   constructor(
     private mealService: MealService,
@@ -34,6 +35,10 @@ export class RecipesComponent implements OnInit {
     
     this.mealService.resetMeals();
     this.mealService.mealSelected = this.mealService.meals[0];
+
+    this.authService.isUserLoggedIn$.subscribe((isLoggedIn) => {
+      this.isAuthenticated = isLoggedIn;
+    })
 
     for (const currentRecipe of this.allRecipes) {
       if (currentRecipe.category === 'breakfast') {
