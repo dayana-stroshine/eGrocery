@@ -9,7 +9,8 @@
         role="presentation" 
         *ngFor="let day of availableDays" 
         (click)="onSelect(day)" 
-        [ngClass]="{'active':day === selectedDay}">
+        [ngClass]="{'active':day === selectedDay}"
+        style="cursor: pointer">
           <a>{{ day }}</a>
         </li>
     </ul>
