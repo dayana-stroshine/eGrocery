@@ -14,4 +14,11 @@ module.exports = class Event {
         WHERE e.user_id = ?`, [user.user_id]
     );
   }
+
+  static addEventRecipe(eventDetails) {
+    return db.execute(
+      'INSERT INTO Events(date, recipe_id, user_id) VALUES (?, ?, ?)',
+      [eventDetails.day, eventDetails.recipe_id, eventDetails.user_id]
+    );
+  }
 };

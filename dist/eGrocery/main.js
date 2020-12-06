@@ -164,7 +164,7 @@ class KitchenComponent {
     }
 }
 KitchenComponent.ɵfac = function KitchenComponent_Factory(t) { return new (t || KitchenComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_kitchen_service__WEBPACK_IMPORTED_MODULE_2__["KitchenService"])); };
-KitchenComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: KitchenComponent, selectors: [["app-kitchen"]], decls: 20, vars: 4, consts: [[1, "jumbotron", "bg-keylime"], [1, "row"], [1, "col-md-8"], ["type", "text", "placeholder", "Search for an ingredient", 1, "form-control", 3, "ngModel", "ngModelChange"], [1, "col-md-4"], [1, "btn", "btn-primary", 3, "click"], [2, "color", "red"], [1, "col-md-5"], [1, "nav", "nav-pills", "nav-stacked"], ["role", "presentation", 3, "ngClass", "click", 4, "ngFor", "ngForOf"], [1, "col-md-7"], [1, "list-group"], ["class", "list-group-item", 4, "ngFor", "ngForOf"], ["role", "presentation", 3, "ngClass", "click"], [1, "list-group-item"]], template: function KitchenComponent_Template(rf, ctx) { if (rf & 1) {
+KitchenComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: KitchenComponent, selectors: [["app-kitchen"]], decls: 20, vars: 4, consts: [[1, "jumbotron", "bg-keylime"], [1, "row"], [1, "col-md-8"], ["type", "text", "placeholder", "Search for an ingredient", 1, "form-control", 3, "ngModel", "ngModelChange"], [1, "col-md-4"], [1, "btn", "btn-primary", 3, "click"], [2, "color", "red"], [1, "col-md-5"], [1, "nav", "nav-pills", "nav-stacked"], ["role", "presentation", "style", "cursor: pointer", 3, "ngClass", "click", 4, "ngFor", "ngForOf"], [1, "col-md-7"], [1, "list-group"], ["class", "list-group-item", 4, "ngFor", "ngForOf"], ["role", "presentation", 2, "cursor", "pointer", 3, "ngClass", "click"], [1, "list-group-item"]], template: function KitchenComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "h1");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "My Kitchen Ingredients");
@@ -328,6 +328,15 @@ class EventService {
         return this.http.get(`${this.url}/${userId}`, this.httpOptions)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["first"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.errorHandlerService.handleError('getAll')));
     }
+    addEventRecipe(recipe_id, user_id, day) {
+        const reqBody = {
+            recipe_id,
+            user_id,
+            day
+        };
+        return this.http.post(`${this.url}/addEventRecipe`, reqBody, this.httpOptions)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["first"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.errorHandlerService.handleError('addEventRecipe')));
+    }
     populateCalendar(allEventRecipes) {
         this.currentCalendar = new Map();
         for (const eventRecipe of allEventRecipes) {
@@ -426,7 +435,7 @@ class CalendarComponent {
     }
 }
 CalendarComponent.ɵfac = function CalendarComponent_Factory(t) { return new (t || CalendarComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_services_event_service__WEBPACK_IMPORTED_MODULE_2__["EventService"])); };
-CalendarComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: CalendarComponent, selectors: [["app-calendar"]], decls: 10, vars: 2, consts: [[1, "jumbotron", "bg-keylime"], [1, "row"], [1, "col-md-5"], [1, "nav", "nav-pills", "nav-stacked"], ["role", "presentation", 3, "ngClass", "click", 4, "ngFor", "ngForOf"], [1, "col-md-7"], [1, "list-group"], ["class", "list-group-item", 4, "ngFor", "ngForOf"], ["role", "presentation", 3, "ngClass", "click"], [1, "list-group-item"]], template: function CalendarComponent_Template(rf, ctx) { if (rf & 1) {
+CalendarComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: CalendarComponent, selectors: [["app-calendar"]], decls: 10, vars: 2, consts: [[1, "jumbotron", "bg-keylime"], [1, "row"], [1, "col-md-5"], [1, "nav", "nav-pills", "nav-stacked"], ["role", "presentation", "style", "cursor: pointer", 3, "ngClass", "click", 4, "ngFor", "ngForOf"], [1, "col-md-7"], [1, "list-group"], ["class", "list-group-item", 4, "ngFor", "ngForOf"], ["role", "presentation", 2, "cursor", "pointer", 3, "ngClass", "click"], [1, "list-group-item"]], template: function CalendarComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "h1");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "My Recipe Calendar");
@@ -1005,7 +1014,7 @@ class HomepageComponent {
     }
 }
 HomepageComponent.ɵfac = function HomepageComponent_Factory(t) { return new (t || HomepageComponent)(); };
-HomepageComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: HomepageComponent, selectors: [["app-homepage"]], decls: 50, vars: 0, consts: [[1, "jumbotron", "bg-keylime"], ["routerLink", "/signup", "role", "button", 1, "btn", "btn-success", "btn-lg"], [1, "row"], [1, "col-sm-6", "col-md-3"], [1, "thumbnail", "no-border"], ["routerLink", "/recipes"], ["src", "assets/images/recipes.svg", "alt", "recipes"], ["routerLink", "/kitchen"], ["src", "assets/images/kitchen.svg", "alt", "kitchen"], ["routerLink", "/grocery-list"], ["src", "assets/images/grocery_list.svg", "alt", "grocery_list"], ["routerLink", "/calendar"], ["src", "assets/images/calendar.svg", "alt", "calendar"], [1, "row", "mrgn-bottom"], [1, "caption"]], template: function HomepageComponent_Template(rf, ctx) { if (rf & 1) {
+HomepageComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: HomepageComponent, selectors: [["app-homepage"]], decls: 40, vars: 0, consts: [[1, "jumbotron", "bg-keylime"], ["routerLink", "/signup", "role", "button", 1, "btn", "btn-success", "btn-lg"], [1, "row"], [1, "col-sm-6", "col-md-4"], [1, "thumbnail", "no-border"], ["routerLink", "/recipes"], ["src", "assets/images/recipes.svg", "alt", "recipes"], ["routerLink", "/kitchen"], ["src", "assets/images/kitchen.svg", "alt", "kitchen"], ["routerLink", "/calendar"], ["src", "assets/images/calendar.svg", "alt", "calendar"], [1, "row", "mrgn-bottom"], [1, "caption"]], template: function HomepageComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "h1");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "eGrocery");
@@ -1041,52 +1050,35 @@ HomepageComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefine
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](21, "div", 3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](22, "div", 4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](23, "a", 11);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](24, "img", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](21, "div", 11);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](22, "div", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](23, "div", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](24, "h3");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](25, "Recipe Storage");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](26, "p");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](27, "Store your recipes in one place to make organizing, searching, and updating easy.");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](28, "div", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](29, "div", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](30, "h3");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](31, "Kitchen Inventory");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](25, "div", 13);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](26, "div", 3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](27, "div", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](28, "h3");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](29, "Recipe Storage");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](30, "p");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](31, "Store your recipes in one place to make organizing, searching, and updating easy.");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](32, "p");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](33, "Keep track of what ingredients to make finding what you need to buy for a recipe simple.");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](32, "div", 3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](33, "div", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](34, "h3");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](35, "Kitchen Inventory");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](34, "div", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](35, "div", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](36, "h3");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](37, "Calendar");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](36, "p");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](37, "Keep track of what ingredients to make finding what you need to buy for a recipe simple.");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](38, "div", 3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](39, "div", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](40, "h3");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](41, "Grocery List Generator");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](42, "p");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](43, "A list of ingredients needed for a recipe or more is generated based on what is in your Kitchen inventory. ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](44, "div", 3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](45, "div", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](46, "h3");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](47, "Calendar");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](48, "p");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](49, "Plan when you will make recipes using the calendar.");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](38, "p");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](39, "Plan when you will make recipes using the calendar.");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1846,7 +1838,7 @@ RecipesComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineC
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](11, _c0, ctx.mealSelected.name === "Dessert"));
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.mealSelected.recipes);
-    } }, directives: [_angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterLinkWithHref"], _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgClass"], _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgForOf"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3JlY2lwZXMvcmVjaXBlcy5jb21wb25lbnQuY3NzIn0= */"] });
+    } }, directives: [_angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterLinkWithHref"], _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgClass"], _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgForOf"]], styles: ["li[_ngcontent-%COMP%] { cursor: pointer; }\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcmVjaXBlcy9yZWNpcGVzLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsS0FBSyxlQUFlLEVBQUUiLCJmaWxlIjoic3JjL2FwcC9yZWNpcGVzL3JlY2lwZXMuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbImxpIHsgY3Vyc29yOiBwb2ludGVyOyB9Il19 */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](RecipesComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -2163,16 +2155,16 @@ AppRoutingModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineI
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RecipeItemComponent", function() { return RecipeItemComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var src_app_shared_services_recipe_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/shared/services/recipe.service */ "tseV");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var src_app_shared_services_event_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/services/event.service */ "6BoG");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "ofXK");
 
 
 
 
 
-function RecipeItemComponent_li_14_Template(rf, ctx) { if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "li", 9);
+function RecipeItemComponent_li_13_Template(rf, ctx) { if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "li", 10);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
@@ -2181,19 +2173,18 @@ function RecipeItemComponent_li_14_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate3"](" ", ingredient_r1.quantity, " ", ingredient_r1.unit, " ", ingredient_r1.ingredient_name, " ");
 } }
 class RecipeItemComponent {
-    constructor(recipeHttpService, router, activeRoute) {
-        this.recipeHttpService = recipeHttpService;
+    constructor(router, activeRoute, eventService) {
         this.router = router;
         this.activeRoute = activeRoute;
+        this.eventService = eventService;
+        this.daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     }
     ngOnInit() {
-        // this.myRecipe = this.recipeHttpService.recipeSelected;
         this.recipeItem = this.formatRecipeItem(this.activeRoute.snapshot.data.message[0]);
     }
     goToEdit(recipeId) {
         console.log(recipeId);
         console.log(this.recipeItem);
-        // this.recipeService.recipeSelected = this.recipeItem;
         this.router.navigate(['/recipe-edit', recipeId]);
     }
     // Upon completion of GET call to API, the results are formatted so the page may be displayed
@@ -2221,9 +2212,18 @@ class RecipeItemComponent {
             });
         }
     }
+    onAddCalendar() {
+        console.log(this.recipeItem);
+        const day = this.daysOfWeek[Math.floor(Math.random() * this.daysOfWeek.length)];
+        this.eventService
+            .addEventRecipe(this.recipeItem.recipe_id, this.recipeItem.user_id, day)
+            .subscribe((msg) => {
+            alert(`${this.recipeItem.recipe_name} has been added to ${day}!`);
+        });
+    }
 }
-RecipeItemComponent.ɵfac = function RecipeItemComponent_Factory(t) { return new (t || RecipeItemComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_shared_services_recipe_service__WEBPACK_IMPORTED_MODULE_1__["RecipeHttpService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"])); };
-RecipeItemComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: RecipeItemComponent, selectors: [["app-recipe-item"]], decls: 20, vars: 3, consts: [[1, "jumbotron", "bg-keylime"], ["type", "button", 1, "btn", "btn-success", "btn-lg", "button-mrgn", 2, "margin-left", "0", 3, "click"], ["aria-hidden", "true", 1, "glyphicon", "glyphicon-pencil"], ["type", "button", 1, "btn", "btn-success", "btn-lg", "button-mrgn"], [1, "heading-float"], [1, "list-group"], ["class", "list-group-item", 4, "ngFor", "ngForOf"], [1, "panel", "panel-default", "mrgn-bottom"], [1, "panel-body"], [1, "list-group-item"]], template: function RecipeItemComponent_Template(rf, ctx) { if (rf & 1) {
+RecipeItemComponent.ɵfac = function RecipeItemComponent_Factory(t) { return new (t || RecipeItemComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](src_app_shared_services_event_service__WEBPACK_IMPORTED_MODULE_2__["EventService"])); };
+RecipeItemComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: RecipeItemComponent, selectors: [["app-recipe-item"]], decls: 19, vars: 3, consts: [[1, "jumbotron", "bg-keylime"], ["type", "button", 1, "btn", "btn-success", "btn-lg", "button-mrgn", 2, "margin-left", "0", 3, "click"], ["aria-hidden", "true", 1, "glyphicon", "glyphicon-pencil"], ["type", "button", 1, "btn", "btn-secondary", "btn-lg", "button-mrgn", 3, "click"], ["aria-hidden", "true", 1, "glyphicon", "glyphicon-plus"], [1, "heading-float"], [1, "list-group"], ["class", "list-group-item", 4, "ngFor", "ngForOf"], [1, "panel", "panel-default", "mrgn-bottom"], [1, "panel-body"], [1, "list-group-item"]], template: function RecipeItemComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "h1");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
@@ -2235,30 +2235,29 @@ RecipeItemComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5, " Edit Recipe\n");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "button", 3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7, "Add to/Remove from Grocery List");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function RecipeItemComponent_Template_button_click_6_listener() { return ctx.onAddCalendar(); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](7, "span", 4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](8, " Add To Calendar ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "button", 3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](9, "Add to/Remove from Calendar");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](9, "br");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "h2", 5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](11, "Ingredients");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](10, "br");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "h2", 4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](12, "Ingredients");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](12, "ul", 6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](13, RecipeItemComponent_li_13_Template, 2, 3, "li", 7);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](13, "ul", 5);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](14, RecipeItemComponent_li_14_Template, 2, 3, "li", 6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](14, "h2", 5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](15, "Directions");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](15, "h2", 4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](16, "Directions");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](17, "div", 7);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](18, "div", 8);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](19);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](16, "div", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](17, "div", 9);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](18);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.recipeItem.recipe_name);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](11);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.recipeItem.ingredients);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx.recipeItem.instruction, " ");
@@ -2270,7 +2269,7 @@ RecipeItemComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
                 templateUrl: './recipe-item.component.html',
                 styleUrls: ['./recipe-item.component.css']
             }]
-    }], function () { return [{ type: src_app_shared_services_recipe_service__WEBPACK_IMPORTED_MODULE_1__["RecipeHttpService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] }]; }, null); })();
+    }], function () { return [{ type: _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"] }, { type: src_app_shared_services_event_service__WEBPACK_IMPORTED_MODULE_2__["EventService"] }]; }, null); })();
 
 
 /***/ }),
