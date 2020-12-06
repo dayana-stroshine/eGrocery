@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
+import { EventService } from 'src/app/shared/services/event.service';
 
 @Component({
   selector: 'app-recipe-item',
@@ -9,10 +10,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class RecipeItemComponent implements OnInit {
   recipeItem: any;
+  daysOfWeek: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
   constructor(
     private router: Router,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private eventService: EventService
   ) { }
 
   ngOnInit(): void {
@@ -23,7 +26,6 @@ export class RecipeItemComponent implements OnInit {
     console.log(recipeId)
     console.log(this.recipeItem)
     this.router.navigate(['/recipe-edit', recipeId]);
-
   }
 
   // Upon completion of GET call to API, the results are formatted so the page may be displayed
@@ -52,4 +54,13 @@ export class RecipeItemComponent implements OnInit {
     }
   }
 
+  onAddCalendar() {
+    console.log(this.recipeItem);
+    const day = this.daysOfWeek[Math.floor(Math.random() * this.daysOfWeek.length)];
+    this.eventService
+      .addEventRecipe(this.recipeItem.recipe_id, this.recipeItem.user_id, day)
+      .subscribe((msg) => {
+        alert(`${this.recipeItem.recipe_name} has been added to ${day}!`);
+      });
+  }
 }

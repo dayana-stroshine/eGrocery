@@ -32,6 +32,19 @@ export class EventService {
       );
   }
 
+  addEventRecipe(recipe_id: number, user_id: number, day: string) {
+    const reqBody = {
+      recipe_id,
+      user_id,
+      day
+    }
+    return this.http.post<any>(`${this.url}/addEventRecipe`, reqBody, this.httpOptions)
+      .pipe(
+        first(),
+        catchError(this.errorHandlerService.handleError<any>('addEventRecipe'))
+      );
+  }
+
   populateCalendar(allEventRecipes: Event[]) {
     this.currentCalendar = new Map();
 
