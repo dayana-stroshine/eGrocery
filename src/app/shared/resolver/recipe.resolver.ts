@@ -18,6 +18,11 @@ export class RecipeResolver implements Resolve<Observable<string>> {
 
   resolve() {
     const userId = this.authService.userId;
-    return this.recipeHttpService.getAll(+userId);
+    // if this is a users recipe library, populate it with their recipes
+    if(userId){
+      this.recipeHttpService.getAll(+userId);
+    }
+    // otherwise just choose 4 recent recipes
+    return this.recipeHttpService.getRandom(1);
   }
 }
