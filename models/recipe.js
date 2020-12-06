@@ -24,28 +24,34 @@ module.exports = class Recipe {
       'SELECT * FROM Recipes WHERE user_id = ?', [user.user_id]);
   }
 
-   // Read all recipes except from one user
-   static getRandom(user) {
+  // Read all recipes except from one user
+  static getRandom(user) {
     return db.execute(
-      'SELECT * FROM Recipes WHERE user_id != ? ORDER BY recipe_id DESC LIMIT 4', [user.user_id]);
+      `SELECT recipe_id, recipe_name, category, satisfaction, Recipes.user_id,
+       Users.name AS user_name
+       FROM Recipes 
+       LEFT JOIN Users ON Recipes.user_id = Users.user_id
+       WHERE Recipes.user_id != ? OR Recipes.user_id IS NULL
+       ORDER BY recipe_id 
+       DESC LIMIT 4`, [user.user_id]);
   }
 
-    // Read a recipe including its ingredients
-    static getOne(recipe) {
-        return db.execute(
-            `SELECT r.recipe_id, r.recipe_name, r.instruction, r.category AS recipe_category, r.satisfaction, r.user_id, 
+  // Read a recipe including its ingredients
+  static getOne(recipe) {
+    return db.execute(
+      `SELECT r.recipe_id, r.recipe_name, r.instruction, r.category AS recipe_category, r.satisfaction, r.user_id, 
             i.ingredient_id, i.ingredient_name, i.quantity, i.unit, i.category FROM Recipes AS r
                         JOIN Recipe_Ingredients AS r_i
                         ON r.recipe_id = r_i.recipe_id
                         JOIN Ingredients as i
                         ON i.ingredient_id = r_i.ingredient_id
                         WHERE r.recipe_id = ?`, [recipe.recipe_id]);
-    }
+  }
 
-    // Update a recipe
-    static update(recipe) {
-        return db.execute(
-            `UPDATE Recipes
+  // Update a recipe
+  static update(recipe) {
+    return db.execute(
+      `UPDATE Recipes
             SET recipe_name = ?,
                 instruction = ?,
                 category = ?,

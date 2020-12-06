@@ -80,3 +80,22 @@ exports.login = async (req, res, next) => {
         next(err)
     }
 };
+
+exports.delete = async (req, res, next) => {
+    const user_id = req.params.userId;
+    console.log(user_id);
+    try {
+        const user = {
+            user_id: user_id
+        }
+        // Send off the request to the database to remove a user
+        const result = await User.delete(user);
+
+        res.status(200).json({ message: 'User has been removed.' })
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err)
+    }
+}

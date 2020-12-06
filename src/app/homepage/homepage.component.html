@@ -70,6 +70,7 @@
       <div class="caption">
         <h3>{{ recipe.recipe_name }} </h3>
         <p>{{ recipe.category }}</p>
+        <p *ngIf="recipe.user_name">by {{ recipe.user_name }}</p>
         <p><button class="btn btn-warning" (click)="goToRecipe(recipe.recipe_id)">View Recipe</button> </p>
       </div>
     </div>

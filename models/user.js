@@ -18,4 +18,11 @@ module.exports = class User {
             [user.name, user.email, user.password]
         );
     }
+
+    static delete(user) {
+        return db.execute(
+            'DELETE FROM Users WHERE user_id = ?',
+            [user.user_id]
+        );
+    }
 };

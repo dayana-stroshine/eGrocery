@@ -28,5 +28,7 @@ router.post(
 
 router.post('/login', authController.login);
 
+router.delete('/:userId', authController.delete);
+
 module.exports = router;
 

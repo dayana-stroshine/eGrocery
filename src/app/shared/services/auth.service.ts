@@ -62,5 +62,16 @@ export class AuthService {
       }>("login"))
     );
   }
+
+  delete(userId: number): Observable<any>{
+    console.log("in http:");
+    console.log(userId);
+    return this.http
+    .delete<any>(`${this.url}/${userId}`, this.httpOptions)
+    .pipe(
+      first(),
+      catchError(this.errorHandlerService.handleError<any>("delete"))
+    );
+  }
 }
 

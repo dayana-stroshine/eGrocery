@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { User } from '../shared/models/User';
 
 import { AuthService } from 'src/app/shared/services/auth.service';
 
@@ -10,14 +11,19 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class HeaderComponent implements OnInit {
   isAuthenticated = false;
+  public userId: Pick<User, "id">;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.userId = this.authService.userId;
+
     this.authService.isUserLoggedIn$.subscribe((isLoggedIn) => {
       this.isAuthenticated = isLoggedIn;
     })
-
   }
 
   logout(): void {
@@ -25,6 +31,17 @@ export class HeaderComponent implements OnInit {
     this.authService.isUserLoggedIn$.next(false);
     this.router.navigate(["login"]);
 
+  }
+
+  delete(): void {
+    console.log("in header component:");
+    console.log(this.userId);
+    this.authService.delete(+this.userId).subscribe((msg) => {
+      console.log(msg);
+      localStorage.removeItem("token");
+      this.authService.isUserLoggedIn$.next(false);
+      this.router.navigate([""]);
+    });
   }
 
 }
