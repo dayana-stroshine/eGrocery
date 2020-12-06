@@ -12,18 +12,22 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { RecipeItemComponent } from './recipes/recipe-item/recipe-item.component';
 import { RecipeItemAddComponent } from './recipes/recipe-item-add/recipe-item-add.component';
+
 import { RecipeResolver } from './shared/resolver/recipe.resolver';
 import { RecipeItemResolver } from './shared/resolver/recipe-item.resolver';
 import { KitchenResolver } from './shared/resolver/kitchen.resolver';
+import { HomepageResolver } from './shared/resolver/homepage.resolver';
+
+import { AuthGuardService } from "./shared/services/auth-guard.service";
 
 const appRoutes: Routes = [
-  { path: '', component: HomepageComponent, pathMatch: 'full' },
+  { path: '', component: HomepageComponent, pathMatch: 'full', resolve: { message: HomepageResolver } },
   { path: 'recipes', component: RecipesComponent, resolve: { message: RecipeResolver } },
-  { path: 'kitchen', component: KitchenComponent, resolve: { message: KitchenResolver } },
-  { path: 'grocery-list', component: GroceryListComponent },
-  { path: 'calendar', component: CalendarComponent },
+  { path: 'kitchen', component: KitchenComponent, canActivate: [AuthGuardService], resolve: { message: KitchenResolver } },
+  { path: 'grocery-list', canActivate: [AuthGuardService], component: GroceryListComponent },
+  { path: 'calendar', canActivate: [AuthGuardService], component: CalendarComponent },
   { path: 'recipe-item/:id', component: RecipeItemComponent, resolve: { message: RecipeItemResolver } },
-  { path: 'recipe-edit/:id', component: RecipeItemEditComponent, resolve: { message: RecipeItemResolver } },
+  { path: 'recipe-edit/:id', canActivate: [AuthGuardService], component: RecipeItemEditComponent, resolve: { message: RecipeItemResolver } },
   { path: 'recipe-add', component: RecipeItemAddComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },

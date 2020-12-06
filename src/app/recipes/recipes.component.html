@@ -1,9 +1,10 @@
 <!-- <app-recipe-item [myRecipe]="testRecipe"></app-recipe-item> -->
 <div class="jumbotron bg-keylime">
-  <h1>My Recipes</h1>
+  <h1 *ngIf="isAuthenticated">My Recipes</h1>
+  <h1 *ngIf="!isAuthenticated">Recipes</h1>
 </div>
 
-<a routerLink="/recipe-add">
+<a *ngIf="isAuthenticated" routerLink="/recipe-add">
   <button type="button" class="btn btn-secondary btn-lg mrgn-bottom">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Recipe 
   </button>
