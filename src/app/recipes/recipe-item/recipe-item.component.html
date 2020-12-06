@@ -1,24 +1,31 @@
 <div class="jumbotron bg-keylime">
-    <h1>{{ recipeItem.recipe_name }}</h1>
+  <h1>{{ recipeItem.recipe_name }}</h1>
 </div>
 
-<button type="button" *ngIf="isAuthenticated" (click)="goToEdit(recipeItem.recipe_id)" class="btn btn-success btn-lg button-mrgn"  style="margin-left: 0;">
+<button 
+  type="button"
+  *ngIf="isAuthenticated"      
+  (click)="goToEdit(recipeItem.recipe_id)" 
+  class="btn btn-success btn-lg button-mrgn"
+  style="margin-left: 0;">
     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit Recipe
 </button>
 
-<button type="button" *ngIf="isAuthenticated" class="btn btn-success btn-lg button-mrgn">Add to/Remove from Grocery List</button>
-<button type="button" *ngIf="isAuthenticated" class="btn btn-success btn-lg button-mrgn">Add to/Remove from Calendar</button>
+<button type="button" *ngIf="isAuthenticated" class="btn btn-secondary btn-lg button-mrgn" (click)="onAddCalendar()">
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add To Calendar 
+</button>
+
 <br>
 
 <h2 class="heading-float">Ingredients</h2>
 <ul class="list-group">
-    <li class="list-group-item" *ngFor="let ingredient of recipeItem.ingredients">
-        {{ ingredient.quantity }} {{ ingredient.unit }} {{ ingredient.ingredient_name }}
-    </li>
+  <li class="list-group-item" *ngFor="let ingredient of recipeItem.ingredients">
+    {{ ingredient.quantity }} {{ ingredient.unit }} {{ ingredient.ingredient_name }}
+  </li>
 </ul>
 <h2 class="heading-float">Directions</h2>
 <div class="panel panel-default mrgn-bottom">
-    <div class="panel-body">
-        {{ recipeItem.instruction }}
-    </div>
+  <div class="panel-body">
+    {{ recipeItem.instruction }}
+  </div>
 </div>

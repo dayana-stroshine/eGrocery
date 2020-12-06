@@ -41,7 +41,7 @@ export class RecipesComponent implements OnInit {
     })
 
     for (const currentRecipe of this.allRecipes) {
-      if (currentRecipe.category === 'breakfast') {
+      if (currentRecipe.category.toLowerCase() === 'breakfast') {
         this.mealService.meals[0].recipes.push(
           new Recipe(
             currentRecipe.recipe_name, 
@@ -52,7 +52,7 @@ export class RecipesComponent implements OnInit {
             currentRecipe.recipe_id
           )
         );
-      } else if (currentRecipe.category === 'lunch') {
+      } else if (currentRecipe.category.toLowerCase() === 'lunch') {
         this.mealService.meals[1].recipes.push(
           new Recipe(
             currentRecipe.recipe_name,
@@ -63,7 +63,7 @@ export class RecipesComponent implements OnInit {
             currentRecipe.recipe_id
           )
         );
-      } else if (currentRecipe.category === 'dinner') {
+      } else if (currentRecipe.category.toLowerCase() === 'dinner') {
         this.mealService.meals[2].recipes.push(
           new Recipe(
             currentRecipe.recipe_name, 
@@ -74,7 +74,7 @@ export class RecipesComponent implements OnInit {
             currentRecipe.recipe_id
           )
         );
-      } else if (currentRecipe.category === 'dessert') {
+      } else if (currentRecipe.category.toLowerCase() === 'dessert') {
         this.mealService.meals[3].recipes.push(
           new Recipe(
             currentRecipe.recipe_name, 
@@ -86,7 +86,7 @@ export class RecipesComponent implements OnInit {
           )
         );
       } else {
-        console.error(`Missing category or invalid currentRecipe: ${currentRecipe}`);
+        console.error(`Missing category or invalid currentRecipe: ${JSON.stringify(currentRecipe)}`);
       }
     }
 
