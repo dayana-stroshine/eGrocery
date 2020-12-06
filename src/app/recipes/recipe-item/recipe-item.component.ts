@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
+import { Recipe } from 'src/app/shared/models/recipe.model';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { RecipeHttpService } from 'src/app/shared/services/recipe.service';
 import { EventService } from 'src/app/shared/services/event.service';
 
 @Component({
@@ -10,16 +13,24 @@ import { EventService } from 'src/app/shared/services/event.service';
 })
 export class RecipeItemComponent implements OnInit {
   recipeItem: any;
+  isAuthenticated = false;
   daysOfWeek: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
 
   constructor(
     private router: Router,
     private activeRoute: ActivatedRoute,
+    private authService: AuthService,
     private eventService: EventService
+
   ) { }
 
   ngOnInit(): void {
     this.recipeItem = this.formatRecipeItem(this.activeRoute.snapshot.data.message[0]);
+
+    this.authService.isUserLoggedIn$.subscribe((isLoggedIn) => {
+      this.isAuthenticated = isLoggedIn;
+    })
   }
 
   goToEdit(recipeId: number): void {

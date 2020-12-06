@@ -13,8 +13,7 @@ exports.addRecipe = async (req, res, next) => {
   const recipe_name = req.body.recipeName;
   const category = req.body.recipeCategory;
   const instruction = req.body.directions;
-  // FIX ME: add in user id
-  const user_id = req.body.user_id ? req.body.user_id : 10;
+  const user_id = req.params.userId ? req.params.userId : null;
 
 
   try {
@@ -78,6 +77,31 @@ exports.getOne = async (req, res, next) => {
     const recipe = await Recipe.getOne(recipeId);
 
     return res.status(200).json(recipe)
+  }
+  catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+}
+
+// Read all recipes except from one user 
+exports.getRandom = async (req, res, next) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) return
+
+  const user_id = req.params.userId;
+
+  try {
+    const recipeUser = {
+      user_id: user_id
+    }
+
+    const recipes = await Recipe.getRandom(recipeUser);
+
+    return res.status(200).json(recipes)
   }
   catch (err) {
     if (!err.statusCode) {

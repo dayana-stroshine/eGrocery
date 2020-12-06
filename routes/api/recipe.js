@@ -4,10 +4,11 @@ const router = express.Router();
 
 const Recipe = require('../../models/recipe');
 const recipeController = require('../../controllers/recipe');
+// const auth = require('../../middleware/auth');
 
 // Create a recipe
 router.post(
-    '/addRecipe',
+    '/addRecipe/:userId',
     [
         // FIX ME add validators here for input before data is sent to the database
     ],
@@ -19,6 +20,9 @@ router.get('/:userId', recipeController.getAll);
 
 // Read one recipe from a user
 router.get('/getOne/:recipeId', recipeController.getOne);
+
+// Get random recipes
+router.get('/random/:userId', recipeController.getRandom);
 
 // Update a recipe
 router.patch('/:recipeId', recipeController.update);

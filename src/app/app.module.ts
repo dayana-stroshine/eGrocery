@@ -1,7 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+
+import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,6 +19,8 @@ import { RecipeItemEditComponent } from './recipes/recipe-item-edit/recipe-item-
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { RecipeItemAddComponent } from './recipes/recipe-item-add/recipe-item-add.component';
+
+import { AuthCompanionService } from './shared/services/auth-companion.service';
 
 
 @NgModule({
@@ -40,7 +45,13 @@ import { RecipeItemAddComponent } from './recipes/recipe-item-add/recipe-item-ad
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthCompanionService,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
