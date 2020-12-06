@@ -13,8 +13,7 @@ exports.addRecipe = async (req, res, next) => {
   const recipe_name = req.body.recipeName;
   const category = req.body.recipeCategory;
   const instruction = req.body.directions;
-  // FIX ME: add in user id
-  const user_id = req.body.user_id ? req.body.user_id : 10;
+  const user_id = req.params.userId ? req.params.userId : null;
 
 
   try {

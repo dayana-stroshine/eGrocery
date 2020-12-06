@@ -24,8 +24,8 @@ export class RecipeHttpService {
     private errorHandlerService: ErrorHandlerService
   ) { }
 
-  addRecipe(recipe: Omit<Recipe, "id">): Observable<Recipe> {
-    return this.http.post<Recipe>(`${this.url}/addRecipe`, recipe, this.httpOptions)
+  addRecipe(recipe: Omit<Recipe, "id">, userId: number): Observable<Recipe> {
+    return this.http.post<Recipe>(`${this.url}/addRecipe/${userId}`, recipe, this.httpOptions)
       .pipe(
         first(),
         catchError(this.errorHandlerService.handleError<Recipe>('addRecipe'))

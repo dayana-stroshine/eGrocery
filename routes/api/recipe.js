@@ -8,7 +8,7 @@ const recipeController = require('../../controllers/recipe');
 
 // Create a recipe
 router.post(
-    '/addRecipe',
+    '/addRecipe/:userId',
     [
         // FIX ME add validators here for input before data is sent to the database
     ],

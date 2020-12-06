@@ -14,7 +14,12 @@
         <label for="inputRecipeCategory">
             <h3>Category</h3>
         </label>
-        <input type="text" class="form-control" id="inputRecipeCategory" formControlName="recipeCategory">
+        <select id="inputRecipeCategory" formControlName="recipeCategory" style="display:block">
+            <option value="breakfast">Breakfast</option>
+            <option value="lunch">Lunch</option>
+            <option value="dinner">Dinner</option>
+            <option value="dessert">Dessert</option>
+        </select>  
     </div>
     <h2>Ingredients</h2>
     <button type="button" class="btn btn-secondary  button-mrgn" (click)="addIngredient();">
