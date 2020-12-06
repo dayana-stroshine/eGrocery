@@ -10,6 +10,12 @@
   </button>
 </a>
 
+<div *ngIf="!isAuthenticated" class="well">
+  <p >This recipe book is populated with a few of the recently added recipes to get a taste of the site. 
+    To add and edit your own recipes and use the rest of the site features, please sign up!</p>
+</div>
+
+
 <div class="row">
   <div class="col-md-5">
     <ul class="nav nav-pills nav-stacked">

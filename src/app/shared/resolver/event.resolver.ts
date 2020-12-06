@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 
 import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 import { EventService } from '../services/event.service';
 
 @Injectable({
@@ -9,10 +10,13 @@ import { EventService } from '../services/event.service';
 })
 export class EventResolver implements Resolve<Observable<string>> {
 
-  constructor(private eventService: EventService) { }
+  constructor(
+    private eventService: EventService,
+    private authService: AuthService) { }
 
   resolve() {
-    const userId = 10; // could be replaced with a user service that has current user
-    return this.eventService.getAll(userId);
+    const userId = this.authService.userId;
+    //const userId = 10; 
+    return this.eventService.getAll(+userId);
   }
 }
