@@ -2,6 +2,8 @@
   <h1>My Recipe Calendar</h1>
 </div>
 
+<p *ngIf="allEventRecipes.length === 0" style="color: red">Calendar is empty! Add a recipe to the calendar by selecting a recipe and pressing the "Add to Calendar" button!</p>
+
 <div class="row">
   <div class="col-md-5">
     <ul class="nav nav-pills nav-stacked">

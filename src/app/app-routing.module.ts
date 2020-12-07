@@ -24,7 +24,7 @@ const appRoutes: Routes = [
   { path: '', component: HomepageComponent, pathMatch: 'full', resolve: { message: HomepageResolver } },
   { path: 'recipes', component: RecipesComponent, resolve: { message: RecipeResolver } },
   { path: 'kitchen', component: KitchenComponent, canActivate: [AuthGuardService], resolve: { message: KitchenResolver } },
-  { path: 'calendar', canActivate: [AuthGuardService], component: CalendarComponent },
+  { path: 'calendar', canActivate: [AuthGuardService], component: CalendarComponent, resolve: { message: EventResolver } },
   { path: 'recipe-item/:id', component: RecipeItemComponent, resolve: { message: RecipeItemResolver } },
   { path: 'recipe-edit/:id', canActivate: [AuthGuardService], component: RecipeItemEditComponent, resolve: { message: RecipeItemResolver } },
   { path: 'recipe-add', component: RecipeItemAddComponent },
