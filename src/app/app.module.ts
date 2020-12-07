@@ -21,6 +21,7 @@ import { LoginComponent } from './login/login.component';
 import { RecipeItemAddComponent } from './recipes/recipe-item-add/recipe-item-add.component';
 
 import { AuthCompanionService } from './shared/services/auth-companion.service';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { AuthCompanionService } from './shared/services/auth-companion.service';
     RecipeItemEditComponent,
     SignupComponent,
     LoginComponent,
-    RecipeItemAddComponent
+    RecipeItemAddComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

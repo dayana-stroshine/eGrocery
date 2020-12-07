@@ -7,6 +7,7 @@ const router = express.Router();
 const authController = require('../../controllers/auth');
 
 //--- SERVER SIDE VALIDATION OF INPUT ---//
+router.get('/:userId', authController.getUser);
 
 router.post(
     '/signup', 

@@ -20,8 +20,8 @@ export class LoginComponent implements OnInit {
   createFormGroup(): FormGroup {
     return new FormGroup({
       // name: new FormControl("", [Validators.required, Validators.minLength(2)]),
-      email: new FormControl("", [Validators.required, Validators.email]),
-      password: new FormControl("", [Validators.required, Validators.minLength(7)])
+      email: new FormControl("demo@eGrocery.com", [Validators.required, Validators.email]),
+      password: new FormControl("password1", [Validators.required, Validators.minLength(7)])
 
     })
   }

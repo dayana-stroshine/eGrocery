@@ -7,6 +7,11 @@ module.exports = class User {
         this.password = password;
     }
 
+    static getUser(user_id) {
+        return db.execute(
+            'SELECT * FROM Users WHERE user_id = ?', [user_id]);
+    }
+
     static find(email) {
         return db.execute(
             'SELECT * FROM Users WHERE email = ?', [email]);
