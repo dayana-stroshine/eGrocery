@@ -16,7 +16,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    ) { }
 
   ngOnInit(): void {
     this.userId = this.authService.userId;
@@ -31,17 +32,6 @@ export class HeaderComponent implements OnInit {
     this.authService.isUserLoggedIn$.next(false);
     this.router.navigate(["login"]);
 
-  }
-
-  delete(): void {
-    console.log("in header component:");
-    console.log(this.userId);
-    this.authService.delete(+this.userId).subscribe((msg) => {
-      console.log(msg);
-      localStorage.removeItem("token");
-      this.authService.isUserLoggedIn$.next(false);
-      this.router.navigate([""]);
-    });
   }
 
 }

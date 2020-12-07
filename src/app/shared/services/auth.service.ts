@@ -29,6 +29,14 @@ export class AuthService {
     private router: Router
   ) {}
 
+  getOne(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.url}/${userId}`, this.httpOptions)
+      .pipe(
+        first(),
+        catchError(this.errorHandlerService.handleError<any>('getOne'))
+      );
+  }
+
   signup(user: Omit<User, "id">): Observable<User>{
     return this.http
     .post<User>(`${this.url}/signup`, user, this.httpOptions)

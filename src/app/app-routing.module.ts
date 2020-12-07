@@ -14,10 +14,12 @@ import { RecipeItemAddComponent } from './recipes/recipe-item-add/recipe-item-ad
 
 import { RecipeResolver } from './shared/resolver/recipe.resolver';
 import { RecipeItemResolver } from './shared/resolver/recipe-item.resolver';
+import { ProfileResolver } from './shared/resolver/profile.resolver';
 import { KitchenResolver } from './shared/resolver/kitchen.resolver';
 import { HomepageResolver } from './shared/resolver/homepage.resolver';
 import { AuthGuardService } from "./shared/services/auth-guard.service";
 import { EventResolver } from './shared/resolver/event.resolver';
+import { ProfileComponent } from './profile/profile.component';
 
 
 const appRoutes: Routes = [
@@ -30,6 +32,7 @@ const appRoutes: Routes = [
   { path: 'recipe-add', component: RecipeItemAddComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'profile', canActivate: [AuthGuardService], component: ProfileComponent, resolve: { message: ProfileResolver } },
   { path: '**', redirectTo: '' }
 ];
 
