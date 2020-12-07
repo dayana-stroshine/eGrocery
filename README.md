@@ -22,4 +22,9 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 7. Run `forever start server.js` to have the app run continuously. 
 
+## Acknowledgements
+
+The authentication using JSON Web Tokens was inspired by:
+“Anuglar Node MySQL - Login System” YouTube, uploaded by Jon Peppinck, 4 July, 2020.
+https://www.youtube.com/watch?v=NUHHbzau_9M&list=PL9_OU-1M9E_sjaUPfH3FIp8GtJrhJhTb8
 
