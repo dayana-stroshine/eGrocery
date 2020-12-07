@@ -41,9 +41,9 @@ module.exports = class Recipe {
     return db.execute(
       `SELECT r.recipe_id, r.recipe_name, r.instruction, r.category AS recipe_category, r.satisfaction, r.user_id, 
             i.ingredient_id, i.ingredient_name, i.quantity, i.unit, i.category FROM Recipes AS r
-                        JOIN Recipe_Ingredients AS r_i
+                        LEFT JOIN Recipe_Ingredients AS r_i
                         ON r.recipe_id = r_i.recipe_id
-                        JOIN Ingredients as i
+                        LEFT JOIN Ingredients as i
                         ON i.ingredient_id = r_i.ingredient_id
                         WHERE r.recipe_id = ?`, [recipe.recipe_id]);
   }
