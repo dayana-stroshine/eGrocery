@@ -4,6 +4,22 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
+
+exports.getUser = async (req, res, next) => {
+    const user_id = req.params.userId;
+    try {
+        // Send off the request to the database to get a user
+        const user = await User.getUser(user_id);
+
+        res.status(200).json(user)
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err)
+    }
+}
+
 exports.signup = async (req, res, next) => {
     const errors = validationResult(req);
     // Check for errors within validation
@@ -83,7 +99,6 @@ exports.login = async (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
     const user_id = req.params.userId;
-    console.log(user_id);
     try {
         const user = {
             user_id: user_id
@@ -99,3 +114,5 @@ exports.delete = async (req, res, next) => {
         next(err)
     }
 }
+
+

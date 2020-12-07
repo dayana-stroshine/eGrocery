@@ -23,17 +23,20 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit(): void {
     this.allEventRecipes = this.activeRoute.snapshot.data.message[0];
-    this.eventService.populateCalendar(this.allEventRecipes);
-
-    for (const day of this.daysOfWeek) {
-      if (this.eventService.currentCalendar.has(day.toLowerCase())) {
-        this.availableDays.push(day);
+    
+    if (this.allEventRecipes.length > 0) {
+      this.eventService.populateCalendar(this.allEventRecipes);
+  
+      for (const day of this.daysOfWeek) {
+        if (this.eventService.currentCalendar.has(day.toLowerCase())) {
+          this.availableDays.push(day);
+        }
       }
-    }
-
-    if (this.availableDays) {
-      this.selectedDay = this.availableDays[0];
-      this.selectedDayRecipes = this.eventService.currentCalendar.get(this.selectedDay.toLowerCase()).slice();
+  
+      if (this.availableDays) {
+        this.selectedDay = this.availableDays[0];
+        this.selectedDayRecipes = this.eventService.currentCalendar.get(this.selectedDay.toLowerCase()).slice();
+      }
     }
   }
 
