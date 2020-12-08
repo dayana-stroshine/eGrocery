@@ -32,6 +32,14 @@ export class KitchenService {
       );
   }
 
+  addKitchenIngredient(kitchen: any): Observable<any> {
+    return this.http.post<any>(`${this.url}`, kitchen, this.httpOptions)
+      .pipe(
+        first(),
+        catchError(this.errorHandlerService.handleError<any>('addKitchenIngredient'))
+      );
+  }
+
   populateKitchen(allIngredients: any[]) {
     this.currentKitchen = new Map();
 
