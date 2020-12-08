@@ -46,7 +46,19 @@ export class KitchenComponent implements OnInit {
     } else {
       this.searchResult = 'This kitchen is empty.';
     }
+  }
 
+  async updateUi() {
+    const getAllResponse = await this.kitchenService.getAll(this.userId).toPromise();
+    this.allIngredients = getAllResponse[0];
+    if (this.allIngredients.length > 0) {
+      this.kitchenService.populateKitchen(this.allIngredients.slice());
+      this.categories = [...this.kitchenService.currentKitchen.keys()];
+      this.selectedCategory = this.categories[0];
+      this.selectedCategoryIngredients = this.kitchenService.currentKitchen.get(this.categories[0]).slice();
+    } else {
+      this.searchResult = 'This kitchen is empty.';
+    }
   }
 
   onSelect(category: string) {
@@ -88,13 +100,12 @@ export class KitchenComponent implements OnInit {
       ingredient_id: ingredientId
     }
     // add to Kitchens table
-    this.kitchenService.addKitchenIngredient(kitchenIngredient).subscribe(msg => console.log(msg));
-    // update UI here
+    this.kitchenService.addKitchenIngredient(kitchenIngredient).subscribe((msg) => {
+      console.log(msg);
+      this.updateUi();
+    });
    
     // reset form
     this.addIngredientForm.reset();
-    
   }
-
-
 }

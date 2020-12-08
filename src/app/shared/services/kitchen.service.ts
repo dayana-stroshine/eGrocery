@@ -44,7 +44,7 @@ export class KitchenService {
     this.currentKitchen = new Map();
 
     for (const currentIngredient of allIngredients) {
-      const currentCategory: string = currentIngredient.category;
+      const currentCategory: string = currentIngredient.category.toLowerCase();
 
       if (this.currentKitchen.has(currentCategory)) {
         const tempIngredientList: Ingredient[] = this.currentKitchen.get(currentCategory).slice();
