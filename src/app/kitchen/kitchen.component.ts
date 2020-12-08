@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Ingredient } from '../shared/models/ingredient.model';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { Ingredient } from '../shared/models/ingredient.model';
+import { IngredientHttpService } from '../shared/services/ingredient.service';
 import { KitchenService } from '../shared/services/kitchen.service';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-kitchen',
@@ -16,15 +19,25 @@ export class KitchenComponent implements OnInit {
   selectedCategory: string;
   searchQuery: string = '';
   searchResult: string;
+  userId: number;
+  addIngredientForm = this.fb.group({
+    quantity: [''],
+    unit: [''],
+    name: ['', Validators.compose([Validators.required])],
+    category: ['']
+  });
 
   constructor(
     private activeRoute: ActivatedRoute,
-    private kitchenService: KitchenService
+    private kitchenService: KitchenService,
+    private fb: FormBuilder, 
+    private authService: AuthService,
+    private ingredientHttpService: IngredientHttpService
   ) { }
 
   ngOnInit(): void {
     this.allIngredients = this.activeRoute.snapshot.data.message[0];
-    console.log(this.allIngredients);
+    this.userId = +this.authService.userId;
     if (this.allIngredients.length > 0) {
       this.kitchenService.populateKitchen(this.allIngredients.slice());
       this.categories = [...this.kitchenService.currentKitchen.keys()];
@@ -58,4 +71,30 @@ export class KitchenComponent implements OnInit {
     this.searchResult = 'Nothing matches search query!';
     return;
   }
+
+  addIngredient(): void {
+    let ingredientId: number;
+
+    console.log(this.addIngredientForm.value);
+    this.ingredientHttpService.addIngredient(this.addIngredientForm.value).subscribe(result => {
+      ingredientId = result[0].insertId;
+      this.submitRelation(this.userId, ingredientId);
+    });
+  }
+
+  submitRelation(userId: number, ingredientId: number) {
+    const kitchenIngredient = {
+      user_id: userId,
+      ingredient_id: ingredientId
+    }
+    // add to Kitchens table
+    this.kitchenService.addKitchenIngredient(kitchenIngredient).subscribe(msg => console.log(msg));
+    // update UI here
+   
+    // reset form
+    this.addIngredientForm.reset();
+    
+  }
+
+
 }
