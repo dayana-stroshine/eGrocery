@@ -15,6 +15,7 @@ module.exports = class Event {
     );
   }
 
+  // Insert into events table
   static addEventRecipe(eventDetails) {
     return db.execute(
       'INSERT INTO Events(date, recipe_id, user_id) VALUES (?, ?, ?)',

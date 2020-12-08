@@ -15,6 +15,7 @@ module.exports = class Kitchen {
     );
   }
 
+  // Insert an ingredient to kitchen
   static save(relation) {
     return db.execute(
         'INSERT INTO Kitchens (user_id, ingredient_id) VALUES (?, ?)',
