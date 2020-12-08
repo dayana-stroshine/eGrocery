@@ -12,14 +12,17 @@
             <div class="form-group">
               <label for="name">Name</label>
               <input type="text" class="form-control" placeholder="ex. Pat" formControlName="name">
+              <p> Name is required.</p>
             </div>
             <div class="form-group">
               <label for="email">Email</label>
               <input type="email" class="form-control" placeholder="ex. pat.lastname@myemail.com" formControlName="email">
+              <p> Email is required.</p>
             </div>
             <div class="form-group">
                 <label for="passwordCheck">Password</label>
                 <input type="password" class="form-control" formControlName="password">
+                <p> Password must be at least 7 characters.</p>
               </div>
             <button type="submit" class="btn btn-success" [disabled]="!signupForm.valid">Submit</button>
           </form>

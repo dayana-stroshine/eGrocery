@@ -7,13 +7,24 @@
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li routerLinkActive="active"><a routerLink="/recipes">Recipes</a></li>
-        <li routerLinkActive="active"><a routerLink="/kitchen">Kitchen</a></li>
-        <li routerLinkActive="active"><a routerLink="/grocery-list">Grocery List</a></li>
-        <li routerLinkActive="active"><a routerLink="/calendar">Calendar</a></li>
+        <li routerLinkActive="active"><a *ngIf="isAuthenticated" routerLink="/kitchen">Kitchen</a></li>
+        <li routerLinkActive="active"><a *ngIf="isAuthenticated" routerLink="/calendar">Calendar</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-       <li routerLinkActive="active"><a routerLink="/login">Log in</a></li>
-        <li routerLinkActive="active"><a routerLink="/signup">Sign up</a></li> 
+       <li routerLinkActive="active"><a *ngIf="!isAuthenticated" routerLink="/login">Log in</a></li>
+        <li routerLinkActive="active"><a *ngIf="!isAuthenticated" routerLink="/signup">Sign up</a></li> 
+
+        <li *ngIf="isAuthenticated" class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <!-- <li><a href="#">Action</a></li> -->
+            <li><a routerLink="/profile">Profile</a></li>
+            <!-- <li><a role="button" (click)="delete()">Delete Account</a></li> -->
+            <li role="separator" class="divider"></li>
+            <li><a role="button" (click)="logout()">Log out</a></li>
+          </ul>
+        </li>
+        
       </ul>
     </div>
   </div>

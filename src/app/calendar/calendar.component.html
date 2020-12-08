@@ -1,3 +1,24 @@
-<h1>Calendar</h1>
-<li>This page will have a sidebar with links for days of the week and each link will display recipes for breakfast, lunch, and dinner for that day</li>
-<li>Functionality to add and delete recipes from each meal of each day</li>
+<div class="page-header bg-keylime my-header">
+  <h1>My Recipe Calendar</h1>
+</div>
+
+<p *ngIf="allEventRecipes.length === 0" style="color: red">Calendar is empty! Add a recipe to the calendar by selecting a recipe and pressing the "Add to Calendar" button!</p>
+
+<div class="row">
+  <div class="col-md-5">
+    <ul class="nav nav-pills nav-stacked">
+      <li 
+        role="presentation" 
+        *ngFor="let day of availableDays" 
+        (click)="onSelect(day)" 
+        [ngClass]="{'active':day === selectedDay}"
+        style="cursor: pointer">
+          <a>{{ day }}</a>
+        </li>
+    </ul>
+  </div>
+  <div class="col-md-7">
+    <ul class="list-group">
+      <li *ngFor="let recipe of selectedDayRecipes" class="list-group-item">{{ recipe }}</li>
+    </ul>
+  </div>

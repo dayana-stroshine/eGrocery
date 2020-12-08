@@ -1,13 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+
+import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RecipesComponent } from './recipes/recipes.component';
 import { HeaderComponent } from './header/header.component';
-import { GroceryListComponent } from './grocery-list/grocery-list.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomepageComponent } from './homepage/homepage.component';
 import { KitchenComponent } from './kitchen/kitchen.component';
@@ -18,13 +20,15 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { RecipeItemAddComponent } from './recipes/recipe-item-add/recipe-item-add.component';
 
+import { AuthCompanionService } from './shared/services/auth-companion.service';
+import { ProfileComponent } from './profile/profile.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     RecipesComponent,
     HeaderComponent,
-    GroceryListComponent,
     HomepageComponent,
     KitchenComponent,
     CalendarComponent,
@@ -32,16 +36,24 @@ import { RecipeItemAddComponent } from './recipes/recipe-item-add/recipe-item-ad
     RecipeItemEditComponent,
     SignupComponent,
     LoginComponent,
-    RecipeItemAddComponent
+    RecipeItemAddComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthCompanionService,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

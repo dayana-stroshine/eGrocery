@@ -5,7 +5,6 @@ import { catchError, first } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { Ingredient } from '../models/ingredient.model';
-import { Recipe } from '../models/recipe.model';
 import { ErrorHandlerService } from './error-handler.service';
 
 @Injectable({
@@ -33,11 +32,19 @@ export class KitchenService {
       );
   }
 
+  addKitchenIngredient(kitchen: any): Observable<any> {
+    return this.http.post<any>(`${this.url}`, kitchen, this.httpOptions)
+      .pipe(
+        first(),
+        catchError(this.errorHandlerService.handleError<any>('addKitchenIngredient'))
+      );
+  }
+
   populateKitchen(allIngredients: any[]) {
     this.currentKitchen = new Map();
 
     for (const currentIngredient of allIngredients) {
-      const currentCategory: string = currentIngredient.category;
+      const currentCategory: string = currentIngredient.category.toLowerCase();
 
       if (this.currentKitchen.has(currentCategory)) {
         const tempIngredientList: Ingredient[] = this.currentKitchen.get(currentCategory).slice();

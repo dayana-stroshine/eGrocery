@@ -25,11 +25,7 @@ exports.addIngredient = async (req, res, next) => {
 
         const result = await Ingredient.save(ingredientDetails);
 
-        return res.status(201).json({
-            // message: 'Ingredient created!',
-            id: result.insertId,
-            status: true,
-        })
+        return res.status(201).json(result)
     }
     catch (err) {
         if (!err.statusCode) {
@@ -40,7 +36,7 @@ exports.addIngredient = async (req, res, next) => {
 }
 
 // Update ingredient
-exports.update = async (req, res, next) => {
+exports.updateIngredient = async (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) return
@@ -63,12 +59,9 @@ exports.update = async (req, res, next) => {
             category: req.body.category || ingredient[0].category || null,
             ingredient_id: ingredient_id
         }
-        console.log(ingredientDetails)
         const result = await Ingredient.update(ingredientDetails);
 
-        return res.status(201).json({
-            message: 'Ingredient updated!',
-        })
+        return res.status(201).json(result)
     }
     catch (err) {
         if (!err.statusCode) {
@@ -85,7 +78,6 @@ exports.deleteIngredient = async (req, res, next) => {
     if (!errors.isEmpty()) return
 
     const ingredient_id = req.params.ingredientId;
-    console.log(ingredient_id);
 
     try {
         const ingredient = {

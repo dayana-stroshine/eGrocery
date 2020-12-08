@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MealService } from '../shared/services/meal.service';
 import { Meal } from '../shared/models/meal.model';
 import { Recipe } from '../shared/models/recipe.model';
+import { AuthService } from '../shared/services/auth.service';
+import { User } from '../shared/models/User';
 
 @Component({
   selector: 'app-recipes',
@@ -15,22 +17,31 @@ export class RecipesComponent implements OnInit {
   mealSelected: Meal;
   meals: Meal[];
   allRecipes: any;
+  userId: Pick<User, "id">;
+  isAuthenticated = false;
 
   constructor(
     private mealService: MealService,
     private router: Router,
     private recipeHttpService: RecipeHttpService,
-    private activeRoute: ActivatedRoute
+    private authService: AuthService,
+    private activeRoute: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
     this.allRecipes = this.activeRoute.snapshot.data.message[0];
+
+    this.userId = this.authService.userId;
     
     this.mealService.resetMeals();
     this.mealService.mealSelected = this.mealService.meals[0];
 
+    this.authService.isUserLoggedIn$.subscribe((isLoggedIn) => {
+      this.isAuthenticated = isLoggedIn;
+    })
+
     for (const currentRecipe of this.allRecipes) {
-      if (currentRecipe.category === 'breakfast') {
+      if (currentRecipe.category.toLowerCase() === 'breakfast') {
         this.mealService.meals[0].recipes.push(
           new Recipe(
             currentRecipe.recipe_name, 
@@ -41,7 +52,7 @@ export class RecipesComponent implements OnInit {
             currentRecipe.recipe_id
           )
         );
-      } else if (currentRecipe.category === 'lunch') {
+      } else if (currentRecipe.category.toLowerCase() === 'lunch') {
         this.mealService.meals[1].recipes.push(
           new Recipe(
             currentRecipe.recipe_name,
@@ -52,7 +63,7 @@ export class RecipesComponent implements OnInit {
             currentRecipe.recipe_id
           )
         );
-      } else if (currentRecipe.category === 'dinner') {
+      } else if (currentRecipe.category.toLowerCase() === 'dinner') {
         this.mealService.meals[2].recipes.push(
           new Recipe(
             currentRecipe.recipe_name, 
@@ -63,7 +74,7 @@ export class RecipesComponent implements OnInit {
             currentRecipe.recipe_id
           )
         );
-      } else if (currentRecipe.category === 'dessert') {
+      } else if (currentRecipe.category.toLowerCase() === 'dessert') {
         this.mealService.meals[3].recipes.push(
           new Recipe(
             currentRecipe.recipe_name, 
@@ -75,7 +86,7 @@ export class RecipesComponent implements OnInit {
           )
         );
       } else {
-        console.error(`Missing category or invalid currentRecipe: ${currentRecipe}`);
+        console.error(`Missing category or invalid currentRecipe: ${JSON.stringify(currentRecipe)}`);
       }
     }
 

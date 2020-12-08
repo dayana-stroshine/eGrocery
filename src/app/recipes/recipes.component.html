@@ -1,13 +1,31 @@
 <!-- <app-recipe-item [myRecipe]="testRecipe"></app-recipe-item> -->
-<div class="jumbotron bg-keylime">
-  <h1>My Recipes</h1>
+
+<div class="page-header bg-keylime my-header">
+  <h1 *ngIf="isAuthenticated">My Recipes</h1>
+  <h1 *ngIf="!isAuthenticated">Recipes</h1>
 </div>
 
-<a routerLink="/recipe-add">
+<div *ngIf="!isAuthenticated" class="alert alert-info alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Hi there!</strong>  
+  This recipe book is populated with a few of the recently added recipes to get a taste of the site. <br>
+  To add and edit your own recipes and use the rest of the site features, please sign up!
+</div>
+
+<div *ngIf="isAuthenticated" class="well well-sm">
+  <p>
+    Add a recipe with the "Add Recipe Button". <br>
+    To view a recipe, select the corresponding category, then select the recipe from that list. <br>
+    From the new view, you can edit or delete that recipe.
+  </p>
+</div>
+
+<a *ngIf="isAuthenticated" routerLink="/recipe-add">
   <button type="button" class="btn btn-secondary btn-lg mrgn-bottom">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Recipe 
   </button>
 </a>
+
 
 <div class="row">
   <div class="col-md-5">

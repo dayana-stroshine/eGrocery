@@ -7,6 +7,11 @@ module.exports = class User {
         this.password = password;
     }
 
+    static getUser(user_id) {
+        return db.execute(
+            'SELECT * FROM Users WHERE user_id = ?', [user_id]);
+    }
+
     static find(email) {
         return db.execute(
             'SELECT * FROM Users WHERE email = ?', [email]);
@@ -16,6 +21,13 @@ module.exports = class User {
         return db.execute(
             'INSERT INTO Users(name, email, password) VALUES (?, ?, ?)',
             [user.name, user.email, user.password]
+        );
+    }
+
+    static delete(user) {
+        return db.execute(
+            'DELETE FROM Users WHERE user_id = ?',
+            [user.user_id]
         );
     }
 };

@@ -14,4 +14,11 @@ module.exports = class Kitchen {
         WHERE k.user_id = ?`, [user.user_id]
     );
   }
+
+  static save(relation) {
+    return db.execute(
+        'INSERT INTO Kitchens (user_id, ingredient_id) VALUES (?, ?)',
+        [relation.user_id, relation.ingredient_id]
+    );
+}
 };

@@ -12,7 +12,7 @@ import { ErrorHandlerService } from './error-handler.service';
   providedIn: 'root'
 })
 export class IngredientHttpService {
-  private url = environment.baseUrl + "api/ingredient/";
+  private url = environment.baseUrl + "api/ingredient";
   // private url = "http://localhost:4100/api/ingredient/addIngredient";
 
   httpOptions: { headers: HttpHeaders } = {
@@ -27,6 +27,14 @@ export class IngredientHttpService {
       .pipe(
         first(),
         catchError(this.errorHandlerService.handleError<Ingredient>('addIngredient'))
+      );
+  }
+
+  updateIngredient(ingredient: Ingredient ): Observable<Ingredient> {
+    return this.http.patch<Ingredient>(`${this.url}/${ingredient.id}`, ingredient, this.httpOptions)
+      .pipe(
+        first(),
+        catchError(this.errorHandlerService.handleError<Ingredient>('updateIngredient'))
       );
   }
 

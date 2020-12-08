@@ -3,7 +3,11 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { IngredientHttpService } from '../../shared/services/ingredient.service';
 import { RecipeHttpService } from '../../shared/services/recipe.service'
+import { RecipeIngredientHttpService } from '../../shared/services/recipe-ingredients.service'
 import { Recipe } from '../../shared/models/recipe.model';
+import { User } from '../../shared/models/User';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-recipe-item-add',
@@ -11,10 +15,12 @@ import { Recipe } from '../../shared/models/recipe.model';
   styleUrls: ['./recipe-item-add.component.css']
 })
 export class RecipeItemAddComponent implements OnInit {
-
+  recipeId: number;
   newRecipe: Recipe;
   public recipeForm: FormGroup;
   public IngredientList: FormArray;
+  userId: Pick<User, "id">;
+
 
   get ingredientFormGroup() {
     return this.recipeForm.get('ingredients') as FormArray;
@@ -28,11 +34,16 @@ export class RecipeItemAddComponent implements OnInit {
   }
 
   constructor(
+    private router: Router,
     private recipeHttpService: RecipeHttpService,
     private ingredientHttpService: IngredientHttpService,
+    private recipeIngredientHttpService: RecipeIngredientHttpService,
+    private authService: AuthService,
     private fb: FormBuilder) { }
 
   ngOnInit(): void {
+
+    this.userId = this.authService.userId;
     this.newRecipe = this.recipeHttpService.recipeSelected;
     // this.recipeForm = this.createFormGroup();
     this.recipeForm = this.fb.group({
@@ -66,41 +77,38 @@ export class RecipeItemAddComponent implements OnInit {
     this.IngredientList.removeAt(index);
   }
 
+  // Helper function for submitting an ingredient
+  submitIngredients(recipeId: number) {
+    // Add Ingredients 
+    let ingredientId: number;
+
+    this.IngredientList.controls.forEach((element, index) => {
+      this.ingredientHttpService.addIngredient(element.value).subscribe(result => {
+        ingredientId = result[0].insertId;
+        this.submitRelation(recipeId, ingredientId);
+      })
+    })
+  }
+
+  // Helper function for submitting to Recipes_Ingredients table that relates an ingredient to a recipe
+  submitRelation(recipeId: number, ingredientId: number) {
+    const recipeIngredient = {
+      recipe_id: recipeId,
+      ingredient_id: ingredientId
+    }
+    this.recipeIngredientHttpService.addRIRelation(recipeIngredient).subscribe(msg => console.log(msg));
+    this.router.navigate(['/recipes']);
+  }
+
   // Makes an Http call
   submit(): void {
     // addRecipe
-    console.log(this.recipeForm.value)
-    this.recipeHttpService.addRecipe(this.recipeForm.value).subscribe((msg) => console.log(msg));
-    // Add Ingredients 
-    this.IngredientList.controls.forEach((element, index) => {
-      this.ingredientHttpService.addIngredient(element.value).subscribe((msg => console.log(msg)))
-    })
+    this.recipeHttpService.addRecipe(this.recipeForm.value,+this.userId).subscribe(results => {
+      this.recipeId = results[0].insertId;
 
+      this.submitIngredients(results[0].insertId);
+    });
 
-
-    // HOT MESS BELOW, FIX ME ADD RECIPE INGREDIENTS
-
-    // const addRecipe$ = this.recipeHttpService.addRecipe(this.recipeForm.value);
-
-
-    // const addIngredient$ = addRecipe$.switchMap(
-    // )
-    // addIngredient$.subscribe(
-    //   console.log,
-    //   console.error,
-    //   () => console.log ('completed adding recipe')
-    // )
-    //     const course$ = simulateHttp({id:1, description: 'Angular For Beginners'}, 1000);
-
-    // const httpResult$ = course$.switchMap(
-    //     courses => simulateHttp([], 2000),
-    //     (courses, lessons, outerIndex, innerIndex) => [courses, lessons] );
-
-    // httpResult$.subscribe(
-    //     console.log,
-    //     console.error,
-    //     () => console.log('completed httpResult$')
-    // );
   }
 }
 
